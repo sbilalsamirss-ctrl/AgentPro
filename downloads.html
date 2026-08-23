@@ -1,287 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Download AgentPro | Official Releases &amp; Utilities</title>
-  <meta name="description" content="Download official release installers for AgentPro Call Center Management Suite. Windows 64-bit and macOS Universal binaries available." />
+  <title>مركز تحميل البرامج والإصدارات | AgentPro</title>
+  <meta name="description" content="تحميل الإصدارات الرسمية لمنظومة AgentPro وأدوات مزامنة قواعد البيانات لأنظمة Windows و macOS." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Download AgentPro Software &amp; Releases" />
-  <meta property="og:description" content="Download official installers for Windows and macOS. Clean setup, no bloatware, and instant launch." />
-  <meta property="og:image" content="./assets/images/dashboard-mockup.svg" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="./assets/css/components.css" />
-  <link rel="stylesheet" href="./assets/css/responsive.css" />
+  <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-primary: #0A0F1D;
+      --bg-secondary: #0F172A;
+      --bg-card: #131E35;
+      --primary: #0077FE;
+      --primary-light: #00D2FF;
+      --accent-green: #10B981;
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-card: rgba(148, 163, 184, 0.14);
+      --nav-height: 74px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 15%, rgba(0, 119, 254, 0.18), transparent 45%);
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: rgba(10, 15, 29, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-link:hover, .nav-link.active { color: #FFFFFF; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #0056cb 100%);
+      color: #FFF;
+      box-shadow: 0 4px 18px rgba(0, 119, 254, 0.4);
+    }
+    .btn-primary:hover { background: #1a88ff; transform: translateY(-2px); color: #FFF; }
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #FFF;
+      border: 1px solid var(--border-card);
+    }
+    .btn-secondary:hover { background: rgba(51, 65, 85, 0.95); transform: translateY(-2px); }
+
     .downloads-hero {
       padding-top: calc(var(--nav-height) + 50px);
       padding-bottom: 40px;
       text-align: center;
     }
-    .specs-comparison-table {
+    .section-badge {
+      display: inline-block;
+      background: rgba(0, 119, 254, 0.12);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 30px;
+    }
+
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+    .download-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 34px 26px;
+      text-align: center;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .download-card.highlight {
+      border-color: var(--primary);
+      box-shadow: 0 0 30px rgba(0, 119, 254, 0.25);
+    }
+    .download-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-light);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.3);
+    }
+    .os-icon {
+      width: 60px; height: 60px;
+      margin: 0 auto 16px;
+      border-radius: 14px;
+      background: rgba(30, 41, 59, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 1px solid var(--border-card);
+    }
+    .download-card h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .version-tag {
+      display: inline-block;
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--primary-light);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .download-specs-list {
+      text-align: right;
+      list-style: none;
+      margin: 16px 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .download-specs-list li { display: flex; align-items: center; gap: 8px; }
+
+    .specs-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 24px;
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: var(--radius-md);
       overflow: hidden;
+      margin: 20px 0 60px;
     }
-    .specs-comparison-table th, .specs-comparison-table td {
+    .specs-table th, .specs-table td {
       padding: 16px 20px;
-      text-align: left;
+      text-align: right;
       border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.9375rem;
+      font-size: 0.95rem;
     }
-    .specs-comparison-table th {
-      background: #0A0F1D;
-      color: var(--primary-light);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.8125rem;
-      letter-spacing: 1px;
+    .specs-table th { background: #0A0F1D; color: var(--primary-light); font-weight: 800; font-size: 0.85rem; }
+
+    .footer {
+      background: #060A14;
+      border-top: 1px solid var(--border-subtle);
+      padding: 40px 0 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-dim);
     }
-    .specs-comparison-table tr:last-child td {
-      border-bottom: none;
-    }
-    .changelog-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      margin-bottom: 20px;
-    }
-    .changelog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-subtle);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .changelog-tag {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-green);
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      font-size: 0.8125rem;
+
+    @media (max-width: 1024px) {
+      .downloads-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto 50px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Ambient Glow Effect -->
   <div class="ambient-glow"></div>
 
-  <!-- Navigation Bar -->
   <header class="navbar">
     <div class="container nav-container">
       <a href="./index.html" class="nav-logo">
-        <img src="./assets/images/logo.svg" alt="AgentPro Logo" />
+        <svg viewBox="0 0 320 80" width="150" height="38">
+          <g transform="translate(10, 10)">
+            <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
+            <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+            <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+            <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+            <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
+          </g>
+          <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
+        </svg>
       </a>
 
       <nav>
         <ul class="nav-links">
-          <li><a href="./index.html#features" class="nav-link">Features</a></li>
-          <li><a href="./index.html#specs" class="nav-link">System Specs</a></li>
-          <li><a href="./tutorials.html" class="nav-link">Tutorials &amp; Videos</a></li>
-          <li><a href="./downloads.html" class="nav-link active">Downloads</a></li>
-          <li><a href="./index.html#faq" class="nav-link">FAQ</a></li>
+          <li><a href="./index.html" class="nav-link">الرئيسية</a></li>
+          <li><a href="./courses.html" class="nav-link">أكاديمية الكورسات</a></li>
+          <li><a href="./downloads.html" class="nav-link active">مركز التحميل</a></li>
+          <li><a href="./index.html#specs" class="nav-link">المواصفات</a></li>
         </ul>
       </nav>
 
-      <div class="nav-actions">
-        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
-          GitHub Repo
-        </a>
+      <div>
+        <a href="./courses.html" class="btn btn-secondary btn-sm">مشاهدة الشروحات</a>
       </div>
-
-      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
     </div>
   </header>
 
-  <!-- Downloads Hero -->
   <section class="downloads-hero">
     <div class="container">
-      <div class="section-badge">SOFTWARE RELEASES</div>
-      <h1 class="section-title">Download <span class="gradient-text">AgentPro Suite</span></h1>
+      <div class="section-badge">💾 مركز التنزيلات والإصدارات الرسمية</div>
+      <h1 class="section-title">تحميل منظومة <span class="gradient-text">AgentPro Suite</span></h1>
       <p class="section-subtitle">
-        Get the latest stable production build for Windows, macOS, or download the multi-database connector utility.
+        حمل أحدث إصدار مستقر لأنظمة Windows و macOS، أو حمل أداة مزامنة وربط قواعد البيانات.
       </p>
-    </div>
-  </section>
 
-  <!-- Downloads Cards Grid (Dynamically Populated from data.js) -->
-  <section style="padding-top: 0; padding-bottom: 60px;">
-    <div class="container">
-      <div id="downloadsGrid" class="downloads-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 100%;">
-        <!-- Rendered dynamically from assets/js/data.js -->
+      <div class="downloads-grid">
+        <!-- Windows Card -->
+        <div class="download-card highlight">
+          <div>
+            <div class="os-icon">🪟</div>
+            <h3>نسخة Windows</h3>
+            <span class="version-tag">v2.4.2 (68.4 MB)</span>
+            <ul class="download-specs-list">
+              <li>✔️ متوافقة مع Windows 10 / 11 (64-bit)</li>
+              <li>✔️ محرك صوت Direct WASAPI منخفض التأخير</li>
+              <li>✔️ تثبيت صامت وتحديثات تلقائية</li>
+              <li>✔️ مدمج مع تعريفات SQLite و PostgreSQL</li>
+            </ul>
+          </div>
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-primary" style="width: 100%;">
+            تحميل نسخة ويندوز (.exe)
+          </a>
+        </div>
+
+        <!-- macOS Card -->
+        <div class="download-card">
+          <div>
+            <div class="os-icon">🍎</div>
+            <h3>نسخة macOS</h3>
+            <span class="version-tag">v2.4.2 (72.1 MB)</span>
+            <ul class="download-specs-list">
+              <li>✔️ متوافقة مع macOS 12 Monterey أو أحدث</li>
+              <li>✔️ حزمة شاملة (Apple Silicon M1..M4 &amp; Intel)</li>
+              <li>✔️ محرك CoreAudio لصفاء ونقاء الصوت</li>
+              <li>✔️ حزمة موثقة ومعتمدة من Apple Notary</li>
+            </ul>
+          </div>
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary" style="width: 100%;">
+            تحميل نسخة ماك (.dmg)
+          </a>
+        </div>
+
+        <!-- Database Tool -->
+        <div class="download-card">
+          <div>
+            <div class="os-icon">🗄️</div>
+            <h3>أداة مزامنة قواعد البيانات</h3>
+            <span class="version-tag">v1.8.0 (14.2 MB)</span>
+            <ul class="download-specs-list">
+              <li>✔️ PostgreSQL, MySQL, MS SQL, SQLite</li>
+              <li>✔️ أداة ربط وتصدير للمؤسسات والسيرفرات</li>
+              <li>✔️ تشفير TLS 1.3 لنقل البيانات</li>
+              <li>✔️ تعمل عبر الـ CLI والواجهة الرسومية</li>
+            </ul>
+          </div>
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary" style="width: 100%;">
+            تحميل أداة السيرفرات (.zip)
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- System Requirements Section -->
-  <section style="background: var(--bg-secondary); padding: 80px 0;">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">COMPATIBILITY &amp; SPECS</div>
-        <h2 class="section-title">Hardware &amp; System Requirements</h2>
-        <p class="section-subtitle">
-          AgentPro is engineered to run seamlessly even on budget workstation hardware without compromising call audio quality.
-        </p>
-      </div>
-
-      <table class="specs-comparison-table">
+      <!-- Specs Comparison Table -->
+      <h2 style="font-size: 1.5rem; margin-bottom: 14px; text-align: right;">جدول متطلبات تشغيل الأجهزة والسيرفرات</h2>
+      <table class="specs-table">
         <thead>
           <tr>
-            <th>Component</th>
-            <th>Minimum Requirement</th>
-            <th>Recommended Specification</th>
+            <th>عنصر النظام</th>
+            <th>الحد الأدنى للمواصفات</th>
+            <th>المواصفات الموصى بها للأداء المثالي</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Operating System</strong></td>
-            <td>Windows 10 (64-bit) / macOS 12 Monterey</td>
+            <td><strong>نظام التشغيل</strong></td>
+            <td>Windows 10 (64-bit) / macOS 12</td>
             <td>Windows 11 (64-bit) / macOS 14 Sonoma</td>
           </tr>
           <tr>
-            <td><strong>Processor (CPU)</strong></td>
-            <td>Dual-Core 2.0 GHz Intel / AMD / Apple M1</td>
-            <td>Quad-Core 2.5 GHz+ / Apple Silicon (M1/M2/M3/M4)</td>
+            <td><strong>المعالج (CPU)</strong></td>
+            <td>معالج ثنائي النواة 2.0 GHz</td>
+            <td>معالج رباعي النواة 2.5 GHz+ أو Apple Silicon</td>
           </tr>
           <tr>
-            <td><strong>Memory (RAM)</strong></td>
-            <td>4 GB System RAM</td>
-            <td>8 GB System RAM or higher</td>
+            <td><strong>الذاكرة (RAM)</strong></td>
+            <td>4 جيجابايت RAM</td>
+            <td>8 جيجابايت RAM أو أعلى</td>
           </tr>
           <tr>
-            <td><strong>Disk Storage</strong></td>
-            <td>500 MB free disk space for application</td>
-            <td>SSD storage for high-volume audio caching</td>
-          </tr>
-          <tr>
-            <td><strong>Audio / Headset</strong></td>
-            <td>Standard 3.5mm or USB Audio Headset</td>
-            <td>Noise-cancelling USB / Bluetooth VoIP Headset</td>
-          </tr>
-          <tr>
-            <td><strong>Network</strong></td>
-            <td>1 Mbps broadband with &lt; 100ms ping to PBX</td>
-            <td>Ethernet connection with &lt; 20ms jitter to SIP Server</td>
+            <td><strong>المساحة التخزينية</strong></td>
+            <td>500 ميجابايت للتثبيت</td>
+            <td>مساحة SSD للتخزين المؤقت للتسجيلات الصوتية</td>
           </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- Version Changelog Section -->
-  <section style="padding: 80px 0;">
-    <div class="container" style="max-width: 900px;">
-      <div class="section-header">
-        <div class="section-badge">RELEASE HISTORY</div>
-        <h2 class="section-title">Changelog &amp; Updates</h2>
-      </div>
-
-      <!-- Release v2.4.2 -->
-      <div class="changelog-item">
-        <div class="changelog-header">
-          <div>
-            <h3 style="font-size: 1.25rem;">Version 2.4.2 (Latest Production)</h3>
-            <span style="color: var(--text-muted); font-size: 0.875rem;">Released on August 15, 2026</span>
-          </div>
-          <span class="changelog-tag">Active Release</span>
-        </div>
-        <ul style="list-style: square; padding-left: 20px; color: var(--text-muted); font-size: 0.9375rem; line-height: 1.8;">
-          <li>Added real-time stereo waveform audio visualizer for active recordings.</li>
-          <li>Optimized PostgreSQL database connection pooling with SSL certificate pinning.</li>
-          <li>Resolved wrap-up timer auto-submission in multi-tier queue transfers.</li>
-          <li>Reduced idle memory footprint by 22% on Windows 11.</li>
-        </ul>
-      </div>
-
-      <!-- Release v2.4.0 -->
-      <div class="changelog-item">
-        <div class="changelog-header">
-          <div>
-            <h3 style="font-size: 1.25rem;">Version 2.4.0</h3>
-            <span style="color: var(--text-muted); font-size: 0.875rem;">Released on July 10, 2026</span>
-          </div>
-          <span style="color: var(--text-dim); font-size: 0.8125rem; font-weight: 600;">Previous Build</span>
-        </div>
-        <ul style="list-style: square; padding-left: 20px; color: var(--text-muted); font-size: 0.9375rem; line-height: 1.8;">
-          <li>Introduced supervisor Whisper and Barge-In audio modes.</li>
-          <li>Integrated automated support ticket tagging with custom SLA escalation rules.</li>
-          <li>Added Apple Silicon universal binary support for macOS.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="./index.html">
-            <img src="./assets/images/logo.svg" alt="AgentPro" style="height: 36px;" />
-          </a>
-          <p>
-            The modern, high-performance Call Center Management System designed to boost agent productivity and deliver actionable analytics.
-          </p>
-        </div>
-
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <ul class="footer-links">
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./index.html#features">Features</a></li>
-            <li><a href="./tutorials.html">Video Tutorials</a></li>
-            <li><a href="./downloads.html">Software Downloads</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Resources</h4>
-          <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">GitHub Repository</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" target="_blank" rel="noopener">Releases &amp; Changelogs</a></li>
-            <li><a href="./index.html#faq">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Community</h4>
-          <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐️ Star on GitHub</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">Submit Feedback</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>
-          &copy; <span id="currentYear">2026</span> <strong>AgentPro</strong>. All rights reserved. Hosted on GitHub Pages.
-        </div>
-        <div>
-          <a href="./index.html" style="color: var(--text-muted);">Back to Home</a>
-        </div>
-      </div>
+      <p>&copy; 2026 <strong>AgentPro Suite</strong>. جميع الحقوق محفوظة • <a href="./index.html" style="color: var(--primary-light); text-decoration: none;">العودة للصفحة الرئيسية</a></p>
     </div>
   </footer>
-
-  <!-- Scripts -->
-  <script src="./assets/js/data.js"></script>
-  <script src="./assets/js/main.js"></script>
 </body>
 </html>

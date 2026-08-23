@@ -1,101 +1,65 @@
-# 🎧 AgentPro - Modern Call Center Management Suite
+# 🎧 منصة AgentPro - بوابة النظام وأكاديمية الكورسات والبرامج
 
-Welcome to the official website repository for **AgentPro**, the next-generation Call Center Management & Telephony Suite.
+أهلاً بك في المستودع الرسمي لموقع **AgentPro**، المنظومة المتطورة لإدارة الكول سنتر وأكاديمية الشروحات والكورسات العملية.
 
-This website is designed with a modern Corporate SaaS aesthetic (Deep Blues, Clean Whites, and Slate Greys), fully responsive across all devices, and configured with clean relative paths for immediate hosting on **GitHub Pages**.
-
----
-
-## 🚀 Live Demo & Repository
-- **GitHub Repository**: [https://github.com/sbilalsamirss-ctrl/AgentPro](https://github.com/sbilalsamirss-ctrl/AgentPro)
-- **GitHub Pages URL**: `https://sbilalsamirss-ctrl.github.io/AgentPro/`
+الموقع مبني بهيكلية برمجية مستقلة (Standalone Vector SVGs & CSS) تضمن عمل الموقع بنسبة 100% على **GitHub Pages** دون أي مشاكل في الصور أو الروابط المفقودة.
 
 ---
 
-## 📂 Project Structure
+## 🌐 الروابط الرسمية
+- **مستودع GitHub**: [https://github.com/sbilalsamirss-ctrl/AgentPro](https://github.com/sbilalsamirss-ctrl/AgentPro)
+- **رابط الموقع على GitHub Pages**: `https://sbilalsamirss-ctrl.github.io/AgentPro/`
+
+---
+
+## 📂 هيكل ملفات المشروع
 
 ```text
 AgentPro/
-├── index.html                   # Main Landing Page (Hero, Features, Stats, Specs, FAQ)
-├── tutorials.html               # Dedicated Video Tutorials Hub (with search, category filters & modal player)
-├── downloads.html               # Dedicated Software Releases & System Specs Center
-├── README.md                    # Project Documentation
+├── index.html                   # البوابة الرئيسية (Hero, إحصائيات حية, أبرز الكورسات, المميزات, تحميل البرنامج)
+├── courses.html                 # أكاديمية الكورسات الكاملة (بحث فوري, فلاتر التصنيفات, مشغل الفيديوهات, المرفقات)
+├── downloads.html               # مركز تحميل البرامج والملفات المرفقة وجدول متطلبات التشغيل
+├── tutorials.html               # صفحة إعادة توجيه تلقائية لأكاديمية الكورسات
+├── README.md                    # دليل التوثيق وإضافة المحتوى
 └── assets/
-    ├── css/
-    │   ├── style.css            # Design tokens, colors, typography, global layout
-    │   ├── components.css       # Buttons, cards, modals, tables, accordions, footer
-    │   └── responsive.css       # Media queries for Mobile and Tablet viewports
-    ├── js/
-    │   ├── main.js              # Navbar scroll, mobile drawer, video modals, search filter
-    │   └── data.js              # Central database for videos and download releases
-    └── images/
-        ├── logo.svg             # Vector Headset & Soundwave Logo
-        └── dashboard-mockup.svg # Vector Modern Dashboard Preview Illustration
+    └── js/
+        └── courses-data.js      # ⭐️ ملف البيانات المركزي لإضافة أي كورس أو فيديو جديد بسهولة
 ```
 
 ---
 
-## 🎬 How to Add or Edit Video Tutorials
+## 🎓 كيف تضيف كورس أو فيديو جديد مستقبلاً؟
 
-You do **not** need to touch complex HTML to add new tutorial videos! Simply open [`assets/js/data.js`](./assets/js/data.js) and add an item to the `tutorials` array:
+لن تحتاج إلى فتح أو تعديل ملفات الـ HTML!
+كل ما عليك فعله هو فتح ملف [`assets/js/courses-data.js`](./assets/js/courses-data.js) وإضافة الكورس الجديد داخل مصفوفة `courses`:
 
 ```javascript
 {
-  id: "tut-07",
-  category: "analytics", // "getting-started" | "analytics" | "ticketing" | "recordings" | "database"
-  categoryName: "KPIs & Analytics",
-  title: "Your Video Title Here",
-  description: "Brief summary of what this video explains...",
-  duration: "04:15",
+  id: "course-07",
+  title: "عنوان الكورس أو الفيديو الجديد",
+  category: "analytics", // "basics" | "analytics" | "ticketing" | "recordings" | "database"
+  categoryName: "التحليلات والـ KPIs",
+  level: "متوسط",
+  duration: "10:15",
   videoUrl: "https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID",
-  thumbnail: "assets/images/dashboard-mockup.svg"
-}
-```
-
----
-
-## 💾 How to Add New Software Releases
-
-Open [`assets/js/data.js`](./assets/js/data.js) and add or update the `releases` array:
-
-```javascript
-{
-  id: "win-v2-5",
-  os: "Windows",
-  icon: "🪟",
-  version: "v2.5.0",
-  releaseDate: "2026-09-01",
-  fileName: "AgentPro-Setup-2.5.0.exe",
-  fileSize: "70.2 MB",
-  downloadUrl: "https://github.com/sbilalsamirss-ctrl/AgentPro/releases/download/v2.5.0/AgentPro-Setup.exe",
-  requirements: [
-    "Windows 10 / 11 (64-bit)",
-    "4 GB RAM minimum"
+  description: "وصف مختصر لما يقدمه هذا الفيديو التعليمي...",
+  attachments: [
+    { name: "ملف الشرح PDF", url: "downloads.html" }
   ]
 }
 ```
 
 ---
 
-## 🌐 How to Host on GitHub Pages
+## 🚀 كيفية رفع التحديثات إلى GitHub Pages
 
-1. Push all files to your GitHub repository:
-   ```bash
-   git add .
-   git commit -m "feat: complete AgentPro landing page, video hub and download center"
-   git push origin main
-   ```
-2. Go to your GitHub repository settings:
-   - **Settings** → **Pages**
-   - Under **Build and deployment** > **Source**, choose **Deploy from a branch**.
-   - Select the `main` branch and `/ (root)` folder.
-   - Click **Save**.
-3. Your website will be live in 1-2 minutes!
-
----
-
-## 💡 Tech Stack
-- **HTML5 & CSS3** (Custom Properties / Flexbox / CSS Grid)
-- **Vanilla JavaScript** (Zero bloated dependencies, maximum speed)
-- **Vector SVG Graphics** (Crisp on Retina & 4K displays)
-- **No Build Step Required** (Open `index.html` directly in any web browser)
+1. افتح صفحة المستودع: **[https://github.com/sbilalsamirss-ctrl/AgentPro](https://github.com/sbilalsamirss-ctrl/AgentPro)**
+2. اضغط على **Add file** ⬅️ **Upload files**.
+3. اسحب الملفات التالية وضعها في المتصفح:
+   - `index.html`
+   - `courses.html`
+   - `downloads.html`
+   - `tutorials.html`
+   - `assets/js/courses-data.js`
+4. في الأسفل، اضغط على الزر الأخضر **Commit changes**.
+5. سيعمل الموقع فوراً بكافة التحديثات!

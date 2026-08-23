@@ -1,54 +1,346 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentPro | Next-Gen Call Center Management System</title>
-  <meta name="description" content="AgentPro is a modern, lightweight, and high-performance Call Center Management System with real-time KPI analytics, agent dashboard, call recording, and support ticketing." />
-  <meta name="keywords" content="Call Center, Agent Dashboard, Call Recording, KPI Analytics, Telephony, VoIP, PBX, Support Tickets, AgentPro" />
+  <title>AgentPro | المنظومة الشاملة لإدارة الكول سنتر وأكاديمية الشروحات</title>
+  <meta name="description" content="AgentPro - نظام إدارة الكول سنتر المتطور وأكاديمية الكورسات والشروحات العملية للوكلاء والمشرفين." />
 
-  <!-- Open Graph Meta Tags for GitHub Pages / Social Sharing -->
-  <meta property="og:title" content="AgentPro - Enterprise Call Center Management Suite" />
-  <meta property="og:description" content="Streamline agent workstations, monitor real-time queue KPIs, record high-fidelity calls, and automate support ticketing." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="./assets/images/dashboard-mockup.svg" />
+  <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
+  <style>
+    :root {
+      --bg-primary: #0A0F1D;
+      --bg-secondary: #0F172A;
+      --bg-card: #131E35;
+      --primary: #0077FE;
+      --primary-light: #00D2FF;
+      --accent-green: #10B981;
+      --accent-purple: #6366F1;
+      --accent-amber: #F59E0B;
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-card: rgba(148, 163, 184, 0.14);
+      --nav-height: 74px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient-glow {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 50% 15%, rgba(0, 119, 254, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 40%, rgba(99, 102, 241, 0.12), transparent 40%);
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
 
-  <!-- Stylesheets (Relative Paths for GitHub Pages Compatibility) -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="./assets/css/components.css" />
-  <link rel="stylesheet" href="./assets/css/responsive.css" />
+    section { padding: 90px 0; position: relative; z-index: 1; }
+    .section-header { text-align: center; max-width: 760px; margin: 0 auto 50px; }
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 119, 254, 0.12);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .section-title { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 800; margin-bottom: 16px; }
+    .gradient-text {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-subtitle { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: rgba(10, 15, 29, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      transition: background var(--transition);
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+      padding: 6px 0;
+    }
+    .nav-link:hover, .nav-link.active { color: #FFFFFF; }
+    .nav-toggle { display: none; background: transparent; border: none; color: #FFF; font-size: 1.5rem; cursor: pointer; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+    .btn-sm { padding: 8px 18px; font-size: 0.875rem; border-radius: var(--radius-sm); }
+    .btn-lg { padding: 16px 32px; font-size: 1.05rem; border-radius: var(--radius-md); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #0056cb 100%);
+      color: #FFF;
+      box-shadow: 0 4px 18px rgba(0, 119, 254, 0.4);
+    }
+    .btn-primary:hover { background: #1a88ff; transform: translateY(-2px); color: #FFF; }
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #FFF;
+      border: 1px solid var(--border-card);
+    }
+    .btn-secondary:hover { background: rgba(51, 65, 85, 0.95); transform: translateY(-2px); }
+
+    /* Hero */
+    .hero { padding-top: calc(var(--nav-height) + 50px); padding-bottom: 80px; text-align: center; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 119, 254, 0.12);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      padding: 6px 18px;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+    .pulse-dot { width: 8px; height: 8px; background-color: var(--accent-green); border-radius: 50%; animation: livePulse 2s infinite; }
+    .hero-title { font-size: clamp(2.25rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.25; margin-bottom: 20px; }
+    .hero-subtitle { font-size: clamp(1.05rem, 1.8vw, 1.25rem); color: var(--text-muted); max-width: 800px; margin: 0 auto 36px; }
+    .hero-cta { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 50px; flex-wrap: wrap; }
+
+    /* Vector Hero Preview */
+    .hero-preview {
+      position: relative;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 10px;
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 60px rgba(0, 119, 254, 0.15);
+    }
+    .hero-preview svg { width: 100%; height: auto; border-radius: var(--radius-md); display: block; }
+
+    /* Stats Bar */
+    .stats-bar { background: var(--bg-card); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: 36px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+    .stat-item { position: relative; }
+    .stat-item:not(:last-child)::after { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 1px; background: var(--border-subtle); }
+    .stat-number { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 900; background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; direction: ltr; }
+    .stat-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; }
+
+    /* Features Grid */
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .feature-card:hover { transform: translateY(-6px); border-color: rgba(0, 210, 255, 0.5); box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.2); }
+    .feature-icon-box {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: rgba(0, 119, 254, 0.12);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .feature-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; }
+    .feature-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border-subtle); margin-top: auto; }
+    .feature-list-item { font-size: 0.9rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; font-weight: 600; }
+
+    /* Courses Preview Grid */
+    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    .course-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .course-card:hover { transform: translateY(-6px); border-color: var(--primary-light); box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.25); }
+    .course-banner {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0A1329 0%, #152238 100%);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative;
+    }
+    .play-btn-circle {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--primary) 0%, #00D2FF 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #FFF; font-size: 1.2rem;
+      box-shadow: 0 0 20px rgba(0, 119, 254, 0.7);
+    }
+    .course-body { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
+    .course-category { font-size: 0.75rem; font-weight: 800; color: var(--primary-light); margin-bottom: 6px; }
+    .course-title { font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 8px; }
+    .course-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+
+    /* Downloads Grid */
+    .downloads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 920px; margin: 0 auto 40px; }
+    .download-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      text-align: center;
+      transition: all var(--transition);
+    }
+    .download-card.highlight { border-color: var(--primary); box-shadow: 0 0 35px rgba(0, 119, 254, 0.25); }
+    .download-card:hover { transform: translateY(-6px); border-color: var(--primary-light); }
+    .os-icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 16px; background: rgba(30, 41, 59, 0.8); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 1px solid var(--border-card); }
+    .version-tag { display: inline-block; background: rgba(0, 210, 255, 0.12); color: var(--primary-light); font-size: 0.8125rem; font-weight: 700; padding: 4px 12px; border-radius: var(--radius-full); margin-bottom: 18px; }
+
+    /* FAQ */
+    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-md); overflow: hidden; }
+    .faq-item.active { border-color: var(--primary); }
+    .faq-question { width: 100%; background: transparent; border: none; padding: 18px 24px; text-align: right; font-size: 1.05rem; font-weight: 700; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-family: inherit; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height var(--transition), padding var(--transition); color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; padding: 0 24px; }
+    .faq-item.active .faq-answer { max-height: 250px; padding: 0 24px 18px; }
+
+    /* Footer */
+    .footer { background: #060A14; border-top: 1px solid var(--border-subtle); padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 50px; }
+    .footer-col h4 { font-size: 1rem; margin-bottom: 18px; color: var(--text-main); }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--primary-light); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-dim); flex-wrap: wrap; gap: 16px; }
+
+    /* Modal */
+    .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(12px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-card); border-radius: var(--radius-lg); width: 100%; max-width: 900px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid var(--border-subtle); }
+    .modal-close { background: transparent; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; }
+
+    @keyframes livePulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    @media (max-width: 1024px) {
+      .features-grid, .courses-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item:nth-child(2)::after { display: none; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 50px 0; }
+      .hero-title { font-size: 2.1rem; }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+      .downloads-grid, .stats-grid, .footer-grid { grid-template-columns: 1fr; }
+      .stat-item::after { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Ambient Glow Effect -->
   <div class="ambient-glow"></div>
 
-  <!-- Navigation Bar -->
+  <!-- Navbar -->
   <header class="navbar">
     <div class="container nav-container">
       <a href="./index.html" class="nav-logo">
-        <img src="./assets/images/logo.svg" alt="AgentPro Logo" />
+        <svg viewBox="0 0 320 80" width="150" height="38">
+          <g transform="translate(10, 10)">
+            <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
+            <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+            <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+            <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+            <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
+          </g>
+          <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
+        </svg>
       </a>
 
       <nav>
-        <ul class="nav-links">
-          <li><a href="#features" class="nav-link">Features</a></li>
-          <li><a href="#specs" class="nav-link">System Specs</a></li>
-          <li><a href="./tutorials.html" class="nav-link">Tutorials &amp; Videos</a></li>
-          <li><a href="./downloads.html" class="nav-link">Downloads</a></li>
-          <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#features" class="nav-link">المميزات</a></li>
+          <li><a href="#courses" class="nav-link">الكورسات والشروحات</a></li>
+          <li><a href="#specs" class="nav-link">مواصفات النظام</a></li>
+          <li><a href="./downloads.html" class="nav-link">تحميل البرنامج</a></li>
+          <li><a href="#faq" class="nav-link">الأسئلة الشائعة</a></li>
         </ul>
       </nav>
 
-      <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" onclick="openDemoModal()">Live Demo</button>
-        <a href="#download" class="btn btn-primary btn-sm btn-glow">Download v2.4</a>
+      <div style="display: flex; gap: 12px;">
+        <a href="./courses.html" class="btn btn-secondary btn-sm">أكاديمية الكورسات</a>
+        <a href="./downloads.html" class="btn btn-primary btn-sm">تحميل v2.4</a>
       </div>
-
-      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
     </div>
   </header>
 
@@ -57,452 +349,370 @@
     <div class="container">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>AgentPro v2.4.2 is Live • Ultra-low Latency &amp; AI Telephony</span>
+        <span>منظومة AgentPro v2.4 مع أكاديمية الكورسات والتدريب العملي</span>
       </div>
 
       <h1 class="hero-title">
-        The Ultimate <span class="highlight">Call Center Management</span> &amp; Telephony Suite
+        المنظومة الاحترافية لإدارة <span class="gradient-text">الكول سنتر ومراكز الاتصال</span>
       </h1>
 
       <p class="hero-subtitle">
-        Empower your agents with intelligent dashboards, instant call recording, live queue analytics, and automated support ticketing — built on a lightweight, secure architecture.
+        ارفع كفاءة وإنتاجية الوكلاء مع لوحة تحكم ذكية، تسجيلات صوتية فائقة النقاء، تحليلات فورية لمؤشرات الـ KPIs، ودورات تدريبية عملية متجددة دورياً.
       </p>
 
       <div class="hero-cta">
-        <a href="#download" class="btn btn-primary btn-lg btn-glow">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Download AgentPro
+        <a href="./downloads.html" class="btn btn-primary btn-lg">
+          ⬇️ تحميل برنامج AgentPro
         </a>
-        <button class="btn btn-secondary btn-lg" onclick="openDemoModal()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          View Interactive Demo
-        </button>
+        <a href="./courses.html" class="btn btn-secondary btn-lg">
+          🎓 استعراض مكتبة الكورسات والدروس
+        </a>
       </div>
 
-      <!-- Hero Dashboard Preview Frame -->
+      <!-- Vector Dashboard Preview -->
       <div class="hero-preview">
-        <!-- Floating KPI Card Left -->
-        <div class="hero-floating-card left">
-          <div class="floating-icon" style="background: rgba(16, 185, 129, 0.2); color: #10B981;">⚡</div>
-          <div class="floating-text">
-            <div class="label">Avg Handle Time</div>
-            <div class="value">2m 45s (-18%)</div>
-          </div>
-        </div>
+        <svg viewBox="0 0 1000 580" width="100%" height="auto">
+          <defs>
+            <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0F172A" />
+              <stop offset="100%" stop-color="#1E293B" />
+            </linearGradient>
+            <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1E293B" stop-opacity="0.85" />
+              <stop offset="100%" stop-color="#0F172A" stop-opacity="0.95" />
+            </linearGradient>
+            <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#0077FE" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="1000" height="580" rx="14" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
+          <path d="M 0 14 A 14 14 0 0 1 14 0 L 986 0 A 14 14 0 0 1 1000 14 L 1000 44 L 0 44 Z" fill="#0A0F1D" />
+          <circle cx="28" cy="22" r="5" fill="#EF4444"/>
+          <circle cx="44" cy="22" r="5" fill="#F59E0B"/>
+          <circle cx="60" cy="22" r="5" fill="#10B981"/>
+          <text x="500" y="27" text-anchor="middle" fill="#64748B" font-family="'Cairo', sans-serif" font-size="12" font-weight="700">AgentPro Enterprise v2.4 - Live Telephony &amp; Monitoring Hub</text>
 
-        <!-- Floating KPI Card Right -->
-        <div class="hero-floating-card right">
-          <div class="floating-icon" style="background: rgba(0, 210, 255, 0.2); color: #00D2FF;">★</div>
-          <div class="floating-text">
-            <div class="label">Customer CSAT</div>
-            <div class="value">4.9 / 5.0 (99.4%)</div>
-          </div>
-        </div>
+          <!-- Stat Cards -->
+          <rect x="20" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="36" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">TOTAL CALLS TODAY</text>
+          <text x="36" y="120" fill="#FFFFFF" font-family="sans-serif" font-size="24" font-weight="800">1,482</text>
+          <text x="175" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">+14.2%</text>
 
-        <img src="./assets/images/dashboard-mockup.svg" alt="AgentPro Modern Call Center Dashboard" class="hero-preview-img" />
+          <rect x="265" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="281" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">AVG HANDLE TIME</text>
+          <text x="281" y="120" fill="#00D2FF" font-family="sans-serif" font-size="24" font-weight="800">2m 45s</text>
+          <text x="420" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">-18s</text>
+
+          <rect x="510" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="526" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">FIRST CALL RESOLUTION</text>
+          <text x="526" y="120" fill="#F59E0B" font-family="sans-serif" font-size="24" font-weight="800">92.8%</text>
+          <text x="665" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">Optimal</text>
+
+          <rect x="755" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="771" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">CSAT SATISFACTION</text>
+          <text x="771" y="120" fill="#10B981" font-family="sans-serif" font-size="24" font-weight="800">4.9 / 5.0</text>
+          <text x="895" y="120" fill="#00D2FF" font-family="sans-serif" font-size="12">★★★★★</text>
+
+          <!-- Center Chart -->
+          <rect x="20" y="160" width="620" height="230" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="40" y="190" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Real-Time Call Volume &amp; Traffic Analytics</text>
+          <path d="M 40 340 L 40 290 Q 140 250 240 210 T 440 260 T 600 190 L 600 340 Z" fill="url(#chartGrad)"/>
+          <path d="M 40 290 Q 140 250 240 210 T 440 260 T 600 190" fill="none" stroke="#00D2FF" stroke-width="3"/>
+          <circle cx="240" cy="210" r="4" fill="#00D2FF"/>
+          <circle cx="600" cy="190" r="4" fill="#0077FE"/>
+
+          <!-- Right Call Status -->
+          <rect x="660" y="160" width="320" height="230" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="680" y="190" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Active Priority Call</text>
+          <rect x="910" y="177" width="50" height="18" rx="9" fill="#10B981"/>
+          <text x="935" y="190" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="800">LIVE</text>
+          
+          <rect x="680" y="210" width="280" height="65" rx="8" fill="#0F172A"/>
+          <text x="696" y="235" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700">VIP Corporate Client</text>
+          <text x="696" y="255" fill="#94A3B8" font-family="sans-serif" font-size="11">+1 (800) 459-0921 • Line 04</text>
+
+          <rect x="680" y="285" width="280" height="40" rx="6" fill="#0A0F1D"/>
+          <g transform="translate(690, 292)">
+            <rect x="5" y="6" width="3" height="14" rx="1.5" fill="#00D2FF"/>
+            <rect x="15" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
+            <rect x="25" y="5" width="3" height="16" rx="1.5" fill="#00D2FF"/>
+            <rect x="35" y="1" width="3" height="24" rx="1.5" fill="#10B981"/>
+            <rect x="45" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
+            <rect x="55" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
+            <rect x="65" y="7" width="3" height="12" rx="1.5" fill="#10B981"/>
+            <rect x="75" y="1" width="3" height="24" rx="1.5" fill="#00D2FF"/>
+            <rect x="85" y="5" width="3" height="16" rx="1.5" fill="#00D2FF"/>
+            <rect x="95" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
+            <rect x="105" y="6" width="3" height="14" rx="1.5" fill="#10B981"/>
+            <rect x="115" y="1" width="3" height="24" rx="1.5" fill="#00D2FF"/>
+            <rect x="125" y="4" width="3" height="18" rx="1.5" fill="#0077FE"/>
+          </g>
+
+          <rect x="680" y="335" width="135" height="32" rx="6" fill="#1E293B"/>
+          <text x="747" y="355" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Transfer Call</text>
+
+          <rect x="825" y="335" width="135" height="32" rx="6" fill="#EF4444"/>
+          <text x="892" y="355" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">End &amp; Log</text>
+
+          <!-- Bottom Agent Workstation Table -->
+          <rect x="20" y="405" width="960" height="155" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
+          <text x="40" y="432" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="700">Real-Time Agent Extensions &amp; Queue Status</text>
+          
+          <rect x="40" y="445" width="920" height="24" rx="4" fill="#0F172A"/>
+          <text x="55" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">AGENT</text>
+          <text x="260" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">EXTENSION</text>
+          <text x="450" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">STATUS</text>
+          <text x="680" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">DURATION</text>
+          <text x="880" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">CSAT</text>
+
+          <text x="55" y="490" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Sarah Jenkins</text>
+          <text x="260" y="490" fill="#94A3B8" font-family="sans-serif" font-size="11">EXT-104</text>
+          <rect x="450" y="478" width="70" height="16" rx="8" fill="#065F46"/>
+          <text x="485" y="490" text-anchor="middle" fill="#34D399" font-family="sans-serif" font-size="9" font-weight="700">In Call (VIP)</text>
+          <text x="680" y="490" fill="#FFFFFF" font-family="sans-serif" font-size="11">04m:12s</text>
+          <text x="880" y="490" fill="#10B981" font-family="sans-serif" font-size="11" font-weight="bold">99.4%</text>
+
+          <line x1="40" y1="504" x2="960" y2="504" stroke="#1E293B" stroke-width="1"/>
+          
+          <text x="55" y="525" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Alex Morgan</text>
+          <text x="260" y="525" fill="#94A3B8" font-family="sans-serif" font-size="11">EXT-108</text>
+          <rect x="450" y="513" width="60" height="16" rx="8" fill="#1E3A8A"/>
+          <text x="480" y="525" text-anchor="middle" fill="#60A5FA" font-family="sans-serif" font-size="9" font-weight="700">Wrap-Up</text>
+          <text x="680" y="525" fill="#94A3B8" font-family="sans-serif" font-size="11">00m:45s</text>
+          <text x="880" y="525" fill="#10B981" font-family="sans-serif" font-size="11" font-weight="bold">97.8%</text>
+        </svg>
       </div>
     </div>
   </section>
 
-  <!-- Live Stats Strip -->
+  <!-- Live Stats -->
   <section class="stats-bar">
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item">
-          <div class="stat-number">1.4M+</div>
-          <div class="stat-label">Calls Processed Daily</div>
+          <div class="stat-number">+1.4M</div>
+          <div class="stat-label">مكالمة يومياً بمعالجة مستقرة</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">99.99%</div>
-          <div class="stat-label">Telephony Uptime SLA</div>
+          <div class="stat-label">نسبة جاهزية وثبات السيرفرات SLA</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">&lt; 3 Mins</div>
-          <div class="stat-label">Fast System Deployment</div>
+          <div class="stat-number">&lt; 3 Min</div>
+          <div class="stat-label">سرعة التثبيت والتشغيل الفوري</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">&lt; 15ms</div>
-          <div class="stat-label">Ultra-Low Audio Latency</div>
+          <div class="stat-label">زمن استجابة الصوت الفائق الصغر</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Core Features Section -->
-  <section id="features">
+  <!-- Featured Courses Section -->
+  <section id="courses">
     <div class="container">
       <div class="section-header">
-        <div class="section-badge">POWERFUL CAPABILITIES</div>
-        <h2 class="section-title">Engineered for <span class="gradient-text">High-Efficiency</span> Operations</h2>
+        <div class="section-badge">🎓 أكاديمية الكورسات والشروحات</div>
+        <h2 class="section-title">أحدث الكورسات <span class="gradient-text">والدروس العملية</span></h2>
         <p class="section-subtitle">
-          Everything your supervisors and call agents need to deliver 5-star customer experiences without technical friction.
+          شروحات فيديو تفاعلية تغطي كافة إمكانيات النظام، من ضبط ملفات الوكلاء وحتى ربط قواعد البيانات وإدارة السيرفرات.
         </p>
       </div>
 
-      <div class="features-grid">
-        <!-- Feature 1: Agent Dashboard -->
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-wrapper">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-            </div>
-            <h3 class="feature-title">Agent Unified Workstation</h3>
-            <p class="feature-desc">
-              An intuitive single-pane cockpit for agents: one-click dialing, instant warm/blind call transfers, customer history lookup, and customizable wrap-up timers.
-            </p>
+      <div class="courses-grid">
+        <!-- Course 1 -->
+        <div class="course-card">
+          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية السريعة: تثبيت وإعداد AgentPro')">
+            <div class="play-btn-circle">▶</div>
           </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Multi-line SIP &amp; WebRTC Telephony Support
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Automated Caller ID &amp; CRM Profile Popup
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Supervisor Whisper &amp; Barge-In capabilities
-            </li>
-          </ul>
-        </div>
-
-        <!-- Feature 2: Call Analytics & KPIs -->
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-wrapper">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-            </div>
-            <h3 class="feature-title">Call Analytics &amp; Live KPIs</h3>
-            <p class="feature-desc">
-              Real-time monitoring of queue volume, Average Handle Time (AHT), First Call Resolution (FCR), and agent occupancy with customizable visual alert triggers.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Real-time queue traffic &amp; peak load heatmaps
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Automated executive PDF/Excel report exports
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Agent leaderboard &amp; gamified scorecards
-            </li>
-          </ul>
-        </div>
-
-        <!-- Feature 3: Support Ticketing System -->
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-wrapper">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-              </svg>
-            </div>
-            <h3 class="feature-title">Smart Support Ticketing</h3>
-            <p class="feature-desc">
-              Automatic call-to-ticket conversion with priority tags, customer sentiment detection, SLA escalation timers, and department assignment.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Automated ticket creation upon call termination
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              SLA breach warnings &amp; tier escalation
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Omni-channel ticket sync (Voice, Email, WhatsApp)
-            </li>
-          </ul>
-        </div>
-
-        <!-- Feature 4: Call Recording Management -->
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-wrapper">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                <line x1="12" y1="19" x2="12" y2="23"></line>
-                <line x1="8" y1="23" x2="16" y2="23"></line>
-              </svg>
-            </div>
-            <h3 class="feature-title">Call Recording &amp; Audio Player</h3>
-            <p class="feature-desc">
-              Crystal-clear dual-channel audio recording with interactive waveform scrubbing, bookmarking, and compliant AES-256 encrypted storage.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Stereo Agent &amp; Customer channel separation
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Interactive waveform audio player &amp; speed control
-            </li>
-            <li class="feature-list-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              PCI-DSS compliant automatic pause for sensitive data
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- System Specs & Architecture -->
-  <section id="specs" style="background: var(--bg-secondary);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">LIGHTWEIGHT &amp; SECURE</div>
-        <h2 class="section-title">Built for Speed, Reliability &amp; Scale</h2>
-        <p class="section-subtitle">
-          AgentPro runs natively on modern workstations with minimal CPU/RAM footprint and enterprise-grade database synchronizations.
-        </p>
-      </div>
-
-      <div class="specs-container">
-        <!-- Specs Column 1 -->
-        <div class="spec-box">
-          <div class="spec-header">
-            <div class="floating-icon" style="background: rgba(0, 119, 254, 0.15); color: var(--primary-light);">⚙️</div>
-            <h3>Hardware &amp; System Performance</h3>
-          </div>
-          <table class="spec-table">
-            <tbody>
-              <tr>
-                <td class="label">Memory Footprint</td>
-                <td class="val">&lt; 120 MB RAM in idle / 250 MB peak</td>
-              </tr>
-              <tr>
-                <td class="label">CPU Usage</td>
-                <td class="val">&lt; 1.5% during active stereo recording</td>
-              </tr>
-              <tr>
-                <td class="label">Startup Time</td>
-                <td class="val">Instant launch (&lt; 1.2 seconds)</td>
-              </tr>
-              <tr>
-                <td class="label">Operating Systems</td>
-                <td class="val">Windows 10/11 (64-bit), macOS 12+</td>
-              </tr>
-              <tr>
-                <td class="label">Audio Driver</td>
-                <td class="val">DirectSound / WASAPI / CoreAudio</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Specs Column 2 -->
-        <div class="spec-box">
-          <div class="spec-header">
-            <div class="floating-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green);">🔒</div>
-            <h3>Database &amp; Security Integrations</h3>
-          </div>
-          <table class="spec-table">
-            <tbody>
-              <tr>
-                <td class="label">Encryption</td>
-                <td class="val">AES-256 at rest, TLS 1.3 in transit</td>
-              </tr>
-              <tr>
-                <td class="label">Supported DBs</td>
-                <td class="val">PostgreSQL, MySQL, SQLite, MSSQL</td>
-              </tr>
-              <tr>
-                <td class="label">PBX Connectors</td>
-                <td class="val">Asterisk, FreePBX, Cisco, Twilio, SIP</td>
-              </tr>
-              <tr>
-                <td class="label">Offline Mode</td>
-                <td class="val">Local buffer with auto cloud sync</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="db-badges">
-            <span class="db-badge">🐘 PostgreSQL</span>
-            <span class="db-badge">🐬 MySQL</span>
-            <span class="db-badge">🪶 SQLite</span>
-            <span class="db-badge">🏢 MS SQL</span>
-            <span class="db-badge">⭐ Asterisk PBX</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Video Tutorials Teaser Section -->
-  <section id="tutorials-preview">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">VIDEO GUIDES</div>
-        <h2 class="section-title">Learn How to Get the Most from <span class="gradient-text">AgentPro</span></h2>
-        <p class="section-subtitle">
-          Watch short step-by-step videos on system setup, queue configuration, and supervisor analytics.
-        </p>
-      </div>
-
-      <div class="videos-grid">
-        <!-- Video 1 -->
-        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'AgentPro Quick Setup & First Launch')">
-          <div class="video-thumbnail">
-            <img src="./assets/images/dashboard-mockup.svg" alt="Setup Guide" />
-            <div class="play-badge">▶</div>
-            <span class="video-duration">03:45</span>
-          </div>
-          <div class="video-content">
-            <span class="video-category">Getting Started</span>
-            <h3 class="video-title">AgentPro Quick Setup &amp; First Launch</h3>
-            <p class="video-desc">Configure your agent profile and connect your SIP/VoIP headset in under 3 minutes.</p>
+          <div class="course-body">
+            <span class="course-category">دليل المبتدئين</span>
+            <h3 class="course-title">دليل البداية السريعة: تثبيت وإعداد AgentPro من الصفر</h3>
+            <p class="course-desc">تعلم خطوات تثبيت البرنامج وضبط إعدادات سماعة الرأس وربط خطوط الـ SIP في دقائق.</p>
+            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية السريعة: تثبيت وإعداد AgentPro')">
+              ▶ مشاهدة الدرس
+            </button>
           </div>
         </div>
 
-        <!-- Video 2 -->
-        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Real-time Call Analytics & Queue Reports')">
-          <div class="video-thumbnail">
-            <img src="./assets/images/dashboard-mockup.svg" alt="Analytics Guide" />
-            <div class="play-badge">▶</div>
-            <span class="video-duration">07:20</span>
+        <!-- Course 2 -->
+        <div class="course-card">
+          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات ومؤشرات الأداء')">
+            <div class="play-btn-circle">▶</div>
           </div>
-          <div class="video-content">
-            <span class="video-category">KPIs &amp; Analytics</span>
-            <h3 class="video-title">Real-time Call Analytics &amp; Queue Reports</h3>
-            <p class="video-desc">Master AHT, FCR, and generate live executive dashboards for your team.</p>
+          <div class="course-body">
+            <span class="course-category">التحليلات والـ KPIs</span>
+            <h3 class="course-title">احتراف تحليلات المكالمات ومؤشرات الأداء (KPIs &amp; AHT)</h3>
+            <p class="course-desc">شرح شامل لقياس زمن المكالمة ومعدل رضا العملاء واستخراج تقارير Excel و PDF.</p>
+            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات ومؤشرات الأداء')">
+              ▶ مشاهدة الدرس
+            </button>
           </div>
         </div>
 
-        <!-- Video 3 -->
-        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Managing Customer Support Tickets')">
-          <div class="video-thumbnail">
-            <img src="./assets/images/dashboard-mockup.svg" alt="Ticketing Guide" />
-            <div class="play-badge">▶</div>
-            <span class="video-duration">05:10</span>
+        <!-- Course 3 -->
+        <div class="course-card">
+          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'نظام إدارة تذاكر الدعم الفني')">
+            <div class="play-btn-circle">▶</div>
           </div>
-          <div class="video-content">
-            <span class="video-category">Ticketing</span>
-            <h3 class="video-title">Managing Customer Support Tickets</h3>
-            <p class="video-desc">Automate call tagging, customer recall, and automatic ticket assignment.</p>
+          <div class="course-body">
+            <span class="course-category">إدارة التذاكر</span>
+            <h3 class="course-title">نظام إدارة تذاكر الدعم الفني وتصعيد الشكاوى (Ticketing)</h3>
+            <p class="course-desc">تحويل المكالمات لتذاكر تلقائياً وتحديد اتفاقيات مستوى الخدمة SLA وتعيين المهام.</p>
+            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'نظام إدارة تذاكر الدعم الفني')">
+              ▶ مشاهدة الدرس
+            </button>
           </div>
         </div>
       </div>
 
       <div style="text-align: center; margin-top: 40px;">
-        <a href="./tutorials.html" class="btn btn-secondary btn-lg">
-          Browse All Video Tutorials &amp; Guides →
+        <a href="./courses.html" class="btn btn-secondary btn-lg">
+          📚 استعراض جميع الكورسات وتحميل الملفات المرفقة ←
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Download & Releases Section -->
+  <!-- Features Section -->
+  <section id="features" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">قدرات برمجية فائقة</div>
+        <h2 class="section-title">صُمم لرفع كفاءة <span class="gradient-text">فريق العمل</span></h2>
+        <p class="section-subtitle">
+          كل ما يحتاجه الوكيل والمشرف لتقديم تجربة خدمة عملاء استثنائية وبدون أي تعقيدات تقنية.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🎧</div>
+            <h3 class="feature-title">لوحة تحكم الوكيل الموحدة</h3>
+            <p class="feature-desc">
+              واجهة تفاعلية للاتصال السريع بضغطة زر، تحويل المكالمات الفوري، والتعرف التلقائي على هوية وبيانات العميل المتصل.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">✔️ دعم بروتوكولات SIP و WebRTC متعددة الخطوط</li>
+            <li class="feature-list-item">✔️ نافذة منبثقة فورية بملف العميل وسجل تعاملاته</li>
+            <li class="feature-list-item">✔️ خاصية الهمس والتدخل المباشر للمشرفين</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">📊</div>
+            <h3 class="feature-title">تحليلات المكالمات ومؤشرات الـ KPIs</h3>
+            <p class="feature-desc">
+              مراقبة حية لحجم الانتظار، متوسط زمن المعالجة (AHT)، نسبة الحل من أول اتصال (FCR)، وتنبيهات بصرية لحظية.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">✔️ خريطة حرارية لمتابعة أوقات الذروة</li>
+            <li class="feature-list-item">✔️ تصدير فوري للتقارير بصيغ PDF و Excel</li>
+            <li class="feature-list-item">✔️ لوحة شرف وتقييمات تفاعلية لأداء الوكلاء</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🎫</div>
+            <h3 class="feature-title">نظام إدارة التذاكر الذكي</h3>
+            <p class="feature-desc">
+              تحويل المكالمات المغلقة إلى تذاكر دعم فني بشكل آلي مع تصنيف الأولويات واحتساب أوقات الاستجابة SLA.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">✔️ أتمتة كاملة لإنشاء وتعيين التذاكر</li>
+            <li class="feature-list-item">✔️ تنبيهات ذكية قبل تجاوز حدود الـ SLA</li>
+            <li class="feature-list-item">✔️ مزامنة متعددة القنوات (مكالمات، واتساب، بريد)</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-box">🎙️</div>
+            <h3 class="feature-title">تسجيل المكالمات ومشغل الموجات الصوتية</h3>
+            <p class="feature-desc">
+              تسجيل صوتي فائق النقاء بقناتين منفصلتين (صوت الوكيل والعميل) مع تشفير كامل بتقنية AES-256 المتوافقة مع معايير الأمان.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">✔️ فصل ستريو متكامل لصوت المتحدثين</li>
+            <li class="feature-list-item">✔️ مشغل تفاعلي للموجات الصوتية مع تسريع الصوت</li>
+            <li class="feature-list-item">✔️ إيقاف تلقائي للتسجيل عند إدخال بيانات حساسة</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs Section -->
+  <section id="specs">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">خفيف وسريع وآمن</div>
+        <h2 class="section-title">مواصفات التشغيل وتكامل قواعد البيانات</h2>
+        <p class="section-subtitle">
+          يعمل AgentPro بكفاءة عالية على الأجهزة المتوسطة دون استهلاك موارد الذاكرة أو المعالج.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 32px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 20px;">⚙️ الأداء ومواصفات الأجهزة</h3>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">استهلاك الذاكرة: <strong>&lt; 120 MB RAM فقط</strong></p>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">استهلاك المعالج: <strong>أقل من 1.5% أثناء التسجيل</strong></p>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">أنظمة التشغيل: <strong>Windows 10/11 (64-bit) و macOS 12+</strong></p>
+          <p style="color: var(--text-muted);">محرك الصوت: <strong>DirectSound / WASAPI / CoreAudio</strong></p>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 32px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 20px;">🔒 الأمان وقواعد البيانات المدعومة</h3>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">التشفير: <strong>AES-256 و TLS 1.3 لنقل البيانات</strong></p>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">قواعد البيانات: <strong>PostgreSQL, MySQL, SQLite, MSSQL</strong></p>
+          <p style="color: var(--text-muted); margin-bottom: 10px;">أنظمة الـ PBX: <strong>Asterisk, FreePBX, 3CX, Cisco, SIP</strong></p>
+          <p style="color: var(--text-muted);">العمل دون اتصال: <strong>تخزين محلي مؤقت ومزامنة تلقائية</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
   <section id="download" style="background: var(--bg-secondary);">
     <div class="container">
       <div class="section-header">
-        <div class="section-badge">LATEST RELEASES</div>
-        <h2 class="section-title">Ready to Elevate Your Call Center?</h2>
+        <div class="section-badge">مركز التحميل السريع</div>
+        <h2 class="section-title">جاهز للبدء مع AgentPro؟</h2>
         <p class="section-subtitle">
-          Download AgentPro for your platform. Setup takes less than 2 minutes with no complex dependencies.
+          حمل النسخة المناسبة لنظامك، التثبيت يستغرق أقل من دقيقتين.
         </p>
       </div>
 
       <div class="downloads-grid">
-        <!-- Windows Card -->
         <div class="download-card highlight">
           <div class="os-icon">🪟</div>
-          <h3>Windows Edition</h3>
+          <h3>نسخة Windows</h3>
           <span class="version-tag">v2.4.2 (68.4 MB)</span>
-          <p style="color: var(--text-muted); font-size: 0.875rem;">Compatible with Windows 10 &amp; 11 (64-bit)</p>
-          
-          <ul class="download-specs-list">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Automatic silent updates support
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Direct WASAPI low-latency audio engine
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Includes SQLite &amp; PostgreSQL drivers
-            </li>
-          </ul>
-
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-primary btn-glow" style="width: 100%;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download for Windows (.exe)
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">متوافقة مع Windows 10 &amp; 11 (64-bit)</p>
+          <a href="./downloads.html" class="btn btn-primary" style="width: 100%;">
+            تحميل نسخة ويندوز (.exe)
           </a>
         </div>
 
-        <!-- macOS Card -->
         <div class="download-card">
           <div class="os-icon">🍎</div>
-          <h3>macOS Edition</h3>
+          <h3>نسخة macOS</h3>
           <span class="version-tag">v2.4.2 (72.1 MB)</span>
-          <p style="color: var(--text-muted); font-size: 0.875rem;">Universal Binary (Apple Silicon M1/M2/M3 &amp; Intel)</p>
-          
-          <ul class="download-specs-list">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Native ARM64 &amp; x86_64 architecture
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              CoreAudio stereo recording optimized
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Apple notarized &amp; signed package
-            </li>
-          </ul>
-
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary btn-glow" style="width: 100%;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download for macOS (.dmg)
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">حزمة شاملة (Apple Silicon M1/M2/M3 &amp; Intel)</p>
+          <a href="./downloads.html" class="btn btn-secondary" style="width: 100%;">
+            تحميل نسخة ماك (.dmg)
           </a>
         </div>
-      </div>
-
-      <div style="text-align: center;">
-        <a href="./downloads.html" style="color: var(--primary-light); font-weight: 600; font-size: 0.9375rem;">
-          View All Releases, Checksums &amp; Database Tools →
-        </a>
       </div>
     </div>
   </section>
@@ -511,51 +721,38 @@
   <section id="faq">
     <div class="container">
       <div class="section-header">
-        <div class="section-badge">GOT QUESTIONS?</div>
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">
-          Clear answers about AgentPro architecture, compatibility, and enterprise deployment.
-        </p>
+        <div class="section-badge">الأسئلة الشائعة</div>
+        <h2 class="section-title">إجابات عن استفساراتك</h2>
       </div>
 
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-question">
-            <span>What PBX and VoIP telephony systems can AgentPro connect with?</span>
-            <span class="faq-icon">▼</span>
+            <span>ما هي أنظمة السنترال والاتصالات المتوافقة مع AgentPro؟</span>
+            <span>▼</span>
           </button>
           <div class="faq-answer">
-            AgentPro integrates seamlessly with Asterisk, FreePBX, 3CX, Cisco Unified Communications Manager, Twilio Voice, Avaya, and standard SIP / WebRTC trunking protocols.
+            يتوافق AgentPro بشكل كامل مع Asterisk, FreePBX, 3CX, Cisco Unified Communications, Twilio Voice، وكافة بروتوكولات الـ SIP / WebRTC القياسية.
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <span>Can we host our database on our own internal servers?</span>
-            <span class="faq-icon">▼</span>
+            <span>هل يمكن حفظ واستضافة قاعدة البيانات على سيرفراتنا الداخلية؟</span>
+            <span>▼</span>
           </button>
           <div class="faq-answer">
-            Yes, 100%. AgentPro supports on-premises and self-hosted databases (PostgreSQL, MySQL, Microsoft SQL Server, and SQLite). Your customer data and call records never leave your infrastructure.
+            نعم 100%، يدعم البرنامج قواعد البيانات المحلية والذاتية (On-Premises) مثل PostgreSQL و MySQL و SQLite و MSSQL، وتبقى كافة تسجيلاتك وبيانات عملائك داخل شبكتك الخاصة.
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question">
-            <span>How does call recording encryption work?</span>
-            <span class="faq-icon">▼</span>
+            <span>كيف يمكنني متابعة الكورسات والشروحات الجديدة؟</span>
+            <span>▼</span>
           </button>
           <div class="faq-answer">
-            Recordings are encrypted on the fly using AES-256 encryption. AgentPro also provides automatic pause/resume triggers during payment or credit card entry to maintain PCI-DSS compliance.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>How do I update AgentPro when a new version is released?</span>
-            <span class="faq-icon">▼</span>
-          </button>
-          <div class="faq-answer">
-            AgentPro includes an in-app auto-update checker that notifies you when a new release is available on GitHub Releases. You can also download the newest installer directly from our Downloads hub.
+            يمكنك زيارة صفحة <a href="./courses.html" style="color: var(--primary-light);">أكاديمية الكورسات</a> للاطلاع على كافة الدروس والفيديوهات المضافة دورياً مع تحميل ملفات التطبيق وقوالب العمل المرفقة مع كل درس.
           </div>
         </div>
       </div>
@@ -566,94 +763,113 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="./index.html">
-            <img src="./assets/images/logo.svg" alt="AgentPro" style="height: 36px;" />
-          </a>
-          <p>
-            The modern, high-performance Call Center Management System designed to boost agent productivity, capture crystal-clear recordings, and deliver actionable analytics.
+        <div>
+          <svg viewBox="0 0 320 80" width="140" height="35">
+            <g transform="translate(10, 10)">
+              <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
+              <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+              <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+              <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
+              <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
+            </g>
+            <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
+          </svg>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 14px; max-width: 320px;">
+            المنظومة الاحترافية المتكاملة لإدارة الكول سنتر ومراكز الاتصال وأكاديمية التدريب العملي.
           </p>
-          <div style="display: flex; gap: 12px; font-size: 0.875rem; color: var(--text-muted);">
-            <span>🛡️ SSL Secured</span>
-            <span>•</span>
-            <span>⚡ Open Telephony</span>
-          </div>
         </div>
 
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4>أقسام الموقع</h4>
           <ul class="footer-links">
-            <li><a href="#features">Core Features</a></li>
-            <li><a href="#specs">System Specs</a></li>
-            <li><a href="./tutorials.html">Video Tutorials</a></li>
-            <li><a href="./downloads.html">Software Downloads</a></li>
+            <li><a href="#features">المميزات الأساسية</a></li>
+            <li><a href="./courses.html">أكاديمية الكورسات</a></li>
+            <li><a href="./downloads.html">مركز البرامج</a></li>
+            <li><a href="#specs">مواصفات التشغيل</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Resources</h4>
+          <h4>المصادر والدعم</h4>
           <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">GitHub Repository</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" target="_blank" rel="noopener">Releases &amp; Changelogs</a></li>
-            <li><a href="./tutorials.html">Setup Guides</a></li>
-            <li><a href="#faq">Support FAQ</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">مستودع GitHub</a></li>
+            <li><a href="./downloads.html">سجل التحديثات</a></li>
+            <li><a href="#faq">الأسئلة الشائعة</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Community &amp; Source</h4>
+          <h4>المجتمع</h4>
           <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐️ Star on GitHub</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">Report an Issue</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/discussions" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐ وضع نجمة على GitHub</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">الإبلاغ عن استفسار</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>
-          &copy; <span id="currentYear">2026</span> <strong>AgentPro</strong>. All rights reserved. Hosted on GitHub Pages.
+          &copy; <span id="currentYear">2026</span> <strong>AgentPro Suite</strong>. جميع الحقوق محفوظة.
         </div>
-        <div style="display: flex; gap: 20px;">
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener" style="color: var(--text-muted);">GitHub Repository</a>
-          <a href="./downloads.html" style="color: var(--text-muted);">Download Center</a>
+        <div>
+          <a href="./courses.html" style="color: var(--primary-light); text-decoration: none;">انتقل إلى منصة الكورسات ←</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Video Modal Player -->
+  <!-- Video Modal -->
   <div id="videoModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="modal-title" id="modalTitle">Video Tutorial</div>
-        <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+        <div id="modalTitle" style="font-weight: 800;">مشغل الفيديو</div>
+        <button class="modal-close" onclick="closeVideoModal()">&times;</button>
       </div>
-      <div class="modal-body">
-        <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <!-- Live Demo Modal -->
-  <div id="demoModal" class="modal">
-    <div class="modal-content" style="max-width: 950px;">
-      <div class="modal-header">
-        <div class="modal-title">AgentPro Live Workstation Demo Preview</div>
-        <button class="modal-close" id="demoClose" aria-label="Close modal">&times;</button>
-      </div>
-      <div style="padding: 20px; background: #0A0F1D; text-align: center;">
-        <img src="./assets/images/dashboard-mockup.svg" alt="AgentPro Workstation Demo" style="border-radius: 12px; width: 100%;" />
-        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-          <a href="#download" class="btn btn-primary" onclick="closeDemoModal()">Download Full Version</a>
-          <a href="./tutorials.html" class="btn btn-secondary" onclick="closeDemoModal()">Watch Video Walkthrough</a>
-        </div>
+      <div style="background: #000; aspect-ratio: 16/9;">
+        <iframe id="modalIframe" style="width: 100%; height: 100%; border: none;" src="" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="./assets/js/data.js"></script>
-  <script src="./assets/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-question');
+      if (q) {
+        q.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        });
+      }
+    });
+
+    window.openVideoModal = (url, title) => {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('modalIframe');
+      const titleEl = document.getElementById('modalTitle');
+      if (titleEl) titleEl.textContent = title;
+      if (iframe) iframe.src = url;
+      if (modal) modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeVideoModal = () => {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('modalIframe');
+      if (modal) modal.classList.remove('active');
+      if (iframe) iframe.src = '';
+      document.body.style.overflow = 'auto';
+    };
+
+    document.getElementById('videoModal')?.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('videoModal')) closeVideoModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeVideoModal();
+    });
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
