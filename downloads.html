@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download AgentPro | Official Releases &amp; Utilities</title>
+  <meta name="description" content="Download official release installers for AgentPro Call Center Management Suite. Windows 64-bit and macOS Universal binaries available." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Download AgentPro Software &amp; Releases" />
+  <meta property="og:description" content="Download official installers for Windows and macOS. Clean setup, no bloatware, and instant launch." />
+  <meta property="og:image" content="./assets/images/dashboard-mockup.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+
+  <style>
+    .downloads-hero {
+      padding-top: calc(var(--nav-height) + 50px);
+      padding-bottom: 40px;
+      text-align: center;
+    }
+    .specs-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .specs-comparison-table th, .specs-comparison-table td {
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.9375rem;
+    }
+    .specs-comparison-table th {
+      background: #0A0F1D;
+      color: var(--primary-light);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8125rem;
+      letter-spacing: 1px;
+    }
+    .specs-comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .changelog-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .changelog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .changelog-tag {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Effect -->
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-logo">
+        <img src="./assets/images/logo.svg" alt="AgentPro Logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="./index.html#features" class="nav-link">Features</a></li>
+          <li><a href="./index.html#specs" class="nav-link">System Specs</a></li>
+          <li><a href="./tutorials.html" class="nav-link">Tutorials &amp; Videos</a></li>
+          <li><a href="./downloads.html" class="nav-link active">Downloads</a></li>
+          <li><a href="./index.html#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
+          GitHub Repo
+        </a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Downloads Hero -->
+  <section class="downloads-hero">
+    <div class="container">
+      <div class="section-badge">SOFTWARE RELEASES</div>
+      <h1 class="section-title">Download <span class="gradient-text">AgentPro Suite</span></h1>
+      <p class="section-subtitle">
+        Get the latest stable production build for Windows, macOS, or download the multi-database connector utility.
+      </p>
+    </div>
+  </section>
+
+  <!-- Downloads Cards Grid (Dynamically Populated from data.js) -->
+  <section style="padding-top: 0; padding-bottom: 60px;">
+    <div class="container">
+      <div id="downloadsGrid" class="downloads-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 100%;">
+        <!-- Rendered dynamically from assets/js/data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- System Requirements Section -->
+  <section style="background: var(--bg-secondary); padding: 80px 0;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">COMPATIBILITY &amp; SPECS</div>
+        <h2 class="section-title">Hardware &amp; System Requirements</h2>
+        <p class="section-subtitle">
+          AgentPro is engineered to run seamlessly even on budget workstation hardware without compromising call audio quality.
+        </p>
+      </div>
+
+      <table class="specs-comparison-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Minimum Requirement</th>
+            <th>Recommended Specification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Operating System</strong></td>
+            <td>Windows 10 (64-bit) / macOS 12 Monterey</td>
+            <td>Windows 11 (64-bit) / macOS 14 Sonoma</td>
+          </tr>
+          <tr>
+            <td><strong>Processor (CPU)</strong></td>
+            <td>Dual-Core 2.0 GHz Intel / AMD / Apple M1</td>
+            <td>Quad-Core 2.5 GHz+ / Apple Silicon (M1/M2/M3/M4)</td>
+          </tr>
+          <tr>
+            <td><strong>Memory (RAM)</strong></td>
+            <td>4 GB System RAM</td>
+            <td>8 GB System RAM or higher</td>
+          </tr>
+          <tr>
+            <td><strong>Disk Storage</strong></td>
+            <td>500 MB free disk space for application</td>
+            <td>SSD storage for high-volume audio caching</td>
+          </tr>
+          <tr>
+            <td><strong>Audio / Headset</strong></td>
+            <td>Standard 3.5mm or USB Audio Headset</td>
+            <td>Noise-cancelling USB / Bluetooth VoIP Headset</td>
+          </tr>
+          <tr>
+            <td><strong>Network</strong></td>
+            <td>1 Mbps broadband with &lt; 100ms ping to PBX</td>
+            <td>Ethernet connection with &lt; 20ms jitter to SIP Server</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Version Changelog Section -->
+  <section style="padding: 80px 0;">
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header">
+        <div class="section-badge">RELEASE HISTORY</div>
+        <h2 class="section-title">Changelog &amp; Updates</h2>
+      </div>
+
+      <!-- Release v2.4.2 -->
+      <div class="changelog-item">
+        <div class="changelog-header">
+          <div>
+            <h3 style="font-size: 1.25rem;">Version 2.4.2 (Latest Production)</h3>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">Released on August 15, 2026</span>
+          </div>
+          <span class="changelog-tag">Active Release</span>
+        </div>
+        <ul style="list-style: square; padding-left: 20px; color: var(--text-muted); font-size: 0.9375rem; line-height: 1.8;">
+          <li>Added real-time stereo waveform audio visualizer for active recordings.</li>
+          <li>Optimized PostgreSQL database connection pooling with SSL certificate pinning.</li>
+          <li>Resolved wrap-up timer auto-submission in multi-tier queue transfers.</li>
+          <li>Reduced idle memory footprint by 22% on Windows 11.</li>
+        </ul>
+      </div>
+
+      <!-- Release v2.4.0 -->
+      <div class="changelog-item">
+        <div class="changelog-header">
+          <div>
+            <h3 style="font-size: 1.25rem;">Version 2.4.0</h3>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">Released on July 10, 2026</span>
+          </div>
+          <span style="color: var(--text-dim); font-size: 0.8125rem; font-weight: 600;">Previous Build</span>
+        </div>
+        <ul style="list-style: square; padding-left: 20px; color: var(--text-muted); font-size: 0.9375rem; line-height: 1.8;">
+          <li>Introduced supervisor Whisper and Barge-In audio modes.</li>
+          <li>Integrated automated support ticket tagging with custom SLA escalation rules.</li>
+          <li>Added Apple Silicon universal binary support for macOS.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="./index.html">
+            <img src="./assets/images/logo.svg" alt="AgentPro" style="height: 36px;" />
+          </a>
+          <p>
+            The modern, high-performance Call Center Management System designed to boost agent productivity and deliver actionable analytics.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./index.html#features">Features</a></li>
+            <li><a href="./tutorials.html">Video Tutorials</a></li>
+            <li><a href="./downloads.html">Software Downloads</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" target="_blank" rel="noopener">Releases &amp; Changelogs</a></li>
+            <li><a href="./index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Community</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐️ Star on GitHub</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">Submit Feedback</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span id="currentYear">2026</span> <strong>AgentPro</strong>. All rights reserved. Hosted on GitHub Pages.
+        </div>
+        <div>
+          <a href="./index.html" style="color: var(--text-muted);">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./assets/js/data.js"></script>
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

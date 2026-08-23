@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentPro | Next-Gen Call Center Management System</title>
+  <meta name="description" content="AgentPro is a modern, lightweight, and high-performance Call Center Management System with real-time KPI analytics, agent dashboard, call recording, and support ticketing." />
+  <meta name="keywords" content="Call Center, Agent Dashboard, Call Recording, KPI Analytics, Telephony, VoIP, PBX, Support Tickets, AgentPro" />
+
+  <!-- Open Graph Meta Tags for GitHub Pages / Social Sharing -->
+  <meta property="og:title" content="AgentPro - Enterprise Call Center Management Suite" />
+  <meta property="og:description" content="Streamline agent workstations, monitor real-time queue KPIs, record high-fidelity calls, and automate support ticketing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/images/dashboard-mockup.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
+
+  <!-- Stylesheets (Relative Paths for GitHub Pages Compatibility) -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+</head>
+<body>
+
+  <!-- Ambient Glow Effect -->
+  <div class="ambient-glow"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-logo">
+        <img src="./assets/images/logo.svg" alt="AgentPro Logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#specs" class="nav-link">System Specs</a></li>
+          <li><a href="./tutorials.html" class="nav-link">Tutorials &amp; Videos</a></li>
+          <li><a href="./downloads.html" class="nav-link">Downloads</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openDemoModal()">Live Demo</button>
+        <a href="#download" class="btn btn-primary btn-sm btn-glow">Download v2.4</a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>AgentPro v2.4.2 is Live • Ultra-low Latency &amp; AI Telephony</span>
+      </div>
+
+      <h1 class="hero-title">
+        The Ultimate <span class="highlight">Call Center Management</span> &amp; Telephony Suite
+      </h1>
+
+      <p class="hero-subtitle">
+        Empower your agents with intelligent dashboards, instant call recording, live queue analytics, and automated support ticketing — built on a lightweight, secure architecture.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#download" class="btn btn-primary btn-lg btn-glow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download AgentPro
+        </a>
+        <button class="btn btn-secondary btn-lg" onclick="openDemoModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          View Interactive Demo
+        </button>
+      </div>
+
+      <!-- Hero Dashboard Preview Frame -->
+      <div class="hero-preview">
+        <!-- Floating KPI Card Left -->
+        <div class="hero-floating-card left">
+          <div class="floating-icon" style="background: rgba(16, 185, 129, 0.2); color: #10B981;">⚡</div>
+          <div class="floating-text">
+            <div class="label">Avg Handle Time</div>
+            <div class="value">2m 45s (-18%)</div>
+          </div>
+        </div>
+
+        <!-- Floating KPI Card Right -->
+        <div class="hero-floating-card right">
+          <div class="floating-icon" style="background: rgba(0, 210, 255, 0.2); color: #00D2FF;">★</div>
+          <div class="floating-text">
+            <div class="label">Customer CSAT</div>
+            <div class="value">4.9 / 5.0 (99.4%)</div>
+          </div>
+        </div>
+
+        <img src="./assets/images/dashboard-mockup.svg" alt="AgentPro Modern Call Center Dashboard" class="hero-preview-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Stats Strip -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">1.4M+</div>
+          <div class="stat-label">Calls Processed Daily</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">99.99%</div>
+          <div class="stat-label">Telephony Uptime SLA</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&lt; 3 Mins</div>
+          <div class="stat-label">Fast System Deployment</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&lt; 15ms</div>
+          <div class="stat-label">Ultra-Low Audio Latency</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features Section -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">POWERFUL CAPABILITIES</div>
+        <h2 class="section-title">Engineered for <span class="gradient-text">High-Efficiency</span> Operations</h2>
+        <p class="section-subtitle">
+          Everything your supervisors and call agents need to deliver 5-star customer experiences without technical friction.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: Agent Dashboard -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Agent Unified Workstation</h3>
+            <p class="feature-desc">
+              An intuitive single-pane cockpit for agents: one-click dialing, instant warm/blind call transfers, customer history lookup, and customizable wrap-up timers.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Multi-line SIP &amp; WebRTC Telephony Support
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Automated Caller ID &amp; CRM Profile Popup
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Supervisor Whisper &amp; Barge-In capabilities
+            </li>
+          </ul>
+        </div>
+
+        <!-- Feature 2: Call Analytics & KPIs -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Call Analytics &amp; Live KPIs</h3>
+            <p class="feature-desc">
+              Real-time monitoring of queue volume, Average Handle Time (AHT), First Call Resolution (FCR), and agent occupancy with customizable visual alert triggers.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Real-time queue traffic &amp; peak load heatmaps
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Automated executive PDF/Excel report exports
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Agent leaderboard &amp; gamified scorecards
+            </li>
+          </ul>
+        </div>
+
+        <!-- Feature 3: Support Ticketing System -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Smart Support Ticketing</h3>
+            <p class="feature-desc">
+              Automatic call-to-ticket conversion with priority tags, customer sentiment detection, SLA escalation timers, and department assignment.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Automated ticket creation upon call termination
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              SLA breach warnings &amp; tier escalation
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Omni-channel ticket sync (Voice, Email, WhatsApp)
+            </li>
+          </ul>
+        </div>
+
+        <!-- Feature 4: Call Recording Management -->
+        <div class="feature-card">
+          <div>
+            <div class="feature-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Call Recording &amp; Audio Player</h3>
+            <p class="feature-desc">
+              Crystal-clear dual-channel audio recording with interactive waveform scrubbing, bookmarking, and compliant AES-256 encrypted storage.
+            </p>
+          </div>
+          <ul class="feature-list">
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Stereo Agent &amp; Customer channel separation
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Interactive waveform audio player &amp; speed control
+            </li>
+            <li class="feature-list-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              PCI-DSS compliant automatic pause for sensitive data
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Specs & Architecture -->
+  <section id="specs" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">LIGHTWEIGHT &amp; SECURE</div>
+        <h2 class="section-title">Built for Speed, Reliability &amp; Scale</h2>
+        <p class="section-subtitle">
+          AgentPro runs natively on modern workstations with minimal CPU/RAM footprint and enterprise-grade database synchronizations.
+        </p>
+      </div>
+
+      <div class="specs-container">
+        <!-- Specs Column 1 -->
+        <div class="spec-box">
+          <div class="spec-header">
+            <div class="floating-icon" style="background: rgba(0, 119, 254, 0.15); color: var(--primary-light);">⚙️</div>
+            <h3>Hardware &amp; System Performance</h3>
+          </div>
+          <table class="spec-table">
+            <tbody>
+              <tr>
+                <td class="label">Memory Footprint</td>
+                <td class="val">&lt; 120 MB RAM in idle / 250 MB peak</td>
+              </tr>
+              <tr>
+                <td class="label">CPU Usage</td>
+                <td class="val">&lt; 1.5% during active stereo recording</td>
+              </tr>
+              <tr>
+                <td class="label">Startup Time</td>
+                <td class="val">Instant launch (&lt; 1.2 seconds)</td>
+              </tr>
+              <tr>
+                <td class="label">Operating Systems</td>
+                <td class="val">Windows 10/11 (64-bit), macOS 12+</td>
+              </tr>
+              <tr>
+                <td class="label">Audio Driver</td>
+                <td class="val">DirectSound / WASAPI / CoreAudio</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Specs Column 2 -->
+        <div class="spec-box">
+          <div class="spec-header">
+            <div class="floating-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green);">🔒</div>
+            <h3>Database &amp; Security Integrations</h3>
+          </div>
+          <table class="spec-table">
+            <tbody>
+              <tr>
+                <td class="label">Encryption</td>
+                <td class="val">AES-256 at rest, TLS 1.3 in transit</td>
+              </tr>
+              <tr>
+                <td class="label">Supported DBs</td>
+                <td class="val">PostgreSQL, MySQL, SQLite, MSSQL</td>
+              </tr>
+              <tr>
+                <td class="label">PBX Connectors</td>
+                <td class="val">Asterisk, FreePBX, Cisco, Twilio, SIP</td>
+              </tr>
+              <tr>
+                <td class="label">Offline Mode</td>
+                <td class="val">Local buffer with auto cloud sync</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="db-badges">
+            <span class="db-badge">🐘 PostgreSQL</span>
+            <span class="db-badge">🐬 MySQL</span>
+            <span class="db-badge">🪶 SQLite</span>
+            <span class="db-badge">🏢 MS SQL</span>
+            <span class="db-badge">⭐ Asterisk PBX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Tutorials Teaser Section -->
+  <section id="tutorials-preview">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">VIDEO GUIDES</div>
+        <h2 class="section-title">Learn How to Get the Most from <span class="gradient-text">AgentPro</span></h2>
+        <p class="section-subtitle">
+          Watch short step-by-step videos on system setup, queue configuration, and supervisor analytics.
+        </p>
+      </div>
+
+      <div class="videos-grid">
+        <!-- Video 1 -->
+        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'AgentPro Quick Setup & First Launch')">
+          <div class="video-thumbnail">
+            <img src="./assets/images/dashboard-mockup.svg" alt="Setup Guide" />
+            <div class="play-badge">▶</div>
+            <span class="video-duration">03:45</span>
+          </div>
+          <div class="video-content">
+            <span class="video-category">Getting Started</span>
+            <h3 class="video-title">AgentPro Quick Setup &amp; First Launch</h3>
+            <p class="video-desc">Configure your agent profile and connect your SIP/VoIP headset in under 3 minutes.</p>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Real-time Call Analytics & Queue Reports')">
+          <div class="video-thumbnail">
+            <img src="./assets/images/dashboard-mockup.svg" alt="Analytics Guide" />
+            <div class="play-badge">▶</div>
+            <span class="video-duration">07:20</span>
+          </div>
+          <div class="video-content">
+            <span class="video-category">KPIs &amp; Analytics</span>
+            <h3 class="video-title">Real-time Call Analytics &amp; Queue Reports</h3>
+            <p class="video-desc">Master AHT, FCR, and generate live executive dashboards for your team.</p>
+          </div>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="video-card" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Managing Customer Support Tickets')">
+          <div class="video-thumbnail">
+            <img src="./assets/images/dashboard-mockup.svg" alt="Ticketing Guide" />
+            <div class="play-badge">▶</div>
+            <span class="video-duration">05:10</span>
+          </div>
+          <div class="video-content">
+            <span class="video-category">Ticketing</span>
+            <h3 class="video-title">Managing Customer Support Tickets</h3>
+            <p class="video-desc">Automate call tagging, customer recall, and automatic ticket assignment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="./tutorials.html" class="btn btn-secondary btn-lg">
+          Browse All Video Tutorials &amp; Guides →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download & Releases Section -->
+  <section id="download" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">LATEST RELEASES</div>
+        <h2 class="section-title">Ready to Elevate Your Call Center?</h2>
+        <p class="section-subtitle">
+          Download AgentPro for your platform. Setup takes less than 2 minutes with no complex dependencies.
+        </p>
+      </div>
+
+      <div class="downloads-grid">
+        <!-- Windows Card -->
+        <div class="download-card highlight">
+          <div class="os-icon">🪟</div>
+          <h3>Windows Edition</h3>
+          <span class="version-tag">v2.4.2 (68.4 MB)</span>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Compatible with Windows 10 &amp; 11 (64-bit)</p>
+          
+          <ul class="download-specs-list">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Automatic silent updates support
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Direct WASAPI low-latency audio engine
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Includes SQLite &amp; PostgreSQL drivers
+            </li>
+          </ul>
+
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-primary btn-glow" style="width: 100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download for Windows (.exe)
+          </a>
+        </div>
+
+        <!-- macOS Card -->
+        <div class="download-card">
+          <div class="os-icon">🍎</div>
+          <h3>macOS Edition</h3>
+          <span class="version-tag">v2.4.2 (72.1 MB)</span>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Universal Binary (Apple Silicon M1/M2/M3 &amp; Intel)</p>
+          
+          <ul class="download-specs-list">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Native ARM64 &amp; x86_64 architecture
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              CoreAudio stereo recording optimized
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Apple notarized &amp; signed package
+            </li>
+          </ul>
+
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary btn-glow" style="width: 100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download for macOS (.dmg)
+          </a>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="./downloads.html" style="color: var(--primary-light); font-weight: 600; font-size: 0.9375rem;">
+          View All Releases, Checksums &amp; Database Tools →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">GOT QUESTIONS?</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">
+          Clear answers about AgentPro architecture, compatibility, and enterprise deployment.
+        </p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What PBX and VoIP telephony systems can AgentPro connect with?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            AgentPro integrates seamlessly with Asterisk, FreePBX, 3CX, Cisco Unified Communications Manager, Twilio Voice, Avaya, and standard SIP / WebRTC trunking protocols.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can we host our database on our own internal servers?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            Yes, 100%. AgentPro supports on-premises and self-hosted databases (PostgreSQL, MySQL, Microsoft SQL Server, and SQLite). Your customer data and call records never leave your infrastructure.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does call recording encryption work?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            Recordings are encrypted on the fly using AES-256 encryption. AgentPro also provides automatic pause/resume triggers during payment or credit card entry to maintain PCI-DSS compliance.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do I update AgentPro when a new version is released?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            AgentPro includes an in-app auto-update checker that notifies you when a new release is available on GitHub Releases. You can also download the newest installer directly from our Downloads hub.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="./index.html">
+            <img src="./assets/images/logo.svg" alt="AgentPro" style="height: 36px;" />
+          </a>
+          <p>
+            The modern, high-performance Call Center Management System designed to boost agent productivity, capture crystal-clear recordings, and deliver actionable analytics.
+          </p>
+          <div style="display: flex; gap: 12px; font-size: 0.875rem; color: var(--text-muted);">
+            <span>🛡️ SSL Secured</span>
+            <span>•</span>
+            <span>⚡ Open Telephony</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#features">Core Features</a></li>
+            <li><a href="#specs">System Specs</a></li>
+            <li><a href="./tutorials.html">Video Tutorials</a></li>
+            <li><a href="./downloads.html">Software Downloads</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" target="_blank" rel="noopener">Releases &amp; Changelogs</a></li>
+            <li><a href="./tutorials.html">Setup Guides</a></li>
+            <li><a href="#faq">Support FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Community &amp; Source</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐️ Star on GitHub</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">Report an Issue</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <span id="currentYear">2026</span> <strong>AgentPro</strong>. All rights reserved. Hosted on GitHub Pages.
+        </div>
+        <div style="display: flex; gap: 20px;">
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener" style="color: var(--text-muted);">GitHub Repository</a>
+          <a href="./downloads.html" style="color: var(--text-muted);">Download Center</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Video Modal Player -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Video Tutorial</div>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Demo Modal -->
+  <div id="demoModal" class="modal">
+    <div class="modal-content" style="max-width: 950px;">
+      <div class="modal-header">
+        <div class="modal-title">AgentPro Live Workstation Demo Preview</div>
+        <button class="modal-close" id="demoClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div style="padding: 20px; background: #0A0F1D; text-align: center;">
+        <img src="./assets/images/dashboard-mockup.svg" alt="AgentPro Workstation Demo" style="border-radius: 12px; width: 100%;" />
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+          <a href="#download" class="btn btn-primary" onclick="closeDemoModal()">Download Full Version</a>
+          <a href="./tutorials.html" class="btn btn-secondary" onclick="closeDemoModal()">Watch Video Walkthrough</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/data.js"></script>
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>
