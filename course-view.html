@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,42 +44,49 @@
   <style>
     body {
       font-family: 'Readex Pro', 'Cairo', sans-serif;
-      background-color: #070A12;
-      color: #FFFFFF;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    .glass-card {
-      background: rgba(14, 23, 46, 0.8);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(0, 245, 212, 0.14);
-    }
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card { background: rgba(14, 23, 46, 0.85); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
+    
+    html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
+    html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
+    html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
+
     .lesson-item.active {
-      background: rgba(0, 245, 212, 0.12);
-      border-color: rgba(0, 245, 212, 0.4);
+      background: rgba(0, 245, 212, 0.12) !important;
+      border-color: rgba(0, 245, 212, 0.4) !important;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#070A12]">
+<body class="min-h-screen flex flex-col">
 
   <!-- Top Classroom Bar -->
-  <header class="h-16 bg-[#090E1E] border-b border-white/10 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
+  <header class="h-16 glass-card px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
     <div class="flex items-center gap-4">
-      <a href="./courses.html" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-2">
+      <a href="./courses.html" class="text-xs font-bold hover:text-samt-cyan flex items-center gap-2">
         <i class="fa-solid fa-arrow-right"></i>
         <span>العودة لقائمة الكورسات</span>
       </a>
-      <span class="text-slate-600">|</span>
-      <h1 id="topCourseTitle" class="text-xs sm:text-sm font-bold text-white truncate max-w-xs sm:max-w-md font-cairo">جاري تحميل الكورس...</h1>
+      <span class="text-slate-500">|</span>
+      <h1 id="topCourseTitle" class="text-xs sm:text-sm font-bold truncate max-w-xs sm:max-w-md font-cairo">جاري تحميل الكورس...</h1>
     </div>
 
-    <!-- Live Overall Progress -->
-    <div class="flex items-center gap-3">
-      <div class="text-right hidden sm:block">
-        <div class="text-[10px] text-slate-400 font-bold">نسبة إنجازك</div>
-        <div id="progressPercent" class="text-xs font-black text-samt-cyan font-mono">0%</div>
+    <!-- Live Overall Progress & Theme Toggle -->
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="text-right hidden sm:block">
+          <div class="text-[10px] text-slate-400 font-bold">نسبة إنجازك</div>
+          <div id="progressPercent" class="text-xs font-black text-samt-cyan font-mono">0%</div>
+        </div>
+        <div class="w-24 sm:w-32 h-2 bg-black/40 rounded-full overflow-hidden border border-white/10">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full transition-all" style="width: 0%"></div>
+        </div>
       </div>
-      <div class="w-24 sm:w-32 h-2 bg-black/50 rounded-full overflow-hidden border border-white/10">
-        <div id="progressBar" class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full transition-all" style="width: 0%"></div>
-      </div>
+      <button id="themeToggle" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-xs text-samt-gold">
+        <i id="themeIcon" class="fa-solid fa-sun"></i>
+      </button>
     </div>
   </header>
 
@@ -88,18 +95,15 @@
     
     <!-- Main Video Player & Lesson Details (Center/Left) -->
     <div class="flex-grow flex flex-col space-y-4">
-      
-      <!-- Video Player Frame -->
       <div class="relative aspect-video rounded-2xl overflow-hidden glass-card shadow-2xl bg-black border border-white/15">
         <iframe id="mainPlayer" class="w-full h-full border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
 
-      <!-- Lesson Navigation & Controls -->
       <div class="glass-card rounded-2xl p-6 text-right space-y-4">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <span id="lessonCategory" class="text-xs font-extrabold text-samt-cyan uppercase">الدرس 1</span>
-            <h2 id="lessonTitle" class="text-xl font-bold text-white mt-1 font-cairo">عنوان الدرس</h2>
+            <h2 id="lessonTitle" class="text-xl font-bold mt-1 font-cairo">عنوان الدرس</h2>
           </div>
           <button id="toggleCompleteBtn" class="px-5 py-2.5 rounded-xl border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold transition-all flex items-center gap-2">
             <i class="fa-solid fa-check"></i>
@@ -107,11 +111,8 @@
           </button>
         </div>
 
-        <p id="lessonDesc" class="text-slate-300 text-sm leading-relaxed">
-          وصف الدرس والملاحظات العملية...
-        </p>
+        <p id="lessonDesc" class="text-slate-300 text-sm leading-relaxed">وصف الدرس والملاحظات العملية...</p>
 
-        <!-- Attachments & Resources Area -->
         <div id="attachmentsBox" class="pt-4 border-t border-white/10 hidden">
           <div class="text-xs font-bold text-samt-gold mb-2.5 flex items-center gap-2">
             <i class="fa-solid fa-paperclip"></i>
@@ -120,21 +121,16 @@
           <div id="attachmentsList" class="flex flex-wrap gap-2"></div>
         </div>
       </div>
-
     </div>
 
     <!-- Sidebar: Course Syllabus / Lessons List (Right) -->
     <div class="w-full lg:w-96 flex-shrink-0">
       <div class="glass-card rounded-2xl p-5 sticky top-24 space-y-4 text-right">
-        
         <div class="flex items-center justify-between border-b border-white/10 pb-3">
-          <h3 class="text-sm font-bold text-white font-cairo">محتوى الدورة والدروس</h3>
+          <h3 class="text-sm font-bold font-cairo">محتوى الدورة والدروس</h3>
           <span id="lessonsCount" class="text-xs text-slate-400 font-mono font-bold">3 دروس</span>
         </div>
-
-        <!-- Lessons Items List Container -->
         <div id="lessonsList" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1"></div>
-
       </div>
     </div>
 
@@ -143,56 +139,46 @@
   <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
 
-  <!-- Interactive Classroom Engine -->
   <script>
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        htmlEl.classList.remove('dark');
+        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+      } else {
+        htmlEl.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+      }
+      localStorage.setItem('samt_theme', theme);
+    }
+    applyTheme(localStorage.getItem('samt_theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Get Course ID from URL (e.g. ?id=course-01)
       const urlParams = new URLSearchParams(window.location.search);
       const courseId = urlParams.get('id') || 'course-01';
 
-      // 2. Find Course Data
-      const courses = window.AgentProData?.courses || [];
+      const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
       const course = courses.find(c => c.id === courseId) || courses[0];
 
       if (!course) {
-        alert('لم يتم العثور على الكورس المطلوب');
         window.location.href = './courses.html';
         return;
       }
 
-      // 3. Populate default lessons if not present in schema
       const lessons = course.lessons || [
-        {
-          id: 'l1',
-          title: course.title + ' (الجزء الأول)',
-          duration: '04:15',
-          videoUrl: course.videoUrl,
-          desc: course.description
-        },
-        {
-          id: 'l2',
-          title: 'التطبيق العملي والإعدادات المتقدمة',
-          duration: '05:30',
-          videoUrl: course.videoUrl,
-          desc: 'شرح وتطبيق عملي خطوة بخطوة داخل بيئة النظام.'
-        },
-        {
-          id: 'l3',
-          title: 'حل المشكلات وأفضل الممارسات',
-          duration: '03:45',
-          videoUrl: course.videoUrl,
-          desc: 'نصائح لزيادة كفاءة وسرعة الوكيل وتفادي الأخطاء الشائعة.'
-        }
+        { id: 'l1', title: course.title + ' (الجزء الأول)', duration: '04:15', videoUrl: course.videoUrl, desc: course.description },
+        { id: 'l2', title: 'التطبيق العملي والإعدادات المتقدمة', duration: '05:30', videoUrl: course.videoUrl, desc: 'تطبيق عملي خطوة بخطوة.' },
+        { id: 'l3', title: 'حل المشكلات وأفضل الممارسات', duration: '03:45', videoUrl: course.videoUrl, desc: 'نصائح لزيادة الكفاءة والإنتاجية.' }
       ];
 
       let currentLessonIndex = 0;
-      let completedLessons = [];
+      let completedLessons = JSON.parse(localStorage.getItem(`samt_completed_${course.id}`) || '[]');
 
-      try {
-        completedLessons = JSON.parse(localStorage.getItem(`samt_completed_${course.id}`) || '[]');
-      } catch(e) { completedLessons = []; }
-
-      // Elements
       const topTitle = document.getElementById('topCourseTitle');
       const player = document.getElementById('mainPlayer');
       const lessonTitle = document.getElementById('lessonTitle');
@@ -213,9 +199,7 @@
         const percent = Math.round((completedLessons.length / lessons.length) * 100);
         progressPercent.textContent = `${percent}%`;
         progressBar.style.width = `${percent}%`;
-        try {
-          localStorage.setItem(`samt_completed_${course.id}`, JSON.stringify(completedLessons));
-        } catch(e) {}
+        localStorage.setItem(`samt_completed_${course.id}`, JSON.stringify(completedLessons));
       }
 
       function renderLessons() {
@@ -229,11 +213,11 @@
                   ${isDone ? '<i class="fa-solid fa-check"></i>' : (idx + 1)}
                 </span>
                 <div>
-                  <h4 class="text-xs sm:text-sm font-bold text-white font-cairo">${l.title}</h4>
+                  <h4 class="text-xs sm:text-sm font-bold font-cairo">${l.title}</h4>
                   <span class="text-[10px] text-slate-400 font-mono">${l.duration}</span>
                 </div>
               </div>
-              <i class="fa-solid ${isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-500 text-xs'}"></i>
+              <i class="fa-solid ${isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-400 text-xs'}"></i>
             </div>
           `;
         }).join('');
@@ -248,7 +232,6 @@
         lessonDesc.textContent = currentLesson.desc || course.description;
         lessonCategory.textContent = `الدرس ${index + 1} من ${lessons.length}`;
 
-        // Toggle complete button status
         const isDone = completedLessons.includes(currentLesson.id);
         if (isDone) {
           toggleCompleteBtn.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم إكمال هذا الدرس (اضغط للإلغاء)</span>';
@@ -258,11 +241,10 @@
           toggleCompleteBtn.classList.remove('bg-emerald-500/20');
         }
 
-        // Attachments
         if (course.attachments && course.attachments.length > 0) {
           attachmentsBox.classList.remove('hidden');
           attachmentsList.innerHTML = course.attachments.map(a => `
-            <a href="${a.url}" class="px-3 py-1.5 rounded-lg bg-samt-card text-xs font-bold text-slate-300 hover:text-samt-cyan border border-white/10 flex items-center gap-2 transition-all">
+            <a href="${a.url}" class="px-3 py-1.5 rounded-lg glass-card text-xs font-bold hover:text-samt-cyan border border-white/10 flex items-center gap-2 transition-all">
               <i class="fa-solid fa-download text-samt-cyan text-xs"></i>
               <span>${a.name}</span>
             </a>
@@ -285,7 +267,6 @@
         selectLesson(currentLessonIndex);
       });
 
-      // Initial load first lesson
       selectLesson(0);
     });
   </script>

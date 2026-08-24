@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>أكاديمية سمت SAMT | منصة الكورسات والدروس التفاعلية</title>
-  <meta name="description" content="أكاديمية سمت SAMT - دورات تدريبية متقدمة في إدارة مراكز الاتصال، تحليلات البيانات، والإنتاجية." />
+  <meta name="description" content="أكاديمية سمت SAMT - دورات تدريبية متقدمة في البرمجيات، إدارة المشروعات، وتحليلات البيانات." />
 
   <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,21 +45,23 @@
   <style>
     body {
       font-family: 'Readex Pro', 'Cairo', sans-serif;
-      background-color: #070A12;
-      color: #FFFFFF;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    .glass-card {
-      background: rgba(14, 23, 46, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(0, 245, 212, 0.14);
-    }
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card { background: rgba(14, 23, 46, 0.75); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
+    
+    html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
+    html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
+    html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
+
     .glass-card:hover {
       border-color: rgba(0, 245, 212, 0.4);
       box-shadow: 0 10px 30px rgba(0, 245, 212, 0.12);
     }
     .btn-samt-glow {
       background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
-      color: #070A12;
+      color: #070A12 !important;
       font-weight: 800;
       box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
     }
@@ -68,19 +70,24 @@
 <body class="min-h-screen flex flex-col justify-between">
 
   <!-- Floating Glass Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-[#070A12]/90 backdrop-blur-md border-b border-white/10">
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
       <a href="./index.html" class="flex items-center gap-3">
-        <span class="text-2xl font-black text-white font-cairo">سَـمْـت</span>
+        <span class="text-2xl font-black font-cairo">سَـمْـت</span>
         <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
       </a>
       <nav class="hidden md:flex items-center gap-8">
-        <a href="./index.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan">الرئيسية</a>
+        <a href="./index.html" class="text-sm font-semibold hover:text-samt-cyan">الرئيسية</a>
         <a href="./courses.html" class="text-sm font-bold text-samt-cyan">أكاديمية الكورسات</a>
-        <a href="./downloads.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan">مركز التحميل</a>
+        <a href="./downloads.html" class="text-sm font-semibold hover:text-samt-cyan">مركز التحميل</a>
         <a href="./admin.html" class="text-sm font-semibold text-samt-gold hover:text-white"><i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن</a>
       </nav>
-      <a href="./downloads.html" class="btn-samt-glow px-5 py-2 rounded-full text-xs font-bold">تحميل المنظومة</a>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm text-samt-gold">
+          <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
+        <a href="./downloads.html" class="btn-samt-glow px-5 py-2 rounded-full text-xs font-bold">تحميل البرامج</a>
+      </div>
     </div>
   </header>
 
@@ -88,10 +95,10 @@
   <main class="pt-32 pb-20 max-w-7xl mx-auto px-4 w-full">
     
     <div class="text-center max-w-3xl mx-auto mb-12">
-      <span class="text-xs font-bold text-samt-cyan px-3 py-1 rounded-full bg-samt-cyan/10 border border-samt-cyan/30">
+      <span class="text-xs font-bold text-samt-cyan px-3 py-1 rounded-full glass-card border border-samt-cyan/30">
         🎓 منصة التعليم التفاعلية
       </span>
-      <h1 class="text-3xl sm:text-5xl font-black text-white mt-4 mb-4 font-cairo">
+      <h1 class="text-3xl sm:text-5xl font-black mt-4 mb-4 font-cairo">
         دورات <span class="text-samt-cyan">سمت SAMT</span> التدريبية
       </h1>
       <p class="text-slate-400 text-sm sm:text-base">
@@ -101,26 +108,26 @@
       <!-- Search Bar -->
       <div class="relative max-w-xl mx-auto mt-8">
         <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-        <input type="text" id="courseSearch" placeholder="ابحث باسم الكورس أو الموضوع (مثل: التثبيت، KPIs، تذاكر)..." class="w-full bg-[#0E172E] border border-white/10 focus:border-samt-cyan text-white text-sm rounded-full py-3.5 pr-11 pl-4 outline-none transition-all shadow-inner" />
+        <input type="text" id="courseSearch" placeholder="ابحث باسم الكورس أو الموضوع (مثل: التثبيت، KPIs، إنتاجية)..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-full py-3.5 pr-11 pl-4 outline-none transition-all shadow-inner" />
       </div>
 
       <!-- Categories Filter Pills -->
       <div class="flex items-center justify-center gap-2 flex-wrap mt-6">
         <button class="filter-btn active px-4 py-2 rounded-full text-xs font-bold bg-samt-cyan text-samt-space transition-all" data-category="all">جميع الكورسات</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="basics">دليل المبتدئين</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="analytics">التحليلات والـ KPIs</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="ticketing">إدارة التذاكر</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="database">قواعد البيانات</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="basics">دليل المبتدئين</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="productivity">الإنتاجية والتنظيم</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="analytics">التحليلات والـ KPIs</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="database">قواعد البيانات</button>
       </div>
     </div>
 
-    <!-- Courses Grid Container (Populated dynamically) -->
+    <!-- Courses Grid Container -->
     <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="bg-[#050813] border-t border-white/10 py-8 text-center text-xs text-slate-500">
+  <footer class="bg-black/50 border-t border-white/10 py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 <strong>أكاديمية سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
       <div class="flex items-center gap-4">
@@ -133,8 +140,26 @@
   <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
 
-  <!-- Course Catalog Engine -->
+  <!-- Theme & Catalog Engine -->
   <script>
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        htmlEl.classList.remove('dark');
+        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+      } else {
+        htmlEl.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+      }
+      localStorage.setItem('samt_theme', theme);
+    }
+    applyTheme(localStorage.getItem('samt_theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       const grid = document.getElementById('coursesGrid');
       const searchInput = document.getElementById('courseSearch');
@@ -143,8 +168,7 @@
       let currentCategory = 'all';
       let searchTerm = '';
 
-      // Get courses from central data or fallback
-      const courses = window.AgentProData?.courses || [];
+      const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
 
       function getProgress(courseId, totalLessons = 3) {
         try {
@@ -169,7 +193,7 @@
           grid.innerHTML = `
             <div class="col-span-full text-center py-16 glass-card rounded-2xl">
               <i class="fa-solid fa-book-open text-4xl text-slate-500 mb-3"></i>
-              <h3 class="text-lg font-bold text-white mb-1">لم يتم العثور على كورسات تطابق بحثك</h3>
+              <h3 class="text-lg font-bold mb-1">لم يتم العثور على كورسات تطابق بحثك</h3>
               <p class="text-xs text-slate-400">جرب كتابة كلمة بحث أخرى أو اختر تصنيفاً مختلفاً.</p>
             </div>
           `;
@@ -181,7 +205,6 @@
           return `
             <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300">
               
-              <!-- Card Header / Thumbnail Preview -->
               <div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">
                 <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
                   <i class="fa-solid fa-play ml-0.5"></i>
@@ -190,16 +213,14 @@
                 <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white"><i class="fa-regular fa-clock ml-1"></i>${c.duration}</span>
               </div>
 
-              <!-- Card Content -->
               <div class="p-5 flex flex-col flex-grow text-right">
                 <div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5">
                   <span>${c.categoryName}</span>
                   <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span>
                 </div>
-                <h3 class="text-base font-bold text-white mb-2 leading-snug font-cairo">${c.title}</h3>
+                <h3 class="text-base font-bold mb-2 leading-snug font-cairo">${c.title}</h3>
                 <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${c.description}</p>
 
-                <!-- Progress Bar -->
                 <div class="mt-auto pt-3 border-t border-white/10 mb-4">
                   <div class="flex items-center justify-between text-[11px] font-bold mb-1">
                     <span class="text-slate-400">نسبة التقدم في الكورس:</span>
@@ -210,7 +231,6 @@
                   </div>
                 </div>
 
-                <!-- Action Button -->
                 <a href="./course-view.html?id=${c.id}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black transition-all flex items-center justify-center gap-2">
                   <i class="fa-solid fa-graduation-cap"></i>
                   <span>${progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس'}</span>
@@ -222,14 +242,13 @@
         }).join('');
       }
 
-      // Filter events
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           filterBtns.forEach(b => {
             b.classList.remove('bg-samt-cyan', 'text-samt-space');
-            b.classList.add('bg-[#0E172E]', 'text-slate-300');
+            b.classList.add('glass-card', 'text-slate-400');
           });
-          btn.classList.remove('bg-[#0E172E]', 'text-slate-300');
+          btn.classList.remove('glass-card', 'text-slate-400');
           btn.classList.add('bg-samt-cyan', 'text-samt-space');
           currentCategory = btn.dataset.category;
           render();
