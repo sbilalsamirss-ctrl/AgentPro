@@ -3,672 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أكاديمية وكورسات AgentPro | منصة الشروحات والدروس</title>
-  <meta name="description" content="منصة الشروحات والكورسات التعليمية الشاملة لنظام إدارة الكول سنتر والوكلاء AgentPro." />
+  <title>أكاديمية سمت SAMT | منصة الكورسات والدروس التفاعلية</title>
+  <meta name="description" content="أكاديمية سمت SAMT - دورات تدريبية متقدمة في إدارة مراكز الاتصال، تحليلات البيانات، والإنتاجية." />
 
-  <!-- Google Fonts: Plus Jakarta Sans & Cairo -->
+  <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            samt: {
+              space: '#070A12',
+              navy: '#0B132B',
+              card: '#0E172E',
+              cyan: '#00F5D4',
+              blue: '#00BBF9',
+              purple: '#7928CA',
+              gold: '#FFB703',
+              border: 'rgba(0, 245, 212, 0.18)'
+            }
+          },
+          fontFamily: {
+            readex: ['"Readex Pro"', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', '"Readex Pro"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    :root {
-      --bg-primary: #0A0F1D;
-      --bg-secondary: #0F172A;
-      --bg-card: #131E35;
-      --primary: #0077FE;
-      --primary-light: #00D2FF;
-      --accent-green: #10B981;
-      --accent-purple: #6366F1;
-      --accent-amber: #F59E0B;
-      --text-main: #FFFFFF;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-card: rgba(148, 163, 184, 0.14);
-      --nav-height: 74px;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-full: 9999px;
-      --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; color-scheme: dark; }
     body {
-      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      line-height: 1.7;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Readex Pro', 'Cairo', sans-serif;
+      background-color: #070A12;
+      color: #FFFFFF;
     }
-    .ambient-glow {
-      position: fixed;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      background: 
-        radial-gradient(circle at 50% 15%, rgba(0, 119, 254, 0.18), transparent 45%),
-        radial-gradient(circle at 80% 40%, rgba(99, 102, 241, 0.12), transparent 40%);
-    }
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-height);
-      background: rgba(10, 15, 29, 0.95);
+    .glass-card {
+      background: rgba(14, 23, 46, 0.75);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      z-index: 1000;
+      border: 1px solid rgba(0, 245, 212, 0.14);
     }
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 100%;
+    .glass-card:hover {
+      border-color: rgba(0, 245, 212, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 245, 212, 0.12);
     }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-link {
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color var(--transition);
-      padding: 6px 0;
-    }
-    .nav-link:hover, .nav-link.active { color: #FFFFFF; }
-    .nav-toggle { display: none; background: transparent; border: none; color: #FFF; font-size: 1.5rem; cursor: pointer; }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 22px;
-      font-size: 0.9375rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, #0056cb 100%);
-      color: #FFF;
-      box-shadow: 0 4px 18px rgba(0, 119, 254, 0.4);
-    }
-    .btn-primary:hover { background: #1a88ff; transform: translateY(-2px); color: #FFF; }
-    .btn-secondary {
-      background: rgba(30, 41, 59, 0.8);
-      color: #FFF;
-      border: 1px solid var(--border-card);
-    }
-    .btn-secondary:hover { background: rgba(51, 65, 85, 0.95); transform: translateY(-2px); }
-
-    /* Hero Section */
-    .courses-hero {
-      padding-top: calc(var(--nav-height) + 50px);
-      padding-bottom: 30px;
-      text-align: center;
-    }
-    .section-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 119, 254, 0.12);
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      color: var(--primary-light);
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 6px 18px;
-      border-radius: var(--radius-full);
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
+    .btn-samt-glow {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      color: #070A12;
       font-weight: 800;
-      margin-bottom: 14px;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--primary-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .section-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 720px;
-      margin: 0 auto 30px;
-    }
-
-    /* Search & Filter Bar */
-    .search-box {
-      max-width: 580px;
-      margin: 0 auto 28px;
-      position: relative;
-    }
-    .search-input {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      color: #FFF;
-      padding: 14px 20px 14px 48px;
-      border-radius: var(--radius-full);
-      font-size: 1rem;
-      font-family: inherit;
-      outline: none;
-      transition: all var(--transition);
-    }
-    .search-input:focus {
-      border-color: var(--primary-light);
-      box-shadow: 0 0 20px rgba(0, 210, 255, 0.25);
-    }
-    .search-icon {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-
-    .filter-pills {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-    .filter-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: var(--radius-full);
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--primary);
-      color: #FFF;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 15px rgba(0, 119, 254, 0.35);
-    }
-
-    /* Courses Grid */
-    .courses-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      margin-bottom: 60px;
-    }
-
-    .course-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .course-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary-light);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.25);
-    }
-
-    /* Card Banner & Video Trigger */
-    .course-banner {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(135deg, #0A1329 0%, #152238 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .banner-graphic {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at center, rgba(0, 119, 254, 0.25), transparent 70%);
-    }
-
-    .play-btn-circle {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, var(--primary) 0%, #00D2FF 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      font-size: 1.3rem;
-      box-shadow: 0 0 25px rgba(0, 119, 254, 0.7);
-      transition: transform var(--transition);
-    }
-
-    .course-card:hover .play-btn-circle {
-      transform: scale(1.15);
-    }
-
-    .course-duration-tag {
-      position: absolute;
-      bottom: 10px;
-      left: 12px;
-      background: rgba(0, 0, 0, 0.75);
-      color: #FFFFFF;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
-      direction: ltr;
-    }
-
-    .course-level-tag {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34D399;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
-    }
-
-    /* Course Body */
-    .course-body {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .course-category {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--primary-light);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-
-    .course-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      line-height: 1.5;
-      margin-bottom: 10px;
-      color: #FFFFFF;
-    }
-
-    .course-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 18px;
-    }
-
-    /* Attachments Area */
-    .course-attachments {
-      margin-top: auto;
-      padding-top: 14px;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .attachments-title {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .attachment-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid var(--border-card);
-      color: var(--text-main);
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      margin-left: 6px;
-      margin-bottom: 6px;
-      transition: all var(--transition);
-    }
-
-    .attachment-pill:hover {
-      border-color: var(--primary-light);
-      color: var(--primary-light);
-      background: rgba(51, 65, 85, 0.9);
-    }
-
-    .watch-btn-full {
-      width: 100%;
-      margin-top: 14px;
-    }
-
-    /* Modal Player */
-    .modal {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.88);
-      backdrop-filter: blur(12px);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal.active { display: flex; }
-    .modal-content {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      width: 100%;
-      max-width: 900px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 22px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .modal-close {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-    .modal-close:hover { color: #FFF; }
-    .modal-body {
-      background: #000;
-      aspect-ratio: 16 / 9;
-    }
-    .modal-body iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* Footer */
-    .footer {
-      background: #060A14;
-      border-top: 1px solid var(--border-subtle);
-      padding: 40px 0 20px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text-dim);
-    }
-
-    @media (max-width: 1024px) {
-      .courses-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 768px) {
-      .courses-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .nav-toggle { display: block; }
-      .section-title { font-size: 1.85rem; }
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-  <!-- Ambient Glow -->
-  <div class="ambient-glow"></div>
-
-  <!-- Header -->
-  <header class="navbar">
-    <div class="container nav-container">
-      <a href="./index.html" class="nav-logo">
-        <svg viewBox="0 0 320 80" width="150" height="38">
-          <g transform="translate(10, 10)">
-            <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
-            <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
-            <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
-          </g>
-          <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
-        </svg>
+  <!-- Floating Glass Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#070A12]/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-3">
+        <span class="text-2xl font-black text-white font-cairo">سَـمْـت</span>
+        <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
       </a>
-
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="./index.html" class="nav-link">الرئيسية</a></li>
-          <li><a href="./index.html#features" class="nav-link">المميزات</a></li>
-          <li><a href="./courses.html" class="nav-link active">أكاديمية الكورسات</a></li>
-          <li><a href="./downloads.html" class="nav-link">مركز البرامج</a></li>
-          <li><a href="./index.html#faq" class="nav-link">الأسئلة الشائعة</a></li>
-        </ul>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="./index.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan">الرئيسية</a>
+        <a href="./courses.html" class="text-sm font-bold text-samt-cyan">أكاديمية الكورسات</a>
+        <a href="./downloads.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan">مركز التحميل</a>
+        <a href="./admin.html" class="text-sm font-semibold text-samt-gold hover:text-white"><i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن</a>
       </nav>
-
-      <div>
-        <a href="./downloads.html" class="btn btn-primary btn-sm">تحميل البرنامج</a>
-      </div>
+      <a href="./downloads.html" class="btn-samt-glow px-5 py-2 rounded-full text-xs font-bold">تحميل المنظومة</a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="courses-hero">
-    <div class="container">
-      <div class="section-badge">🎓 أكاديمية الشروحات والكورسات الدورية</div>
-      <h1 class="section-title">تعلم واحتراف <span class="gradient-text">منظومة AgentPro</span></h1>
-      <p class="section-subtitle">
-        مكتبة متكاملة من الدروس العملية والفيديوهات التعليمية، مع ملفات التطبيق وقوالب العمل المرفقة مع كل درس.
+  <!-- Courses Hero & Filter Header -->
+  <main class="pt-32 pb-20 max-w-7xl mx-auto px-4 w-full">
+    
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs font-bold text-samt-cyan px-3 py-1 rounded-full bg-samt-cyan/10 border border-samt-cyan/30">
+        🎓 منصة التعليم التفاعلية
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black text-white mt-4 mb-4 font-cairo">
+        دورات <span class="text-samt-cyan">سمت SAMT</span> التدريبية
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base">
+        اختر مسارك التعليمي، تابع دروس الفيديو، وحمّل ملفات التطبيق وقوالب العمل مباشرة.
       </p>
 
-      <!-- Real-time Search Box -->
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="courseSearch" class="search-input" placeholder="ابحث باسم الكورس، الموضوع، أو الكلمة المفتاحية (مثل: تثبيت، KPIs، تذاكر، تسجيلات)..." />
+      <!-- Search Bar -->
+      <div class="relative max-w-xl mx-auto mt-8">
+        <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input type="text" id="courseSearch" placeholder="ابحث باسم الكورس أو الموضوع (مثل: التثبيت، KPIs، تذاكر)..." class="w-full bg-[#0E172E] border border-white/10 focus:border-samt-cyan text-white text-sm rounded-full py-3.5 pr-11 pl-4 outline-none transition-all shadow-inner" />
       </div>
 
-      <!-- Categories Filter -->
-      <div class="filter-pills">
-        <button class="filter-btn active" data-category="all">جميع الكورسات والدروس</button>
-        <button class="filter-btn" data-category="basics">دليل المبتدئين</button>
-        <button class="filter-btn" data-category="analytics">التحليلات والـ KPIs</button>
-        <button class="filter-btn" data-category="ticketing">إدارة التذاكر</button>
-        <button class="filter-btn" data-category="recordings">تسجيل المكالمات</button>
-        <button class="filter-btn" data-category="database">قواعد البيانات والسيرفرات</button>
-      </div>
-
-      <!-- Courses Grid Container -->
-      <div id="coursesGrid" class="courses-grid">
-        <!-- Rendered dynamically from courses-data.js -->
+      <!-- Categories Filter Pills -->
+      <div class="flex items-center justify-center gap-2 flex-wrap mt-6">
+        <button class="filter-btn active px-4 py-2 rounded-full text-xs font-bold bg-samt-cyan text-samt-space transition-all" data-category="all">جميع الكورسات</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="basics">دليل المبتدئين</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="analytics">التحليلات والـ KPIs</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="ticketing">إدارة التذاكر</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#0E172E] hover:bg-samt-card text-slate-300 hover:text-white border border-white/10 transition-all" data-category="database">قواعد البيانات</button>
       </div>
     </div>
-  </section>
+
+    <!-- Courses Grid Container (Populated dynamically) -->
+    <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2026 <strong>AgentPro Suite</strong>. جميع الحقوق محفوظة • <a href="./index.html" style="color: var(--primary-light); text-decoration: none;">العودة للصفحة الرئيسية</a></p>
+  <footer class="bg-[#050813] border-t border-white/10 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>&copy; 2026 <strong>أكاديمية سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
+      <div class="flex items-center gap-4">
+        <a href="./index.html" class="text-slate-400 hover:text-white">الرئيسية</a>
+        <a href="./admin.html" class="text-samt-gold hover:text-white">لوحة تحكم الأدمن</a>
+      </div>
     </div>
   </footer>
-
-  <!-- Video Modal -->
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div id="modalTitle" style="font-weight: 800; font-size: 1.1rem;">مشغل الفيديو التعليمي</div>
-        <button class="modal-close" onclick="closeVideoModal()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
 
   <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
 
-  <!-- App Script -->
+  <!-- Course Catalog Engine -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const grid = document.getElementById('coursesGrid');
       const searchInput = document.getElementById('courseSearch');
       const filterBtns = document.querySelectorAll('.filter-btn');
 
-      let currentCat = 'all';
-      let currentSearch = '';
+      let currentCategory = 'all';
+      let searchTerm = '';
 
-      // Fallback data in case external script isn't loaded
-      const data = window.AgentProData?.courses || [];
+      // Get courses from central data or fallback
+      const courses = window.AgentProData?.courses || [];
 
-      function renderCourses() {
-        if (!grid) return;
-
-        let filtered = data;
-        if (currentCat !== 'all') {
-          filtered = filtered.filter(item => item.category === currentCat);
+      function getProgress(courseId, totalLessons = 3) {
+        try {
+          const completed = JSON.parse(localStorage.getItem(`samt_completed_${courseId}`) || '[]');
+          return Math.round((completed.length / totalLessons) * 100);
+        } catch (e) {
+          return 0;
         }
-        if (currentSearch.trim() !== '') {
-          const q = currentSearch.toLowerCase();
-          filtered = filtered.filter(item => 
-            item.title.toLowerCase().includes(q) || 
-            item.description.toLowerCase().includes(q) ||
-            item.categoryName.toLowerCase().includes(q)
-          );
+      }
+
+      function render() {
+        let list = courses;
+        if (currentCategory !== 'all') {
+          list = list.filter(c => c.category === currentCategory);
+        }
+        if (searchTerm.trim() !== '') {
+          const q = searchTerm.toLowerCase();
+          list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.categoryName.toLowerCase().includes(q));
         }
 
-        if (filtered.length === 0) {
+        if (list.length === 0) {
           grid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-card);">
-              <p style="font-size: 1.3rem; margin-bottom: 8px;">🔍 لم يتم العثور على أي كورسات تطابق بحثك</p>
-              <p style="font-size: 0.95rem;">جرب كتابة كلمة بحث أخرى أو اختر تصنيفاً مختلفاً من القائمة أعلاه.</p>
+            <div class="col-span-full text-center py-16 glass-card rounded-2xl">
+              <i class="fa-solid fa-book-open text-4xl text-slate-500 mb-3"></i>
+              <h3 class="text-lg font-bold text-white mb-1">لم يتم العثور على كورسات تطابق بحثك</h3>
+              <p class="text-xs text-slate-400">جرب كتابة كلمة بحث أخرى أو اختر تصنيفاً مختلفاً.</p>
             </div>
           `;
           return;
         }
 
-        grid.innerHTML = filtered.map(course => `
-          <div class="course-card">
-            <div class="course-banner" onclick="openVideoModal('${course.videoUrl}', '${course.title.replace(/'/g, "\\'")}')">
-              <div class="banner-graphic">
-                <div class="play-btn-circle">▶</div>
+        grid.innerHTML = list.map(c => {
+          const progress = getProgress(c.id, c.lessons ? c.lessons.length : 3);
+          return `
+            <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300">
+              
+              <!-- Card Header / Thumbnail Preview -->
+              <div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">
+                <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+                <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">${c.level || 'كورس معتمد'}</span>
+                <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white"><i class="fa-regular fa-clock ml-1"></i>${c.duration}</span>
               </div>
-              <span class="course-level-tag">${course.level || 'كورس عملي'}</span>
-              <span class="course-duration-tag">⏱️ ${course.duration}</span>
-            </div>
 
-            <div class="course-body">
-              <span class="course-category">${course.categoryName}</span>
-              <h3 class="course-title">${course.title}</h3>
-              <p class="course-desc">${course.description}</p>
+              <!-- Card Content -->
+              <div class="p-5 flex flex-col flex-grow text-right">
+                <div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5">
+                  <span>${c.categoryName}</span>
+                  <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span>
+                </div>
+                <h3 class="text-base font-bold text-white mb-2 leading-snug font-cairo">${c.title}</h3>
+                <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${c.description}</p>
 
-              ${course.attachments && course.attachments.length > 0 ? `
-                <div class="course-attachments">
-                  <div class="attachments-title">📁 المرفقات والملفات الخاصة بالدرس:</div>
-                  <div style="display: flex; flex-wrap: wrap;">
-                    ${course.attachments.map(att => `
-                      <a href="${att.url}" class="attachment-pill">
-                        ${att.name}
-                      </a>
-                    `).join('')}
+                <!-- Progress Bar -->
+                <div class="mt-auto pt-3 border-t border-white/10 mb-4">
+                  <div class="flex items-center justify-between text-[11px] font-bold mb-1">
+                    <span class="text-slate-400">نسبة التقدم في الكورس:</span>
+                    <span class="${progress === 100 ? 'text-emerald-400' : 'text-samt-cyan'}">${progress}%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full transition-all" style="width: ${progress}%"></div>
                   </div>
                 </div>
-              ` : ''}
 
-              <button class="btn btn-primary watch-btn-full" onclick="openVideoModal('${course.videoUrl}', '${course.title.replace(/'/g, "\\'")}')">
-                ▶ مشاهدة الفيديو والشرح
-              </button>
+                <!-- Action Button -->
+                <a href="./course-view.html?id=${c.id}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black transition-all flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                  <span>${progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس'}</span>
+                </a>
+              </div>
+
             </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
 
-      // Filter Buttons Click
+      // Filter events
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentCat = btn.getAttribute('data-category') || 'all';
-          renderCourses();
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-samt-cyan', 'text-samt-space');
+            b.classList.add('bg-[#0E172E]', 'text-slate-300');
+          });
+          btn.classList.remove('bg-[#0E172E]', 'text-slate-300');
+          btn.classList.add('bg-samt-cyan', 'text-samt-space');
+          currentCategory = btn.dataset.category;
+          render();
         });
       });
 
-      // Search input typing
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          currentSearch = e.target.value;
-          renderCourses();
-        });
-      }
+      searchInput?.addEventListener('input', (e) => {
+        searchTerm = e.target.value;
+        render();
+      });
 
-      // Initial render
-      renderCourses();
-    });
-
-    // Video Modal Handlers
-    window.openVideoModal = (url, title) => {
-      const modal = document.getElementById('videoModal');
-      const iframe = document.getElementById('modalIframe');
-      const titleEl = document.getElementById('modalTitle');
-      if (titleEl) titleEl.textContent = title;
-      if (iframe) iframe.src = url;
-      if (modal) modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    };
-
-    window.closeVideoModal = () => {
-      const modal = document.getElementById('videoModal');
-      const iframe = document.getElementById('modalIframe');
-      if (modal) modal.classList.remove('active');
-      if (iframe) iframe.src = '';
-      document.body.style.overflow = 'auto';
-    };
-
-    // Close on backdrop click
-    document.getElementById('videoModal')?.addEventListener('click', (e) => {
-      if (e.target === document.getElementById('videoModal')) {
-        closeVideoModal();
-      }
-    });
-
-    // Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeVideoModal();
+      render();
     });
   </script>
+
 </body>
 </html>

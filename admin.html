@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحكم المشرف (Admin) | منظومة سمت SAMT</title>
+
+  <!-- Google Fonts: Readex Pro & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            samt: {
+              space: '#070A12',
+              navy: '#0B132B',
+              card: '#0E172E',
+              cyan: '#00F5D4',
+              blue: '#00BBF9',
+              purple: '#7928CA',
+              gold: '#FFB703',
+              border: 'rgba(0, 245, 212, 0.18)'
+            }
+          },
+          fontFamily: {
+            readex: ['"Readex Pro"', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', '"Readex Pro"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Readex Pro', 'Cairo', sans-serif;
+      background-color: #070A12;
+      color: #FFFFFF;
+    }
+    .glass-card {
+      background: rgba(14, 23, 46, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.14);
+    }
+    .btn-samt-glow {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      color: #070A12;
+      font-weight: 800;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- Admin Navbar -->
+  <header class="h-20 bg-[#090E1E] border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <a href="./index.html" class="flex items-center gap-2">
+        <span class="text-xl font-black text-white font-cairo">سَـمْـت</span>
+        <span class="text-lg font-extrabold text-samt-cyan font-readex">SAMT</span>
+      </a>
+      <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-samt-gold/20 text-samt-gold border border-samt-gold/30">لوحة الإدارة</span>
+    </div>
+    
+    <div class="flex items-center gap-4">
+      <a href="./courses.html" class="text-xs font-semibold text-slate-300 hover:text-white">معاينة الكورسات</a>
+      <a href="./index.html" class="text-xs font-semibold text-slate-300 hover:text-white">الرئيسية</a>
+    </div>
+  </header>
+
+  <!-- Login Shield (PIN Protected) -->
+  <div id="loginShield" class="flex-grow flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl p-8 max-w-md w-full text-center space-y-6">
+      <div class="w-16 h-16 rounded-2xl bg-samt-gold/10 border border-samt-gold/30 text-samt-gold text-2xl flex items-center justify-center mx-auto">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-white font-cairo">تسجيل دخول المشرف</h2>
+        <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة للوصول إلى أدوات الإضافة والتعديل والحذف.</p>
+      </div>
+      <input type="password" id="pinInput" placeholder="الرمز السري الافتراضي: 1234" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
+      <button id="loginBtn" class="btn-samt-glow w-full py-3 rounded-xl text-sm font-bold">
+        دخول لوحة التحكم
+      </button>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard Workspace (Hidden until login) -->
+  <main id="adminPanel" class="hidden flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6 space-y-8">
+    
+    <!-- Top Stats & Export Tools Bar -->
+    <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-black text-white font-cairo">إدارة الكورسات والمحتوى</h2>
+        <p class="text-xs text-slate-400 mt-1">أضف دورات جديدة، عدل الروابط، واحفظ التعديلات لتطبيقها على الموقع.</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <button onclick="openNewCourseModal()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 flex-grow md:flex-grow-0 justify-center">
+          <i class="fa-solid fa-plus"></i>
+          <span>إضافة كورس جديد</span>
+        </button>
+        <button onclick="exportUpdatedData()" class="px-5 py-2.5 rounded-xl bg-samt-card hover:bg-samt-navy border border-samt-cyan/40 text-samt-cyan text-xs font-bold transition-all flex items-center gap-2 flex-grow md:flex-grow-0 justify-center">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span>تصدير / حفظ البيانات</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Courses Table & Management List -->
+    <div class="glass-card rounded-2xl overflow-hidden text-right">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-base font-bold text-white font-cairo">الكورسات المتاحة حالياً (<span id="totalCoursesBadge">0</span>)</h3>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-[#090E1E] text-xs text-slate-400 font-cairo border-b border-white/10">
+            <tr>
+              <th class="p-4">#</th>
+              <th class="p-4">عنوان الكورس</th>
+              <th class="p-4">التصنيف</th>
+              <th class="p-4">المدة</th>
+              <th class="p-4">المستوى</th>
+              <th class="p-4 text-center">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="coursesTableBody" class="divide-y divide-white/5 text-xs text-slate-300">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Add/Edit Course Modal Form -->
+  <div id="courseModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl text-right">
+      <div class="bg-[#090E1E] px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <h3 id="modalHeaderTitle" class="text-base font-bold text-white font-cairo">إضافة كورس جديد</h3>
+        <button onclick="closeCourseModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="courseForm" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        <input type="hidden" id="editCourseId" />
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">عنوان الكورس:</label>
+          <input type="text" id="formTitle" required placeholder="مثال: احتراف إدارة المكالمات والـ KPIs" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">التصنيف:</label>
+            <select id="formCategory" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none">
+              <option value="basics">دليل المبتدئين</option>
+              <option value="analytics">التحليلات والـ KPIs</option>
+              <option value="ticketing">إدارة التذاكر</option>
+              <option value="recordings">تسجيل المكالمات</option>
+              <option value="database">قواعد البيانات</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">المستوى:</label>
+            <select id="formLevel" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none">
+              <option value="مبتدئ">مبتدئ</option>
+              <option value="متوسط">متوسط</option>
+              <option value="متقدم">متقدم</option>
+              <option value="شامل">شامل</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">المدة الزمنية:</label>
+            <input type="text" id="formDuration" placeholder="مثال: 12:45" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">رابط فيديو YouTube (رابط التضمين Embed أو الرابط العادي):</label>
+          <input type="text" id="formVideoUrl" required placeholder="https://www.youtube.com/watch?v=XXXX أو رابط التضمين" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none text-left" dir="ltr" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">الوصف والملاحظات:</label>
+          <textarea id="formDescription" rows="3" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..." class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none"></textarea>
+        </div>
+
+        <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCourseModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white">إلغاء</button>
+          <button type="submit" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold">حفظ الكورس</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Export Code Modal -->
+  <div id="exportModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl text-right">
+      <div class="bg-[#090E1E] px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <h3 class="text-base font-bold text-samt-cyan font-cairo">تم تحديث بيانات الكورسات بنجاح! 🎉</h3>
+        <button onclick="document.getElementById('exportModal').classList.add('hidden')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <p class="text-xs text-slate-300">
+          تم حفظ التعديلات في متصفحك محلياً. لتحديث ملف المشروع ورفعه على GitHub Pages، يمكنك تحميل الملف أو نسخ الكود واستبدال محتوى ملف <code class="text-samt-cyan font-mono">assets/js/courses-data.js</code>:
+        </p>
+
+        <textarea id="exportCodeArea" readonly rows="10" class="w-full bg-black/70 border border-white/15 text-samt-cyan font-mono text-[11px] p-3 rounded-xl outline-none" dir="ltr"></textarea>
+
+        <div class="flex items-center justify-between pt-2">
+          <button onclick="copyExportCode()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i>
+            <span id="copyBtnText">نسخ الكود بالكامل</span>
+          </button>
+          <button onclick="downloadDataFile()" class="px-5 py-2.5 rounded-xl bg-samt-blue text-samt-space text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل ملف courses-data.js</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#050813] border-t border-white/10 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 <strong>منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
+  </footer>
+
+  <!-- Central Data Script -->
+  <script src="./assets/js/courses-data.js"></script>
+
+  <!-- Admin Controller -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let activeCourses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
+
+      const loginShield = document.getElementById('loginShield');
+      const adminPanel = document.getElementById('adminPanel');
+      const pinInput = document.getElementById('pinInput');
+      const loginBtn = document.getElementById('loginBtn');
+      const tableBody = document.getElementById('coursesTableBody');
+      const totalBadge = document.getElementById('totalCoursesBadge');
+      const courseForm = document.getElementById('courseForm');
+
+      // Login handler (PIN: 1234)
+      loginBtn.addEventListener('click', () => {
+        if (pinInput.value === '1234' || pinInput.value === 'admin') {
+          loginShield.classList.add('hidden');
+          adminPanel.classList.remove('hidden');
+          renderTable();
+        } else {
+          alert('الرمز السري غير صحيح! الرمز الافتراضي هو 1234');
+        }
+      });
+
+      function renderTable() {
+        totalBadge.textContent = activeCourses.length;
+        tableBody.innerHTML = activeCourses.map((c, idx) => `
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="p-4 font-bold text-slate-400">${idx + 1}</td>
+            <td class="p-4 font-bold text-white font-cairo">${c.title}</td>
+            <td class="p-4 text-samt-cyan font-bold">${c.categoryName || c.category}</td>
+            <td class="p-4 font-mono">${c.duration}</td>
+            <td class="p-4"><span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[11px] font-bold">${c.level || 'معتمد'}</span></td>
+            <td class="p-4 text-center space-x-2 space-x-reverse">
+              <button onclick="editCourse('${c.id}')" class="px-3 py-1.5 rounded-lg bg-samt-blue/20 text-samt-blue hover:bg-samt-blue hover:text-black transition-all text-xs font-bold">
+                <i class="fa-solid fa-pen-to-square"></i> تعديل
+              </button>
+              <button onclick="deleteCourse('${c.id}')" class="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-bold">
+                <i class="fa-solid fa-trash"></i> حذف
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Open Modal for New Course
+      window.openNewCourseModal = () => {
+        document.getElementById('modalHeaderTitle').textContent = 'إضافة كورس جديد';
+        document.getElementById('editCourseId').value = '';
+        courseForm.reset();
+        document.getElementById('courseModal').classList.remove('hidden');
+        document.getElementById('courseModal').classList.add('flex');
+      };
+
+      window.closeCourseModal = () => {
+        document.getElementById('courseModal').classList.add('hidden');
+        document.getElementById('courseModal').classList.remove('flex');
+      };
+
+      // Edit Course
+      window.editCourse = (id) => {
+        const item = activeCourses.find(c => c.id === id);
+        if (!item) return;
+
+        document.getElementById('modalHeaderTitle').textContent = 'تعديل بيانات الكورس';
+        document.getElementById('editCourseId').value = item.id;
+        document.getElementById('formTitle').value = item.title;
+        document.getElementById('formCategory').value = item.category;
+        document.getElementById('formLevel').value = item.level || 'مبتدئ';
+        document.getElementById('formDuration').value = item.duration;
+        document.getElementById('formVideoUrl').value = item.videoUrl;
+        document.getElementById('formDescription').value = item.description;
+
+        document.getElementById('courseModal').classList.remove('hidden');
+        document.getElementById('courseModal').classList.add('flex');
+      };
+
+      // Delete Course
+      window.deleteCourse = (id) => {
+        if (confirm('هل أنت متأكد من حذف هذا الكورس؟')) {
+          activeCourses = activeCourses.filter(c => c.id !== id);
+          saveState();
+          renderTable();
+        }
+      };
+
+      // Save form
+      courseForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('editCourseId').value;
+        const title = document.getElementById('formTitle').value;
+        const category = document.getElementById('formCategory').value;
+        const level = document.getElementById('formLevel').value;
+        const duration = document.getElementById('formDuration').value || '10:00';
+        let videoUrl = document.getElementById('formVideoUrl').value;
+        const description = document.getElementById('formDescription').value;
+
+        // Convert standard youtube link to embed if needed
+        if (videoUrl.includes('watch?v=')) {
+          const vId = videoUrl.split('watch?v=')[1].split('&')[0];
+          videoUrl = `https://www.youtube-nocookie.com/embed/${vId}`;
+        } else if (videoUrl.includes('youtu.be/')) {
+          const vId = videoUrl.split('youtu.be/')[1].split('?')[0];
+          videoUrl = `https://www.youtube-nocookie.com/embed/${vId}`;
+        }
+
+        const categoryNames = {
+          basics: 'دليل المبتدئين',
+          analytics: 'التحليلات والـ KPIs',
+          ticketing: 'إدارة التذاكر',
+          recordings: 'تسجيل المكالمات',
+          database: 'قواعد البيانات'
+        };
+
+        if (editId) {
+          // Update
+          const idx = activeCourses.findIndex(c => c.id === editId);
+          if (idx !== -1) {
+            activeCourses[idx] = {
+              ...activeCourses[idx],
+              title, category, categoryName: categoryNames[category] || category,
+              level, duration, videoUrl, description
+            };
+          }
+        } else {
+          // Add new
+          const newCourse = {
+            id: 'course-' + Date.now(),
+            title, category, categoryName: categoryNames[category] || category,
+            level, duration, videoUrl, description,
+            attachments: []
+          };
+          activeCourses.unshift(newCourse);
+        }
+
+        saveState();
+        closeCourseModal();
+        renderTable();
+      });
+
+      function saveState() {
+        localStorage.setItem('samt_admin_courses', JSON.stringify(activeCourses));
+      }
+
+      // Export tools
+      window.exportUpdatedData = () => {
+        const fullDataObj = {
+          courses: activeCourses,
+          releases: window.AgentProData?.releases || []
+        };
+        const exportContent = `/**
+ * AgentPro / SAMT - Central Database File
+ * Auto-generated by SAMT Admin Dashboard on ${new Date().toLocaleString()}
+ */
+
+const AgentProData = ${JSON.stringify(fullDataObj, null, 2)};
+
+if (typeof window !== 'undefined') {
+  window.AgentProData = AgentProData;
+}
+`;
+        document.getElementById('exportCodeArea').value = exportContent;
+        document.getElementById('exportModal').classList.remove('hidden');
+        document.getElementById('exportModal').classList.add('flex');
+      };
+
+      window.copyExportCode = () => {
+        const area = document.getElementById('exportCodeArea');
+        area.select();
+        navigator.clipboard.writeText(area.value);
+        document.getElementById('copyBtnText').textContent = 'تم النسخ بنجاح! ✔️';
+        setTimeout(() => {
+          document.getElementById('copyBtnText').textContent = 'نسخ الكود بالكامل';
+        }, 2500);
+      };
+
+      window.downloadDataFile = () => {
+        const blob = new Blob([document.getElementById('exportCodeArea').value], { type: 'application/javascript' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'courses-data.js';
+        a.click();
+      };
+    });
+  </script>
+
+</body>
+</html>

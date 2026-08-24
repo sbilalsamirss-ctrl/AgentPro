@@ -3,863 +3,796 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgentPro | المنظومة الشاملة لإدارة الكول سنتر وأكاديمية الشروحات</title>
-  <meta name="description" content="AgentPro - نظام إدارة الكول سنتر المتطور وأكاديمية الكورسات والشروحات العملية للوكلاء والمشرفين." />
+  <title>سمت SAMT | منظومة الاتصال الموحد وأكاديمية الكورسات المتطورة</title>
+  <meta name="description" content="منظومة سمت SAMT - المنظومة الاحترافية الشاملة لإدارة المراكز والاتصالات وأكاديمية الكورسات والتدريب العملي المتطور." />
 
-  <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+  <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            samt: {
+              space: '#070A12',
+              navy: '#0B132B',
+              card: '#0E172E',
+              cardLight: '#162244',
+              cyan: '#00F5D4',
+              blue: '#00BBF9',
+              purple: '#7928CA',
+              gold: '#FFB703',
+              border: 'rgba(0, 245, 212, 0.18)',
+              borderSubtle: 'rgba(255, 255, 255, 0.08)'
+            }
+          },
+          fontFamily: {
+            readex: ['"Readex Pro"', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', '"Readex Pro"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    :root {
-      --bg-primary: #0A0F1D;
-      --bg-secondary: #0F172A;
-      --bg-card: #131E35;
-      --primary: #0077FE;
-      --primary-light: #00D2FF;
-      --accent-green: #10B981;
-      --accent-purple: #6366F1;
-      --accent-amber: #F59E0B;
-      --text-main: #FFFFFF;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-card: rgba(148, 163, 184, 0.14);
-      --nav-height: 74px;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-full: 9999px;
-      --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; color-scheme: dark; }
+    /* ==========================================================================
+       SAMT - Celestial Design System & Custom Keyframes
+       ========================================================================== */
     body {
-      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      line-height: 1.7;
+      font-family: 'Readex Pro', 'Cairo', sans-serif;
+      background-color: #070A12;
+      color: #FFFFFF;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    .ambient-glow {
-      position: fixed;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      background: 
-        radial-gradient(circle at 50% 15%, rgba(0, 119, 254, 0.18), transparent 45%),
-        radial-gradient(circle at 85% 40%, rgba(99, 102, 241, 0.12), transparent 40%);
-    }
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
+      scroll-behavior: smooth;
     }
 
-    section { padding: 90px 0; position: relative; z-index: 1; }
-    .section-header { text-align: center; max-width: 760px; margin: 0 auto 50px; }
-    .section-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 119, 254, 0.12);
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      color: var(--primary-light);
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 6px 18px;
-      border-radius: var(--radius-full);
-      margin-bottom: 16px;
+    /* Ambient Celestial Star Background */
+    .celestial-bg {
+      background-color: #070A12;
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(0, 187, 249, 0.15), transparent 45%),
+        radial-gradient(circle at 90% 25%, rgba(121, 40, 202, 0.12), transparent 40%),
+        radial-gradient(circle at 10% 70%, rgba(0, 245, 212, 0.1), transparent 35%);
     }
-    .section-title { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 800; margin-bottom: 16px; }
-    .gradient-text {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--primary-light) 100%);
+
+    /* Glowing Buttons */
+    .btn-samt-glow {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      color: #070A12;
+      font-weight: 800;
+      box-shadow: 0 0 25px rgba(0, 245, 212, 0.45);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-samt-glow:hover {
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.7);
+      transform: translateY(-2px);
+      color: #070A12;
+    }
+
+    /* Dark Glass Elements */
+    .glass-card {
+      background: rgba(14, 23, 46, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.14);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    }
+    .glass-card:hover {
+      border-color: rgba(0, 245, 212, 0.4);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55), 0 0 25px rgba(0, 245, 212, 0.15);
+    }
+
+    .glass-nav {
+      background: rgba(7, 10, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Floating Animation */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-float {
+      animation: floatSlow 5s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 245, 212, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 245, 212, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 245, 212, 0); }
+    }
+    .animate-pulse-glow {
+      animation: livePulse 2s infinite;
+    }
+
+    /* Text Gradient */
+    .text-gradient {
+      background: linear-gradient(135deg, #FFFFFF 30%, #00F5D4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .section-subtitle { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
-
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-height);
-      background: rgba(10, 15, 29, 0.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      z-index: 1000;
-      transition: background var(--transition);
-    }
-    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-link {
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color var(--transition);
-      padding: 6px 0;
-    }
-    .nav-link:hover, .nav-link.active { color: #FFFFFF; }
-    .nav-toggle { display: none; background: transparent; border: none; color: #FFF; font-size: 1.5rem; cursor: pointer; }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 24px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-    .btn-sm { padding: 8px 18px; font-size: 0.875rem; border-radius: var(--radius-sm); }
-    .btn-lg { padding: 16px 32px; font-size: 1.05rem; border-radius: var(--radius-md); }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, #0056cb 100%);
-      color: #FFF;
-      box-shadow: 0 4px 18px rgba(0, 119, 254, 0.4);
-    }
-    .btn-primary:hover { background: #1a88ff; transform: translateY(-2px); color: #FFF; }
-    .btn-secondary {
-      background: rgba(30, 41, 59, 0.8);
-      color: #FFF;
-      border: 1px solid var(--border-card);
-    }
-    .btn-secondary:hover { background: rgba(51, 65, 85, 0.95); transform: translateY(-2px); }
-
-    /* Hero */
-    .hero { padding-top: calc(var(--nav-height) + 50px); padding-bottom: 80px; text-align: center; }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(0, 119, 254, 0.12);
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      padding: 6px 18px;
-      border-radius: var(--radius-full);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 24px;
-    }
-    .pulse-dot { width: 8px; height: 8px; background-color: var(--accent-green); border-radius: 50%; animation: livePulse 2s infinite; }
-    .hero-title { font-size: clamp(2.25rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.25; margin-bottom: 20px; }
-    .hero-subtitle { font-size: clamp(1.05rem, 1.8vw, 1.25rem); color: var(--text-muted); max-width: 800px; margin: 0 auto 36px; }
-    .hero-cta { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 50px; flex-wrap: wrap; }
-
-    /* Vector Hero Preview */
-    .hero-preview {
-      position: relative;
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 10px;
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 60px rgba(0, 119, 254, 0.15);
-    }
-    .hero-preview svg { width: 100%; height: auto; border-radius: var(--radius-md); display: block; }
-
-    /* Stats Bar */
-    .stats-bar { background: var(--bg-card); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: 36px 0; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
-    .stat-item { position: relative; }
-    .stat-item:not(:last-child)::after { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 1px; background: var(--border-subtle); }
-    .stat-number { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 900; background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; direction: ltr; }
-    .stat-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; }
-
-    /* Features Grid */
-    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      padding: 34px;
-      transition: all var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .feature-card:hover { transform: translateY(-6px); border-color: rgba(0, 210, 255, 0.5); box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.2); }
-    .feature-icon-box {
-      width: 56px; height: 56px;
-      border-radius: 14px;
-      background: rgba(0, 119, 254, 0.12);
-      border: 1px solid rgba(0, 210, 255, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-    }
-    .feature-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; }
-    .feature-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
-    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border-subtle); margin-top: auto; }
-    .feature-list-item { font-size: 0.9rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; font-weight: 600; }
-
-    /* Courses Preview Grid */
-    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-    .course-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .course-card:hover { transform: translateY(-6px); border-color: var(--primary-light); box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.25); }
-    .course-banner {
-      width: 100%; aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #0A1329 0%, #152238 100%);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; position: relative;
-    }
-    .play-btn-circle {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--primary) 0%, #00D2FF 100%);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: #FFF; font-size: 1.2rem;
-      box-shadow: 0 0 20px rgba(0, 119, 254, 0.7);
-    }
-    .course-body { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
-    .course-category { font-size: 0.75rem; font-weight: 800; color: var(--primary-light); margin-bottom: 6px; }
-    .course-title { font-size: 1.1rem; font-weight: 800; line-height: 1.5; margin-bottom: 8px; }
-    .course-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
-
-    /* Downloads Grid */
-    .downloads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 920px; margin: 0 auto 40px; }
-    .download-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-      text-align: center;
-      transition: all var(--transition);
-    }
-    .download-card.highlight { border-color: var(--primary); box-shadow: 0 0 35px rgba(0, 119, 254, 0.25); }
-    .download-card:hover { transform: translateY(-6px); border-color: var(--primary-light); }
-    .os-icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 16px; background: rgba(30, 41, 59, 0.8); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 1px solid var(--border-card); }
-    .version-tag { display: inline-block; background: rgba(0, 210, 255, 0.12); color: var(--primary-light); font-size: 0.8125rem; font-weight: 700; padding: 4px 12px; border-radius: var(--radius-full); margin-bottom: 18px; }
-
-    /* FAQ */
-    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-    .faq-item { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-md); overflow: hidden; }
-    .faq-item.active { border-color: var(--primary); }
-    .faq-question { width: 100%; background: transparent; border: none; padding: 18px 24px; text-align: right; font-size: 1.05rem; font-weight: 700; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-family: inherit; }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height var(--transition), padding var(--transition); color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; padding: 0 24px; }
-    .faq-item.active .faq-answer { max-height: 250px; padding: 0 24px 18px; }
-
-    /* Footer */
-    .footer { background: #060A14; border-top: 1px solid var(--border-subtle); padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 50px; }
-    .footer-col h4 { font-size: 1rem; margin-bottom: 18px; color: var(--text-main); }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: color var(--transition); }
-    .footer-links a:hover { color: var(--primary-light); }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-dim); flex-wrap: wrap; gap: 16px; }
-
-    /* Modal */
-    .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(12px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-    .modal.active { display: flex; }
-    .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-card); border-radius: var(--radius-lg); width: 100%; max-width: 900px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid var(--border-subtle); }
-    .modal-close { background: transparent; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; }
-
-    @keyframes livePulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    @media (max-width: 1024px) {
-      .features-grid, .courses-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .stat-item:nth-child(2)::after { display: none; }
-    }
-    @media (max-width: 768px) {
-      section { padding: 50px 0; }
-      .hero-title { font-size: 2.1rem; }
-      .hero-cta { flex-direction: column; }
-      .hero-cta .btn { width: 100%; }
-      .nav-links { display: none; }
-      .nav-toggle { display: block; }
-      .downloads-grid, .stats-grid, .footer-grid { grid-template-columns: 1fr; }
-      .stat-item::after { display: none; }
-    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #070A12; }
+    ::-webkit-scrollbar-thumb { background: #162244; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00F5D4; }
   </style>
 </head>
-<body>
+<body class="celestial-bg min-h-screen">
 
-  <div class="ambient-glow"></div>
-
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="container nav-container">
-      <a href="./index.html" class="nav-logo">
-        <svg viewBox="0 0 320 80" width="150" height="38">
-          <g transform="translate(10, 10)">
-            <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
-            <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
-            <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
-          </g>
-          <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
-        </svg>
+  <!-- ==========================================================================
+       1. Floating Glass Navbar
+       ========================================================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Right: Brand Logo (سمت SAMT) -->
+      <a href="./index.html" class="flex items-center gap-3 group">
+        <!-- Astrolabe / Celestial Compass Icon -->
+        <div class="relative w-10 h-10 flex items-center justify-center">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-samt-cyan transition-transform group-hover:rotate-45 duration-700">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3" opacity="0.6"/>
+            <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <!-- 4 Compass Points -->
+            <line x1="50" y1="6" x2="50" y2="94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="6" y1="50" x2="94" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <!-- Center Star & Pulse -->
+            <circle cx="50" cy="50" r="6" fill="#00BBF9"/>
+            <circle cx="50" cy="50" r="10" fill="none" stroke="#00F5D4" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="85" cy="50" r="4" fill="#00F5D4"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl font-black tracking-tight text-white font-cairo">سَـمْـت</span>
+            <span class="text-xl font-extrabold tracking-widest text-samt-cyan font-readex">SAMT</span>
+          </div>
+        </div>
       </a>
 
-      <nav>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#features" class="nav-link">المميزات</a></li>
-          <li><a href="#courses" class="nav-link">الكورسات والشروحات</a></li>
-          <li><a href="#specs" class="nav-link">مواصفات النظام</a></li>
-          <li><a href="./downloads.html" class="nav-link">تحميل البرنامج</a></li>
-          <li><a href="#faq" class="nav-link">الأسئلة الشائعة</a></li>
-        </ul>
+      <!-- Middle: Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan transition-colors">المميزات</a>
+        <a href="#kpis" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan transition-colors">التحليلات</a>
+        <a href="./courses.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan transition-colors flex items-center gap-1.5">
+          <span>أكاديمية سامت</span>
+          <span class="px-2 py-0.5 text-[10px] font-bold bg-samt-purple/30 text-samt-cyan rounded-full border border-samt-cyan/30">جديد</span>
+        </a>
+        <a href="./downloads.html" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan transition-colors">تحميل البرنامج</a>
+        <a href="#faq" class="text-sm font-semibold text-slate-300 hover:text-samt-cyan transition-colors">الدعم</a>
       </nav>
 
-      <div style="display: flex; gap: 12px;">
-        <a href="./courses.html" class="btn btn-secondary btn-sm">أكاديمية الكورسات</a>
-        <a href="./downloads.html" class="btn btn-primary btn-sm">تحميل v2.4</a>
+      <!-- Left: CTA Action Button -->
+      <div class="flex items-center gap-4">
+        <a href="./downloads.html" class="btn-samt-glow px-6 py-2.5 rounded-full text-sm flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
+          <span>ابدأ الآن (v2.4)</span>
+        </a>
+        <button id="mobileMenuBtn" class="md:hidden text-slate-300 hover:text-white text-xl p-2" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
+
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden glass-nav border-t border-samt-border px-6 py-5 space-y-4">
+      <a href="#features" class="block text-slate-200 font-semibold py-2">المميزات</a>
+      <a href="#kpis" class="block text-slate-200 font-semibold py-2">التحليلات</a>
+      <a href="./courses.html" class="block text-samt-cyan font-bold py-2">أكاديمية سامت للكورسات</a>
+      <a href="./downloads.html" class="block text-slate-200 font-semibold py-2">تحميل البرنامج</a>
+      <a href="./admin.html" class="block text-samt-gold font-semibold py-2">لوحة تحكم الأدمن</a>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        <span>منظومة AgentPro v2.4 مع أكاديمية الكورسات والتدريب العملي</span>
+  <!-- ==========================================================================
+       2. Hero Section (مع لمسات الخرائط الفلكية والأسترلاب)
+       ========================================================================== -->
+  <section class="relative pt-36 pb-20 overflow-hidden">
+    
+    <!-- Astrolabe Background Vectors (Watermarks) -->
+    <div class="absolute top-10 right-[-100px] w-[450px] h-[450px] opacity-10 pointer-events-none">
+      <svg viewBox="0 0 400 400" class="w-full h-full text-samt-cyan animate-spin" style="animation-duration: 120s;">
+        <circle cx="200" cy="200" r="180" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+        <circle cx="200" cy="200" r="140" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="200" cy="200" r="90" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="200" y1="20" x2="200" y2="380" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="20" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="200,60 210,190 340,200 210,210 200,340 190,210 60,200 190,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <div class="absolute top-40 left-[-80px] w-[380px] h-[380px] opacity-10 pointer-events-none">
+      <svg viewBox="0 0 300 300" class="w-full h-full text-samt-blue">
+        <circle cx="150" cy="150" r="130" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="150" cy="150" r="70" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M 50 150 Q 150 50 250 150 T 50 150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
+      
+      <!-- Top Announcement Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-samt-navy/80 border border-samt-border mb-8 shadow-lg">
+        <span class="w-2 h-2 rounded-full bg-samt-cyan animate-pulse-glow"></span>
+        <span class="text-xs sm:text-sm font-semibold text-slate-300">
+          تصفح الويب وإدارة الاتصالات بسرعة الضوء وبدون تشتت — الإصدار الحديث 2026
+        </span>
       </div>
 
-      <h1 class="hero-title">
-        المنظومة الاحترافية لإدارة <span class="gradient-text">الكول سنتر ومراكز الاتصال</span>
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.3] mb-6 font-cairo">
+        المنظومة الاحترافية الشاملة <br class="hidden sm:block" />
+        <span class="text-gradient">لإدارة المراكز والاتصالات الذكية</span>
       </h1>
 
-      <p class="hero-subtitle">
-        ارفع كفاءة وإنتاجية الوكلاء مع لوحة تحكم ذكية، تسجيلات صوتية فائقة النقاء، تحليلات فورية لمؤشرات الـ KPIs، ودورات تدريبية عملية متجددة دورياً.
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+        حلول ذكاء اصطناعي لتحليل الصوت والبيانات، تعزيز الكفاءة، حجب الإعلانات، وتوفير استهلاك الرامات (Zero Lag) مع تقديم تجارب استثنائية عبر <strong class="text-samt-cyan font-bold">أكاديمية سامت للتدريب</strong>.
       </p>
 
-      <div class="hero-cta">
-        <a href="./downloads.html" class="btn btn-primary btn-lg">
-          ⬇️ تحميل برنامج AgentPro
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="./downloads.html" class="btn-samt-glow w-full sm:w-auto px-8 py-3.5 rounded-full text-base flex items-center justify-center gap-3">
+          <i class="fa-solid fa-download text-sm"></i>
+          <span>تنزيل برنامج سامت (Windows / Mac)</span>
         </a>
-        <a href="./courses.html" class="btn btn-secondary btn-lg">
-          🎓 استعراض مكتبة الكورسات والدروس
+        <a href="./courses.html" class="glass-card w-full sm:w-auto px-8 py-3.5 rounded-full text-base font-bold text-white hover:text-samt-cyan transition-all flex items-center justify-center gap-3">
+          <i class="fa-solid fa-graduation-cap text-samt-cyan"></i>
+          <span>استكشف الدورات التدريبية</span>
         </a>
       </div>
 
-      <!-- Vector Dashboard Preview -->
-      <div class="hero-preview">
-        <svg viewBox="0 0 1000 580" width="100%" height="auto">
-          <defs>
-            <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#0F172A" />
-              <stop offset="100%" stop-color="#1E293B" />
-            </linearGradient>
-            <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#1E293B" stop-opacity="0.85" />
-              <stop offset="100%" stop-color="#0F172A" stop-opacity="0.95" />
-            </linearGradient>
-            <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.4" />
-              <stop offset="100%" stop-color="#0077FE" stop-opacity="0.0" />
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="1000" height="580" rx="14" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
-          <path d="M 0 14 A 14 14 0 0 1 14 0 L 986 0 A 14 14 0 0 1 1000 14 L 1000 44 L 0 44 Z" fill="#0A0F1D" />
-          <circle cx="28" cy="22" r="5" fill="#EF4444"/>
-          <circle cx="44" cy="22" r="5" fill="#F59E0B"/>
-          <circle cx="60" cy="22" r="5" fill="#10B981"/>
-          <text x="500" y="27" text-anchor="middle" fill="#64748B" font-family="'Cairo', sans-serif" font-size="12" font-weight="700">AgentPro Enterprise v2.4 - Live Telephony &amp; Monitoring Hub</text>
-
-          <!-- Stat Cards -->
-          <rect x="20" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="36" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">TOTAL CALLS TODAY</text>
-          <text x="36" y="120" fill="#FFFFFF" font-family="sans-serif" font-size="24" font-weight="800">1,482</text>
-          <text x="175" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">+14.2%</text>
-
-          <rect x="265" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="281" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">AVG HANDLE TIME</text>
-          <text x="281" y="120" fill="#00D2FF" font-family="sans-serif" font-size="24" font-weight="800">2m 45s</text>
-          <text x="420" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">-18s</text>
-
-          <rect x="510" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="526" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">FIRST CALL RESOLUTION</text>
-          <text x="526" y="120" fill="#F59E0B" font-family="sans-serif" font-size="24" font-weight="800">92.8%</text>
-          <text x="665" y="120" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">Optimal</text>
-
-          <rect x="755" y="60" width="225" height="85" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="771" y="85" fill="#94A3B8" font-family="sans-serif" font-size="11" font-weight="600">CSAT SATISFACTION</text>
-          <text x="771" y="120" fill="#10B981" font-family="sans-serif" font-size="24" font-weight="800">4.9 / 5.0</text>
-          <text x="895" y="120" fill="#00D2FF" font-family="sans-serif" font-size="12">★★★★★</text>
-
-          <!-- Center Chart -->
-          <rect x="20" y="160" width="620" height="230" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="40" y="190" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Real-Time Call Volume &amp; Traffic Analytics</text>
-          <path d="M 40 340 L 40 290 Q 140 250 240 210 T 440 260 T 600 190 L 600 340 Z" fill="url(#chartGrad)"/>
-          <path d="M 40 290 Q 140 250 240 210 T 440 260 T 600 190" fill="none" stroke="#00D2FF" stroke-width="3"/>
-          <circle cx="240" cy="210" r="4" fill="#00D2FF"/>
-          <circle cx="600" cy="190" r="4" fill="#0077FE"/>
-
-          <!-- Right Call Status -->
-          <rect x="660" y="160" width="320" height="230" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="680" y="190" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Active Priority Call</text>
-          <rect x="910" y="177" width="50" height="18" rx="9" fill="#10B981"/>
-          <text x="935" y="190" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="800">LIVE</text>
+      <!-- ==========================================================================
+           3. Floating Browser / Dashboard Mockup (مطابق للصورة تماماً)
+           ========================================================================== -->
+      <div class="relative max-w-4xl mx-auto animate-float">
+        
+        <!-- Outer Glow Ring -->
+        <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-samt-cyan via-samt-blue to-samt-purple opacity-30 blur-xl"></div>
+        
+        <!-- Window Container -->
+        <div class="relative rounded-2xl bg-[#090E1E] border border-samt-border/60 shadow-2xl overflow-hidden text-right">
           
-          <rect x="680" y="210" width="280" height="65" rx="8" fill="#0F172A"/>
-          <text x="696" y="235" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700">VIP Corporate Client</text>
-          <text x="696" y="255" fill="#94A3B8" font-family="sans-serif" font-size="11">+1 (800) 459-0921 • Line 04</text>
+          <!-- Top Window Bar -->
+          <div class="bg-[#050813] px-4 py-3 flex items-center justify-between border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+            </div>
+            <div class="text-xs font-semibold text-slate-400 font-mono flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-samt-cyan text-[11px]"></i>
+              <span>Agent SAMT Hub v2.4 — Live Telephony &amp; AI Node</span>
+            </div>
+            <div class="w-6"></div>
+          </div>
 
-          <rect x="680" y="285" width="280" height="40" rx="6" fill="#0A0F1D"/>
-          <g transform="translate(690, 292)">
-            <rect x="5" y="6" width="3" height="14" rx="1.5" fill="#00D2FF"/>
-            <rect x="15" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
-            <rect x="25" y="5" width="3" height="16" rx="1.5" fill="#00D2FF"/>
-            <rect x="35" y="1" width="3" height="24" rx="1.5" fill="#10B981"/>
-            <rect x="45" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
-            <rect x="55" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
-            <rect x="65" y="7" width="3" height="12" rx="1.5" fill="#10B981"/>
-            <rect x="75" y="1" width="3" height="24" rx="1.5" fill="#00D2FF"/>
-            <rect x="85" y="5" width="3" height="16" rx="1.5" fill="#00D2FF"/>
-            <rect x="95" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
-            <rect x="105" y="6" width="3" height="14" rx="1.5" fill="#10B981"/>
-            <rect x="115" y="1" width="3" height="24" rx="1.5" fill="#00D2FF"/>
-            <rect x="125" y="4" width="3" height="18" rx="1.5" fill="#0077FE"/>
-          </g>
+          <!-- Inside Dashboard Workspace -->
+          <div class="p-5 sm:p-6 bg-gradient-to-b from-[#090E1E] to-[#0D152B] space-y-5">
+            
+            <!-- Row 1: 4 KPI Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+              
+              <!-- Card 1: Today's Interactions -->
+              <div class="glass-card rounded-xl p-4 relative overflow-hidden text-right">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-400">تفاعلات اليوم</span>
+                  <i class="fa-solid fa-users text-samt-cyan text-sm"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white font-readex">182</div>
+                <div class="text-[11px] text-emerald-400 font-bold mt-1">+14.2% مقارنة بالأمس</div>
+              </div>
 
-          <rect x="680" y="335" width="135" height="32" rx="6" fill="#1E293B"/>
-          <text x="747" y="355" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Transfer Call</text>
+              <!-- Card 2: Average Handling Time -->
+              <div class="glass-card rounded-xl p-4 relative overflow-hidden text-right border-samt-cyan/30">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-400">متوسط زمن المكالمة</span>
+                  <i class="fa-solid fa-stopwatch text-samt-blue text-sm"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-samt-cyan font-readex">2m 45s</div>
+                <div class="text-[11px] text-emerald-400 font-bold mt-1">-18 ثانية استجابة</div>
+              </div>
 
-          <rect x="825" y="335" width="135" height="32" rx="6" fill="#EF4444"/>
-          <text x="892" y="355" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">End &amp; Log</text>
+              <!-- Card 3: First Call Resolution -->
+              <div class="glass-card rounded-xl p-4 relative overflow-hidden text-right">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-400">الحل من أول اتصال</span>
+                  <i class="fa-solid fa-circle-check text-samt-gold text-sm"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-samt-gold font-readex">92.8%</div>
+                <div class="text-[11px] text-emerald-400 font-bold mt-1">المعدل المثالي (Optimal)</div>
+              </div>
 
-          <!-- Bottom Agent Workstation Table -->
-          <rect x="20" y="405" width="960" height="155" rx="10" fill="url(#cardGrad)" stroke="#334155"/>
-          <text x="40" y="432" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="700">Real-Time Agent Extensions &amp; Queue Status</text>
-          
-          <rect x="40" y="445" width="920" height="24" rx="4" fill="#0F172A"/>
-          <text x="55" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">AGENT</text>
-          <text x="260" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">EXTENSION</text>
-          <text x="450" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">STATUS</text>
-          <text x="680" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">DURATION</text>
-          <text x="880" y="461" fill="#64748B" font-family="sans-serif" font-size="10" font-weight="700">CSAT</text>
+              <!-- Card 4: CSAT Satisfaction -->
+              <div class="glass-card rounded-xl p-4 relative overflow-hidden text-right">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-400">تقييم رضا العملاء</span>
+                  <i class="fa-solid fa-face-smile text-emerald-400 text-sm"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-emerald-400 font-readex">4.9/5</div>
+                <div class="text-xs text-samt-gold mt-1">★★★★★</div>
+              </div>
 
-          <text x="55" y="490" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Sarah Jenkins</text>
-          <text x="260" y="490" fill="#94A3B8" font-family="sans-serif" font-size="11">EXT-104</text>
-          <rect x="450" y="478" width="70" height="16" rx="8" fill="#065F46"/>
-          <text x="485" y="490" text-anchor="middle" fill="#34D399" font-family="sans-serif" font-size="9" font-weight="700">In Call (VIP)</text>
-          <text x="680" y="490" fill="#FFFFFF" font-family="sans-serif" font-size="11">04m:12s</text>
-          <text x="880" y="490" fill="#10B981" font-family="sans-serif" font-size="11" font-weight="bold">99.4%</text>
+            </div>
 
-          <line x1="40" y1="504" x2="960" y2="504" stroke="#1E293B" stroke-width="1"/>
-          
-          <text x="55" y="525" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Alex Morgan</text>
-          <text x="260" y="525" fill="#94A3B8" font-family="sans-serif" font-size="11">EXT-108</text>
-          <rect x="450" y="513" width="60" height="16" rx="8" fill="#1E3A8A"/>
-          <text x="480" y="525" text-anchor="middle" fill="#60A5FA" font-family="sans-serif" font-size="9" font-weight="700">Wrap-Up</text>
-          <text x="680" y="525" fill="#94A3B8" font-family="sans-serif" font-size="11">00m:45s</text>
-          <text x="880" y="525" fill="#10B981" font-family="sans-serif" font-size="11" font-weight="bold">97.8%</text>
-        </svg>
+            <!-- Row 2: Live Traffic Charts & Active Call Console -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <!-- Chart Visualizer -->
+              <div class="md:col-span-2 glass-card rounded-xl p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-bold text-slate-300">مراقبة تدفق المكالمات وحركة البيانات اللحظية</span>
+                  <span class="text-[11px] text-samt-cyan font-mono flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-samt-cyan animate-ping"></span>
+                    Live 10ms
+                  </span>
+                </div>
+                
+                <!-- SVG Wave Graphic -->
+                <div class="h-28 w-full">
+                  <svg viewBox="0 0 500 100" class="w-full h-full" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="waveGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#00F5D4" stop-opacity="0.35"/>
+                        <stop offset="100%" stop-color="#00BBF9" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M 0 80 Q 70 30 140 60 T 280 25 T 420 50 T 500 30 L 500 100 L 0 100 Z" fill="url(#waveGrad)"/>
+                    <path d="M 0 80 Q 70 30 140 60 T 280 25 T 420 50 T 500 30" fill="none" stroke="#00F5D4" stroke-width="2.5"/>
+                    <circle cx="280" cy="25" r="4" fill="#00F5D4"/>
+                    <circle cx="420" cy="50" r="4" fill="#00BBF9"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Live Audio Waveform Box -->
+              <div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-white">المكالمة النشطة الآن</span>
+                  <span class="px-2 py-0.5 text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">مباشر</span>
+                </div>
+
+                <div class="text-sm font-bold text-white mb-1">عميل VIP (الخط 04)</div>
+                <div class="text-xs text-slate-400 mb-3 font-mono">+966 50 123 4567</div>
+
+                <!-- Animated Equalizer Bars -->
+                <div class="flex items-center justify-between h-8 bg-black/40 px-3 rounded-lg">
+                  <div class="w-1 bg-samt-cyan h-3 rounded-full animate-pulse"></div>
+                  <div class="w-1 bg-samt-blue h-6 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                  <div class="w-1 bg-samt-cyan h-4 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                  <div class="w-1 bg-emerald-400 h-7 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
+                  <div class="w-1 bg-samt-cyan h-5 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+                  <div class="w-1 bg-samt-blue h-6 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                  <div class="w-1 bg-emerald-400 h-3 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. Performance Benchmarks Bar
+       ========================================================================== -->
+  <section class="border-y border-white/10 bg-[#0A0F20] py-10 relative z-10">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        
+        <div>
+          <div class="text-3xl md:text-4xl font-black text-gradient-cyan font-readex">+300%</div>
+          <div class="text-xs md:text-sm text-slate-400 font-bold mt-1">سرعة معالجة وتصفح الويب</div>
+        </div>
+
+        <div>
+          <div class="text-3xl md:text-4xl font-black text-emerald-400 font-readex">120 MB</div>
+          <div class="text-xs md:text-sm text-slate-400 font-bold mt-1">استهلاك خفيف جداً للذاكرة (RAM)</div>
+        </div>
+
+        <div>
+          <div class="text-3xl md:text-4xl font-black text-samt-gold font-readex">14,200+</div>
+          <div class="text-xs md:text-sm text-slate-400 font-bold mt-1">إعلانات وتتبع محجوبة لحظياً</div>
+        </div>
+
+        <div>
+          <div class="text-3xl md:text-4xl font-black text-white font-readex">99.99%</div>
+          <div class="text-xs md:text-sm text-slate-400 font-bold mt-1">جاهزية واستقرار السيرفرات (SLA)</div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Live Stats -->
-  <section class="stats-bar">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">+1.4M</div>
-          <div class="stat-label">مكالمة يومياً بمعالجة مستقرة</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">99.99%</div>
-          <div class="stat-label">نسبة جاهزية وثبات السيرفرات SLA</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">&lt; 3 Min</div>
-          <div class="stat-label">سرعة التثبيت والتشغيل الفوري</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">&lt; 15ms</div>
-          <div class="stat-label">زمن استجابة الصوت الفائق الصغر</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Courses Section -->
-  <section id="courses">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">🎓 أكاديمية الكورسات والشروحات</div>
-        <h2 class="section-title">أحدث الكورسات <span class="gradient-text">والدروس العملية</span></h2>
-        <p class="section-subtitle">
-          شروحات فيديو تفاعلية تغطي كافة إمكانيات النظام، من ضبط ملفات الوكلاء وحتى ربط قواعد البيانات وإدارة السيرفرات.
+  <!-- ==========================================================================
+       5. Core Features Section
+       ========================================================================== -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-extrabold text-samt-cyan uppercase tracking-wider px-3 py-1 rounded-full bg-samt-cyan/10 border border-samt-cyan/30">
+          المميزات الحصرية
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-4 mb-4 font-cairo">
+          هندسة برمجية متطورة <span class="text-gradient">بدون بطء أو تعقيد</span>
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          تم تصميم سمت SAMT ليوفر لك بيئة عمل سريعة، آمنة، وخفيفة على أجهزتك مع أدوات إنتاجية مدمجة.
         </p>
       </div>
 
-      <div class="courses-grid">
-        <!-- Course 1 -->
-        <div class="course-card">
-          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية السريعة: تثبيت وإعداد AgentPro')">
-            <div class="play-btn-circle">▶</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Feature 1 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 text-right">
+          <div class="w-12 h-12 rounded-xl bg-samt-cyan/10 border border-samt-cyan/30 flex items-center justify-center text-samt-cyan text-xl mb-5">
+            <i class="fa-solid fa-bolt"></i>
           </div>
-          <div class="course-body">
-            <span class="course-category">دليل المبتدئين</span>
-            <h3 class="course-title">دليل البداية السريعة: تثبيت وإعداد AgentPro من الصفر</h3>
-            <p class="course-desc">تعلم خطوات تثبيت البرنامج وضبط إعدادات سماعة الرأس وربط خطوط الـ SIP في دقائق.</p>
-            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية السريعة: تثبيت وإعداد AgentPro')">
-              ▶ مشاهدة الدرس
+          <h3 class="text-lg font-bold text-white mb-2 font-cairo">أداء فائق وانعدام الجاذبية</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            محرك مبني بلغات عالية الكفاءة يضمن استجابة فورية للأوامر دون أي تأخير (Zero Lag) حتى مع فتح عشرات التبويبات.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 text-right">
+          <div class="w-12 h-12 rounded-xl bg-samt-blue/10 border border-samt-blue/30 flex items-center justify-center text-samt-blue text-xl mb-5">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2 font-cairo">حماية الخصوصية وتشفير كامل</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            تشفير AES-256 و TLS 1.3 مع حجب تلقائي لكافة نصوص التتبع والإعلانات المزعجة للحفاظ على سرية بياناتك.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card rounded-2xl p-6 transition-all duration-300 text-right">
+          <div class="w-12 h-12 rounded-xl bg-samt-purple/10 border border-samt-purple/30 flex items-center justify-center text-samt-cyan text-xl mb-5">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2 font-cairo">أكاديمية كورسات متجددة دورياً</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            دورات تدريبية متكاملة لتعليم أسرار الإنتاجية، إدارة الكول سنتر، وربط قواعد البيانات مع حساب تلقائي لتقدمك.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. Courses Academy Section (Udemy Style Grid)
+       ========================================================================== -->
+  <section id="courses" class="py-20 bg-[#090F22]/70 relative border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <div class="flex flex-col md:flex-row items-center justify-between mb-12 gap-4 text-right">
+        <div>
+          <span class="text-xs font-extrabold text-samt-cyan uppercase tracking-wider px-3 py-1 rounded-full bg-samt-cyan/10 border border-samt-cyan/30">
+            أكاديمية التدريب
+          </span>
+          <h2 class="text-3xl font-black text-white mt-3 font-cairo">
+            أحدث الكورسات <span class="text-gradient">والشروحات العملية</span>
+          </h2>
+        </div>
+        <a href="./courses.html" class="btn-samt-glow px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2">
+          <span>تصفح كل الكورسات والدروس</span>
+          <i class="fa-solid fa-arrow-left text-xs"></i>
+        </a>
+      </div>
+
+      <!-- Course Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Course 1 -->
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
+          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية مع منظومة سمت SAMT')">
+            <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-lg shadow-lg group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-play ml-0.5"></i>
+            </div>
+            <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">مبتدئ</span>
+            <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white">08:30 دقيقة</span>
+          </div>
+
+          <div class="p-5 flex flex-col flex-grow text-right">
+            <span class="text-xs font-extrabold text-samt-cyan mb-1">دليل التثبيت والتشغيل</span>
+            <h3 class="text-base font-bold text-white mb-2 font-cairo">دليل البداية السريعة مع منظومة سمت SAMT</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+              خطوات تنزيل البرنامج وتفعيل محرك الصوت منخفض التأخير وضبط إعدادات الوكيل في أقل من 3 دقائق.
+            </p>
+            <button class="w-full mt-auto py-2.5 rounded-xl bg-samt-cyan/10 hover:bg-samt-cyan hover:text-samt-space border border-samt-cyan/30 text-samt-cyan text-xs font-bold transition-all flex items-center justify-center gap-2" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية مع منظومة سمت SAMT')">
+              <i class="fa-solid fa-circle-play"></i>
+              <span>مشاهدة الدرس الآن</span>
             </button>
           </div>
         </div>
 
         <!-- Course 2 -->
-        <div class="course-card">
-          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات ومؤشرات الأداء')">
-            <div class="play-btn-circle">▶</div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
+          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات والـ KPIs')">
+            <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-lg shadow-lg group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-play ml-0.5"></i>
+            </div>
+            <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-samt-blue/20 text-samt-blue border border-samt-blue/30">متوسط</span>
+            <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white">14:15 دقيقة</span>
           </div>
-          <div class="course-body">
-            <span class="course-category">التحليلات والـ KPIs</span>
-            <h3 class="course-title">احتراف تحليلات المكالمات ومؤشرات الأداء (KPIs &amp; AHT)</h3>
-            <p class="course-desc">شرح شامل لقياس زمن المكالمة ومعدل رضا العملاء واستخراج تقارير Excel و PDF.</p>
-            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات ومؤشرات الأداء')">
-              ▶ مشاهدة الدرس
+
+          <div class="p-5 flex flex-col flex-grow text-right">
+            <span class="text-xs font-extrabold text-samt-blue mb-1">التحليلات والمؤشرات</span>
+            <h3 class="text-base font-bold text-white mb-2 font-cairo">احتراف تحليلات المكالمات ومؤشرات الـ KPIs</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+              شرح شامل لحساب AHT ومعدل الرضا CSAT وتصدير تقارير Excel و PDF التفاعلية.
+            </p>
+            <button class="w-full mt-auto py-2.5 rounded-xl bg-samt-blue/10 hover:bg-samt-blue hover:text-samt-space border border-samt-blue/30 text-samt-blue text-xs font-bold transition-all flex items-center justify-center gap-2" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'احتراف تحليلات المكالمات والـ KPIs')">
+              <i class="fa-solid fa-circle-play"></i>
+              <span>مشاهدة الدرس الآن</span>
             </button>
           </div>
         </div>
 
         <!-- Course 3 -->
-        <div class="course-card">
-          <div class="course-banner" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'نظام إدارة تذاكر الدعم الفني')">
-            <div class="play-btn-circle">▶</div>
+        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
+          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'إدارة تسجيلات المكالمات والموجات الصوتية')">
+            <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-lg shadow-lg group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-play ml-0.5"></i>
+            </div>
+            <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-samt-gold/20 text-samt-gold border border-samt-gold/30">شامل</span>
+            <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white">11:20 دقيقة</span>
           </div>
-          <div class="course-body">
-            <span class="course-category">إدارة التذاكر</span>
-            <h3 class="course-title">نظام إدارة تذاكر الدعم الفني وتصعيد الشكاوى (Ticketing)</h3>
-            <p class="course-desc">تحويل المكالمات لتذاكر تلقائياً وتحديد اتفاقيات مستوى الخدمة SLA وتعيين المهام.</p>
-            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'نظام إدارة تذاكر الدعم الفني')">
-              ▶ مشاهدة الدرس
+
+          <div class="p-5 flex flex-col flex-grow text-right">
+            <span class="text-xs font-extrabold text-samt-gold mb-1">تسجيلات الصوت</span>
+            <h3 class="text-base font-bold text-white mb-2 font-cairo">إدارة تسجيلات المكالمات ومشغل الموجات</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+              الاستماع للتسجيلات الصوتية المشفرة وتفعيل عزل الصوت المزدوج للوكيل والعميل.
+            </p>
+            <button class="w-full mt-auto py-2.5 rounded-xl bg-samt-gold/10 hover:bg-samt-gold hover:text-samt-space border border-samt-gold/30 text-samt-gold text-xs font-bold transition-all flex items-center justify-center gap-2" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'إدارة تسجيلات المكالمات والموجات الصوتية')">
+              <i class="fa-solid fa-circle-play"></i>
+              <span>مشاهدة الدرس الآن</span>
             </button>
           </div>
         </div>
+
       </div>
 
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="./courses.html" class="btn btn-secondary btn-lg">
-          📚 استعراض جميع الكورسات وتحميل الملفات المرفقة ←
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section id="features" style="background: var(--bg-secondary);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">قدرات برمجية فائقة</div>
-        <h2 class="section-title">صُمم لرفع كفاءة <span class="gradient-text">فريق العمل</span></h2>
-        <p class="section-subtitle">
-          كل ما يحتاجه الوكيل والمشرف لتقديم تجربة خدمة عملاء استثنائية وبدون أي تعقيدات تقنية.
+  <!-- ==========================================================================
+       7. Downloads & Releases Center
+       ========================================================================== -->
+  <section id="download" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-extrabold text-samt-cyan uppercase tracking-wider px-3 py-1 rounded-full bg-samt-cyan/10 border border-samt-cyan/30">
+          التحميل المباشر
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-4 mb-4 font-cairo">
+          حمّل منظومة <span class="text-gradient">سمت SAMT الآن</span>
+        </h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          تثبيت فوري بدون تعقيدات أو برامج طرف ثالث مزعجة، اختر نسختك وابدأ العمل في دقيقتين.
         </p>
       </div>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-box">🎧</div>
-            <h3 class="feature-title">لوحة تحكم الوكيل الموحدة</h3>
-            <p class="feature-desc">
-              واجهة تفاعلية للاتصال السريع بضغطة زر، تحويل المكالمات الفوري، والتعرف التلقائي على هوية وبيانات العميل المتصل.
-            </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        
+        <!-- Windows Edition -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden border-samt-cyan/40 text-right">
+          <div class="w-16 h-16 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 flex items-center justify-center text-samt-cyan text-3xl mb-6">
+            <i class="fa-brands fa-windows"></i>
           </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">✔️ دعم بروتوكولات SIP و WebRTC متعددة الخطوط</li>
-            <li class="feature-list-item">✔️ نافذة منبثقة فورية بملف العميل وسجل تعاملاته</li>
-            <li class="feature-list-item">✔️ خاصية الهمس والتدخل المباشر للمشرفين</li>
+          <h3 class="text-xl font-bold text-white mb-2 font-cairo">إصدار Windows (64-bit)</h3>
+          <span class="inline-block px-3 py-1 text-xs font-extrabold text-samt-cyan bg-samt-cyan/10 rounded-full mb-4">v2.4.2 (68.4 MB)</span>
+          
+          <ul class="space-y-2.5 text-sm text-slate-300 mb-8">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> متوافق مع Windows 10 و 11</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> محرك Direct WASAPI عالي السرعة</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> تحديثات تلقائية دورية</li>
           </ul>
-        </div>
 
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-box">📊</div>
-            <h3 class="feature-title">تحليلات المكالمات ومؤشرات الـ KPIs</h3>
-            <p class="feature-desc">
-              مراقبة حية لحجم الانتظار، متوسط زمن المعالجة (AHT)، نسبة الحل من أول اتصال (FCR)، وتنبيهات بصرية لحظية.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">✔️ خريطة حرارية لمتابعة أوقات الذروة</li>
-            <li class="feature-list-item">✔️ تصدير فوري للتقارير بصيغ PDF و Excel</li>
-            <li class="feature-list-item">✔️ لوحة شرف وتقييمات تفاعلية لأداء الوكلاء</li>
-          </ul>
-        </div>
-
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-box">🎫</div>
-            <h3 class="feature-title">نظام إدارة التذاكر الذكي</h3>
-            <p class="feature-desc">
-              تحويل المكالمات المغلقة إلى تذاكر دعم فني بشكل آلي مع تصنيف الأولويات واحتساب أوقات الاستجابة SLA.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">✔️ أتمتة كاملة لإنشاء وتعيين التذاكر</li>
-            <li class="feature-list-item">✔️ تنبيهات ذكية قبل تجاوز حدود الـ SLA</li>
-            <li class="feature-list-item">✔️ مزامنة متعددة القنوات (مكالمات، واتساب، بريد)</li>
-          </ul>
-        </div>
-
-        <div class="feature-card">
-          <div>
-            <div class="feature-icon-box">🎙️</div>
-            <h3 class="feature-title">تسجيل المكالمات ومشغل الموجات الصوتية</h3>
-            <p class="feature-desc">
-              تسجيل صوتي فائق النقاء بقناتين منفصلتين (صوت الوكيل والعميل) مع تشفير كامل بتقنية AES-256 المتوافقة مع معايير الأمان.
-            </p>
-          </div>
-          <ul class="feature-list">
-            <li class="feature-list-item">✔️ فصل ستريو متكامل لصوت المتحدثين</li>
-            <li class="feature-list-item">✔️ مشغل تفاعلي للموجات الصوتية مع تسريع الصوت</li>
-            <li class="feature-list-item">✔️ إيقاف تلقائي للتسجيل عند إدخال بيانات حساسة</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Specs Section -->
-  <section id="specs">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">خفيف وسريع وآمن</div>
-        <h2 class="section-title">مواصفات التشغيل وتكامل قواعد البيانات</h2>
-        <p class="section-subtitle">
-          يعمل AgentPro بكفاءة عالية على الأجهزة المتوسطة دون استهلاك موارد الذاكرة أو المعالج.
-        </p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
-        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 32px;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 20px;">⚙️ الأداء ومواصفات الأجهزة</h3>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">استهلاك الذاكرة: <strong>&lt; 120 MB RAM فقط</strong></p>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">استهلاك المعالج: <strong>أقل من 1.5% أثناء التسجيل</strong></p>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">أنظمة التشغيل: <strong>Windows 10/11 (64-bit) و macOS 12+</strong></p>
-          <p style="color: var(--text-muted);">محرك الصوت: <strong>DirectSound / WASAPI / CoreAudio</strong></p>
-        </div>
-
-        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 32px;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 20px;">🔒 الأمان وقواعد البيانات المدعومة</h3>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">التشفير: <strong>AES-256 و TLS 1.3 لنقل البيانات</strong></p>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">قواعد البيانات: <strong>PostgreSQL, MySQL, SQLite, MSSQL</strong></p>
-          <p style="color: var(--text-muted); margin-bottom: 10px;">أنظمة الـ PBX: <strong>Asterisk, FreePBX, 3CX, Cisco, SIP</strong></p>
-          <p style="color: var(--text-muted);">العمل دون اتصال: <strong>تخزين محلي مؤقت ومزامنة تلقائية</strong></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Download Section -->
-  <section id="download" style="background: var(--bg-secondary);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">مركز التحميل السريع</div>
-        <h2 class="section-title">جاهز للبدء مع AgentPro؟</h2>
-        <p class="section-subtitle">
-          حمل النسخة المناسبة لنظامك، التثبيت يستغرق أقل من دقيقتين.
-        </p>
-      </div>
-
-      <div class="downloads-grid">
-        <div class="download-card highlight">
-          <div class="os-icon">🪟</div>
-          <h3>نسخة Windows</h3>
-          <span class="version-tag">v2.4.2 (68.4 MB)</span>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">متوافقة مع Windows 10 &amp; 11 (64-bit)</p>
-          <a href="./downloads.html" class="btn btn-primary" style="width: 100%;">
-            تحميل نسخة ويندوز (.exe)
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn-samt-glow w-full py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل للويندوز (.exe)</span>
           </a>
         </div>
 
-        <div class="download-card">
-          <div class="os-icon">🍎</div>
-          <h3>نسخة macOS</h3>
-          <span class="version-tag">v2.4.2 (72.1 MB)</span>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">حزمة شاملة (Apple Silicon M1/M2/M3 &amp; Intel)</p>
-          <a href="./downloads.html" class="btn btn-secondary" style="width: 100%;">
-            تحميل نسخة ماك (.dmg)
+        <!-- macOS Edition -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden text-right">
+          <div class="w-16 h-16 rounded-2xl bg-samt-blue/10 border border-samt-blue/30 flex items-center justify-center text-samt-blue text-3xl mb-6">
+            <i class="fa-brands fa-apple"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2 font-cairo">إصدار macOS Universal</h3>
+          <span class="inline-block px-3 py-1 text-xs font-extrabold text-samt-blue bg-samt-blue/10 rounded-full mb-4">v2.4.2 (72.1 MB)</span>
+          
+          <ul class="space-y-2.5 text-sm text-slate-300 mb-8">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> يدعم Apple Silicon (M1..M4) و Intel</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> استجابة فائقة بمحرك CoreAudio</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> حزمة موقعة ومحمية من Apple</li>
+          </ul>
+
+          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="glass-card hover:border-samt-blue text-white w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all">
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل للماك (.dmg)</span>
           </a>
         </div>
+
       </div>
+
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section id="faq">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">الأسئلة الشائعة</div>
-        <h2 class="section-title">إجابات عن استفساراتك</h2>
+  <!-- ==========================================================================
+       8. FAQ Accordion
+       ========================================================================== -->
+  <section id="faq" class="py-20 bg-[#0A0F20] border-t border-white/10">
+    <div class="max-w-4xl mx-auto px-4 text-right">
+      
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-black text-white font-cairo">الأسئلة الشائعة حول سمت SAMT</h2>
       </div>
 
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>ما هي أنظمة السنترال والاتصالات المتوافقة مع AgentPro؟</span>
-            <span>▼</span>
+      <div class="space-y-4">
+        
+        <div class="glass-card rounded-xl overflow-hidden">
+          <button class="w-full p-5 text-right font-bold text-white flex items-center justify-between font-cairo" onclick="toggleFaq(this)">
+            <span>ما هو مفهوم "سمت SAMT" في منظومة الاتصالات والمتصفح؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan transition-transform"></i>
           </button>
-          <div class="faq-answer">
-            يتوافق AgentPro بشكل كامل مع Asterisk, FreePBX, 3CX, Cisco Unified Communications, Twilio Voice، وكافة بروتوكولات الـ SIP / WebRTC القياسية.
+          <div class="p-5 pt-0 text-slate-400 text-sm leading-relaxed hidden">
+            "السمت" في الفلك العربي القديم هو الاتجاه والمسار الدقيق للنجوم. استلهمنا الاسم لنقدم منظومة اتصالات وتصفح تمنحك المسار الأسرع، الأنقى، والأخف وزناً دون أي تشتت أو بطء في الأداء.
           </div>
         </div>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>هل يمكن حفظ واستضافة قاعدة البيانات على سيرفراتنا الداخلية؟</span>
-            <span>▼</span>
+        <div class="glass-card rounded-xl overflow-hidden">
+          <button class="w-full p-5 text-right font-bold text-white flex items-center justify-between font-cairo" onclick="toggleFaq(this)">
+            <span>كيف يمكنني الاستفادة من أكاديمية الكورسات؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan transition-transform"></i>
           </button>
-          <div class="faq-answer">
-            نعم 100%، يدعم البرنامج قواعد البيانات المحلية والذاتية (On-Premises) مثل PostgreSQL و MySQL و SQLite و MSSQL، وتبقى كافة تسجيلاتك وبيانات عملائك داخل شبكتك الخاصة.
+          <div class="p-5 pt-0 text-slate-400 text-sm leading-relaxed hidden">
+            توفر لك <a href="./courses.html" class="text-samt-cyan font-bold underline">أكاديمية سمت</a> دروساً عملية وشروحات فيديو متجددة دورياً مع مشغل تفاعلي يحسب نسبة تقدمك في التعلم ويحتفظ بها تلقائياً.
           </div>
         </div>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>كيف يمكنني متابعة الكورسات والشروحات الجديدة؟</span>
-            <span>▼</span>
+        <div class="glass-card rounded-xl overflow-hidden">
+          <button class="w-full p-5 text-right font-bold text-white flex items-center justify-between font-cairo" onclick="toggleFaq(this)">
+            <span>هل تتوفر لوحة تحكم لإضافة وتعديل الكورسات كـ Admin؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan transition-transform"></i>
           </button>
-          <div class="faq-answer">
-            يمكنك زيارة صفحة <a href="./courses.html" style="color: var(--primary-light);">أكاديمية الكورسات</a> للاطلاع على كافة الدروس والفيديوهات المضافة دورياً مع تحميل ملفات التطبيق وقوالب العمل المرفقة مع كل درس.
+          <div class="p-5 pt-0 text-slate-400 text-sm leading-relaxed hidden">
+            نعم، يمكنك الدخول لصفحة <a href="./admin.html" class="text-samt-gold font-bold underline">لوحة تحكم الأدمن</a> لإضافة أي كورس أو فيديو يوتيوب جديد أو تعديل وحذف الكورسات الحالية بضغطة زر.
           </div>
         </div>
+
       </div>
+
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <svg viewBox="0 0 320 80" width="140" height="35">
-            <g transform="translate(10, 10)">
-              <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
-              <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
-              <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-              <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-              <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
-            </g>
-            <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
-          </svg>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 14px; max-width: 320px;">
-            المنظومة الاحترافية المتكاملة لإدارة الكول سنتر ومراكز الاتصال وأكاديمية التدريب العملي.
+  <!-- ==========================================================================
+       9. Celestial Footer
+       ========================================================================== -->
+  <footer class="bg-[#050813] border-t border-white/10 pt-16 pb-12 text-right">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-2xl font-black text-white font-cairo">سَـمْـت</span>
+            <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
+          </div>
+          <p class="text-slate-400 text-sm max-w-sm leading-relaxed">
+            المنظومة المتطورة للاتصالات وتحليل البيانات وأكاديمية الكورسات المفتوحة — صُممت بأحدث معايير الأداء والسرعة.
           </p>
         </div>
 
-        <div class="footer-col">
-          <h4>أقسام الموقع</h4>
-          <ul class="footer-links">
-            <li><a href="#features">المميزات الأساسية</a></li>
-            <li><a href="./courses.html">أكاديمية الكورسات</a></li>
-            <li><a href="./downloads.html">مركز البرامج</a></li>
-            <li><a href="#specs">مواصفات التشغيل</a></li>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 font-cairo">روابط سريعة</h4>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-semibold">
+            <li><a href="#features" class="hover:text-samt-cyan transition-colors">المميزات الأساسية</a></li>
+            <li><a href="./courses.html" class="hover:text-samt-cyan transition-colors">أكاديمية الكورسات</a></li>
+            <li><a href="./downloads.html" class="hover:text-samt-cyan transition-colors">تحميل البرنامج</a></li>
+            <li><a href="./admin.html" class="hover:text-samt-gold transition-colors">لوحة تحكم الأدمن</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h4>المصادر والدعم</h4>
-          <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">مستودع GitHub</a></li>
-            <li><a href="./downloads.html">سجل التحديثات</a></li>
-            <li><a href="#faq">الأسئلة الشائعة</a></li>
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4 font-cairo">المستودع والمجتمع</h4>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-semibold">
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener" class="hover:text-samt-cyan transition-colors"><i class="fa-brands fa-github ml-1"></i> GitHub Repository</a></li>
+            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" target="_blank" rel="noopener" class="hover:text-samt-cyan transition-colors">سجل الإصدارات (Changelog)</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h4>المجتمع</h4>
-          <ul class="footer-links">
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro" target="_blank" rel="noopener">⭐ وضع نجمة على GitHub</a></li>
-            <li><a href="https://github.com/sbilalsamirss-ctrl/AgentPro/issues" target="_blank" rel="noopener">الإبلاغ عن استفسار</a></li>
-          </ul>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>
+          &copy; <span id="currentYear">2026</span> <strong>منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.
+        </div>
+        <div class="text-slate-400">
+          مستضاف على <strong class="text-white">GitHub Pages</strong> بتقنية Zero-Lag
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <div>
-          &copy; <span id="currentYear">2026</span> <strong>AgentPro Suite</strong>. جميع الحقوق محفوظة.
-        </div>
-        <div>
-          <a href="./courses.html" style="color: var(--primary-light); text-decoration: none;">انتقل إلى منصة الكورسات ←</a>
-        </div>
-      </div>
     </div>
   </footer>
 
-  <!-- Video Modal -->
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div id="modalTitle" style="font-weight: 800;">مشغل الفيديو</div>
-        <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+  <!-- ==========================================================================
+       10. Responsive Video Modal Player
+       ========================================================================== -->
+  <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4">
+    <div class="glass-card rounded-2xl w-full max-w-4xl overflow-hidden shadow-2xl border border-samt-border">
+      <div class="bg-[#050813] px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <h3 id="modalTitle" class="text-sm sm:text-base font-bold text-white font-cairo">مشاهدة الدرس</h3>
+        <button class="text-slate-400 hover:text-white text-xl" onclick="closeVideoModal()" aria-label="Close Video">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <div style="background: #000; aspect-ratio: 16/9;">
-        <iframe id="modalIframe" style="width: 100%; height: 100%; border: none;" src="" allowfullscreen></iframe>
+      <div class="aspect-video bg-black">
+        <iframe id="modalIframe" class="w-full h-full border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
+  <!-- JavaScript Functions -->
   <script>
-    document.querySelectorAll('.faq-item').forEach(item => {
-      const q = item.querySelector('.faq-question');
-      if (q) {
-        q.addEventListener('click', () => {
-          const isActive = item.classList.contains('active');
-          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-          if (!isActive) item.classList.add('active');
-        });
-      }
-    });
+    // FAQ Toggle
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    }
 
-    window.openVideoModal = (url, title) => {
+    // Video Modal
+    function openVideoModal(url, title) {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('modalIframe');
       const titleEl = document.getElementById('modalTitle');
       if (titleEl) titleEl.textContent = title;
       if (iframe) iframe.src = url;
-      if (modal) modal.classList.add('active');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
-    };
+    }
 
-    window.closeVideoModal = () => {
+    function closeVideoModal() {
       const modal = document.getElementById('videoModal');
       const iframe = document.getElementById('modalIframe');
-      if (modal) modal.classList.remove('active');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
       if (iframe) iframe.src = '';
       document.body.style.overflow = 'auto';
-    };
+    }
 
     document.getElementById('videoModal')?.addEventListener('click', (e) => {
       if (e.target === document.getElementById('videoModal')) closeVideoModal();
@@ -869,7 +802,14 @@
       if (e.key === 'Escape') closeVideoModal();
     });
 
+    // Mobile Menu Toggle
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+      document.getElementById('mobileMenu')?.classList.toggle('hidden');
+    });
+
+    // Update Year
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
