@@ -1,374 +1,199 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مركز تحميل البرامج والإصدارات | AgentPro</title>
-  <meta name="description" content="تحميل الإصدارات الرسمية لمنظومة AgentPro وأدوات مزامنة قواعد البيانات لأنظمة Windows و macOS." />
+  <title>مركز تنزيل البرامج والتطبيقات | منظومة سمت SAMT</title>
+  <meta name="description" content="تحميل أحدث إصدارات متصفح وتطبيقات منظومة سمت SAMT لأنظمة Windows و macOS وأدوات المطورين." />
 
-  <!-- Google Fonts: Cairo & Plus Jakarta Sans -->
+  <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            samt: {
+              space: '#070A12',
+              navy: '#0B132B',
+              card: '#0E172E',
+              cyan: '#00F5D4',
+              blue: '#00BBF9',
+              purple: '#7928CA',
+              gold: '#FFB703',
+              border: 'rgba(0, 245, 212, 0.18)'
+            }
+          },
+          fontFamily: {
+            readex: ['"Readex Pro"', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', '"Readex Pro"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    :root {
-      --bg-primary: #0A0F1D;
-      --bg-secondary: #0F172A;
-      --bg-card: #131E35;
-      --primary: #0077FE;
-      --primary-light: #00D2FF;
-      --accent-green: #10B981;
-      --text-main: #FFFFFF;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-card: rgba(148, 163, 184, 0.14);
-      --nav-height: 74px;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-full: 9999px;
-      --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; color-scheme: dark; }
     body {
-      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      line-height: 1.7;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Readex Pro', 'Cairo', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    .ambient-glow {
-      position: fixed;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      background: radial-gradient(circle at 50% 15%, rgba(0, 119, 254, 0.18), transparent 45%);
-    }
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card { background: rgba(14, 23, 46, 0.8); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
+    
+    html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
+    html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
+    html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
 
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-height);
-      background: rgba(10, 15, 29, 0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      z-index: 1000;
-    }
-    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-link {
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-    .nav-link:hover, .nav-link.active { color: #FFFFFF; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 24px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, #0056cb 100%);
-      color: #FFF;
-      box-shadow: 0 4px 18px rgba(0, 119, 254, 0.4);
-    }
-    .btn-primary:hover { background: #1a88ff; transform: translateY(-2px); color: #FFF; }
-    .btn-secondary {
-      background: rgba(30, 41, 59, 0.8);
-      color: #FFF;
-      border: 1px solid var(--border-card);
-    }
-    .btn-secondary:hover { background: rgba(51, 65, 85, 0.95); transform: translateY(-2px); }
-
-    .downloads-hero {
-      padding-top: calc(var(--nav-height) + 50px);
-      padding-bottom: 40px;
-      text-align: center;
-    }
-    .section-badge {
-      display: inline-block;
-      background: rgba(0, 119, 254, 0.12);
-      border: 1px solid rgba(0, 210, 255, 0.3);
-      color: var(--primary-light);
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 6px 18px;
-      border-radius: var(--radius-full);
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
+    .btn-samt-glow {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      color: #070A12 !important;
       font-weight: 800;
-      margin-bottom: 14px;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--primary-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .section-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 680px;
-      margin: 0 auto 30px;
-    }
-
-    .downloads-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      margin-bottom: 60px;
-    }
-    .download-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-lg);
-      padding: 34px 26px;
-      text-align: center;
-      transition: all var(--transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .download-card.highlight {
-      border-color: var(--primary);
-      box-shadow: 0 0 30px rgba(0, 119, 254, 0.25);
-    }
-    .download-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary-light);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 25px rgba(0,119,254,0.3);
-    }
-    .os-icon {
-      width: 60px; height: 60px;
-      margin: 0 auto 16px;
-      border-radius: 14px;
-      background: rgba(30, 41, 59, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      border: 1px solid var(--border-card);
-    }
-    .download-card h3 { font-size: 1.4rem; margin-bottom: 6px; }
-    .version-tag {
-      display: inline-block;
-      background: rgba(0, 210, 255, 0.12);
-      color: var(--primary-light);
-      font-size: 0.8125rem;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      margin-bottom: 16px;
-    }
-    .download-specs-list {
-      text-align: right;
-      list-style: none;
-      margin: 16px 0 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    .download-specs-list li { display: flex; align-items: center; gap: 8px; }
-
-    .specs-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      margin: 20px 0 60px;
-    }
-    .specs-table th, .specs-table td {
-      padding: 16px 20px;
-      text-align: right;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.95rem;
-    }
-    .specs-table th { background: #0A0F1D; color: var(--primary-light); font-weight: 800; font-size: 0.85rem; }
-
-    .footer {
-      background: #060A14;
-      border-top: 1px solid var(--border-subtle);
-      padding: 40px 0 20px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text-dim);
-    }
-
-    @media (max-width: 1024px) {
-      .downloads-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto 50px; }
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
     }
   </style>
 </head>
-<body>
-  <div class="ambient-glow"></div>
+<body class="min-h-screen flex flex-col justify-between">
 
-  <header class="navbar">
-    <div class="container nav-container">
-      <a href="./index.html" class="nav-logo">
-        <svg viewBox="0 0 320 80" width="150" height="38">
-          <g transform="translate(10, 10)">
-            <rect x="0" y="0" width="60" height="60" rx="16" fill="#0077FE" />
-            <path d="M 17 31 A 13 13 0 0 1 43 31" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
-            <rect x="14" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <rect x="40" y="29" width="6" height="11" rx="3" fill="#FFFFFF" />
-            <circle cx="28" cy="45" r="2.5" fill="#00D2FF"/>
-          </g>
-          <text x="82" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF">Agent<tspan fill="#00D2FF">Pro</tspan></text>
-        </svg>
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-3">
+        <span class="text-2xl font-black font-cairo">سَـمْـت</span>
+        <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
       </a>
-
-      <nav>
-        <ul class="nav-links">
-          <li><a href="./index.html" class="nav-link">الرئيسية</a></li>
-          <li><a href="./courses.html" class="nav-link">أكاديمية الكورسات</a></li>
-          <li><a href="./downloads.html" class="nav-link active">مركز التحميل</a></li>
-          <li><a href="./index.html#specs" class="nav-link">المواصفات</a></li>
-        </ul>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="./index.html" class="text-sm font-semibold hover:text-samt-cyan">الرئيسية</a>
+        <a href="./courses.html" class="text-sm font-semibold hover:text-samt-cyan">أكاديمية الكورسات</a>
+        <a href="./downloads.html" class="text-sm font-bold text-samt-cyan">مركز التحميل</a>
+        <a href="./admin.html" class="text-sm font-semibold text-samt-gold"><i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن</a>
       </nav>
-
-      <div>
-        <a href="./courses.html" class="btn btn-secondary btn-sm">مشاهدة الشروحات</a>
-      </div>
+      <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm text-samt-gold">
+        <i id="themeIcon" class="fa-solid fa-sun"></i>
+      </button>
     </div>
   </header>
 
-  <section class="downloads-hero">
-    <div class="container">
-      <div class="section-badge">💾 مركز التنزيلات والإصدارات الرسمية</div>
-      <h1 class="section-title">تحميل منظومة <span class="gradient-text">AgentPro Suite</span></h1>
-      <p class="section-subtitle">
-        حمل أحدث إصدار مستقر لأنظمة Windows و macOS، أو حمل أداة مزامنة وربط قواعد البيانات.
+  <main class="pt-32 pb-20 max-w-6xl mx-auto px-4 w-full text-right">
+    
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="text-xs font-bold text-samt-cyan px-3 py-1 rounded-full glass-card">
+        💾 حزم التثبيت الرسمية
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black mt-4 mb-3 font-cairo">
+        مركز تنزيل <span class="text-samt-cyan">برمجيات سمت</span>
+      </h1>
+      <p class="text-slate-400 text-sm">
+        جميع البرامج خفيفة، آمنة ومحدثة بشكل دوري، اختر التطبيق المناسب لنظام تشغيلك.
       </p>
+    </div>
 
-      <div class="downloads-grid">
-        <!-- Windows Card -->
-        <div class="download-card highlight">
-          <div>
-            <div class="os-icon">🪟</div>
-            <h3>نسخة Windows</h3>
-            <span class="version-tag">v2.4.2 (68.4 MB)</span>
-            <ul class="download-specs-list">
-              <li>✔️ متوافقة مع Windows 10 / 11 (64-bit)</li>
-              <li>✔️ محرك صوت Direct WASAPI منخفض التأخير</li>
-              <li>✔️ تثبيت صامت وتحديثات تلقائية</li>
-              <li>✔️ مدمج مع تعريفات SQLite و PostgreSQL</li>
-            </ul>
+    <!-- Software Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      
+      <!-- App 1 -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-compass"></i>
           </div>
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-primary" style="width: 100%;">
-            تحميل نسخة ويندوز (.exe)
-          </a>
+          <span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[10px] font-extrabold">v3.2.0 (74.5 MB)</span>
+          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">متصفح سمت Anti-Gravity</h3>
+          <p class="text-slate-400 text-xs leading-relaxed mb-6">
+            متصفح فائق السرعة مع حجب إعلانات وتوفير استهلاك الرام (Zero Lag).
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 mb-6">
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> متوافق مع Windows 10/11</li>
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> يدعم macOS Universal (M1..M4)</li>
+          </ul>
         </div>
-
-        <!-- macOS Card -->
-        <div class="download-card">
-          <div>
-            <div class="os-icon">🍎</div>
-            <h3>نسخة macOS</h3>
-            <span class="version-tag">v2.4.2 (72.1 MB)</span>
-            <ul class="download-specs-list">
-              <li>✔️ متوافقة مع macOS 12 Monterey أو أحدث</li>
-              <li>✔️ حزمة شاملة (Apple Silicon M1..M4 &amp; Intel)</li>
-              <li>✔️ محرك CoreAudio لصفاء ونقاء الصوت</li>
-              <li>✔️ حزمة موثقة ومعتمدة من Apple Notary</li>
-            </ul>
-          </div>
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary" style="width: 100%;">
-            تحميل نسخة ماك (.dmg)
-          </a>
-        </div>
-
-        <!-- Database Tool -->
-        <div class="download-card">
-          <div>
-            <div class="os-icon">🗄️</div>
-            <h3>أداة مزامنة قواعد البيانات</h3>
-            <span class="version-tag">v1.8.0 (14.2 MB)</span>
-            <ul class="download-specs-list">
-              <li>✔️ PostgreSQL, MySQL, MS SQL, SQLite</li>
-              <li>✔️ أداة ربط وتصدير للمؤسسات والسيرفرات</li>
-              <li>✔️ تشفير TLS 1.3 لنقل البيانات</li>
-              <li>✔️ تعمل عبر الـ CLI والواجهة الرسومية</li>
-            </ul>
-          </div>
-          <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn btn-secondary" style="width: 100%;">
-            تحميل أداة السيرفرات (.zip)
-          </a>
-        </div>
+        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-download"></i>
+          <span>تحميل المتصفح</span>
+        </a>
       </div>
 
-      <!-- Specs Comparison Table -->
-      <h2 style="font-size: 1.5rem; margin-bottom: 14px; text-align: right;">جدول متطلبات تشغيل الأجهزة والسيرفرات</h2>
-      <table class="specs-table">
-        <thead>
-          <tr>
-            <th>عنصر النظام</th>
-            <th>الحد الأدنى للمواصفات</th>
-            <th>المواصفات الموصى بها للأداء المثالي</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>نظام التشغيل</strong></td>
-            <td>Windows 10 (64-bit) / macOS 12</td>
-            <td>Windows 11 (64-bit) / macOS 14 Sonoma</td>
-          </tr>
-          <tr>
-            <td><strong>المعالج (CPU)</strong></td>
-            <td>معالج ثنائي النواة 2.0 GHz</td>
-            <td>معالج رباعي النواة 2.5 GHz+ أو Apple Silicon</td>
-          </tr>
-          <tr>
-            <td><strong>الذاكرة (RAM)</strong></td>
-            <td>4 جيجابايت RAM</td>
-            <td>8 جيجابايت RAM أو أعلى</td>
-          </tr>
-          <tr>
-            <td><strong>المساحة التخزينية</strong></td>
-            <td>500 ميجابايت للتثبيت</td>
-            <td>مساحة SSD للتخزين المؤقت للتسجيلات الصوتية</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+      <!-- App 2 -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-samt-blue/10 border border-samt-blue/30 text-samt-blue text-2xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-cubes"></i>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-samt-blue/10 text-samt-blue text-[10px] font-extrabold">v2.4.2 (68.4 MB)</span>
+          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">برنامج سمت SAMT Hub</h3>
+          <p class="text-slate-400 text-xs leading-relaxed mb-6">
+            منصة إدارة المهام ومؤشرات الأداء وتحليل الصوت والاتصالات.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 mb-6">
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> محرك Direct WASAPI و CoreAudio</li>
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> دعم بروتوكولات SIP / WebRTC</li>
+          </ul>
+        </div>
+        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="glass-card hover:border-samt-blue w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
+          <i class="fa-solid fa-download"></i>
+          <span>تحميل SAMT Hub</span>
+        </a>
+      </div>
 
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2026 <strong>AgentPro Suite</strong>. جميع الحقوق محفوظة • <a href="./index.html" style="color: var(--primary-light); text-decoration: none;">العودة للصفحة الرئيسية</a></p>
+      <!-- App 3 -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-samt-purple/10 border border-samt-purple/30 text-samt-gold text-2xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-samt-gold/10 text-samt-gold text-[10px] font-extrabold">v1.8.0 (14.2 MB)</span>
+          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">أداة مزامنة قواعد البيانات</h3>
+          <p class="text-slate-400 text-xs leading-relaxed mb-6">
+            أداة سريعة لربط قواعد بيانات PostgreSQL, MySQL, SQLite مع تشفير TLS 1.3.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300 mb-6">
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> متوافقة مع جميع الأنظمة</li>
+            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> مزامنة سحابية تلقائية</li>
+          </ul>
+        </div>
+        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="glass-card hover:border-samt-gold w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
+          <i class="fa-solid fa-download"></i>
+          <span>تحميل أداة السيرفرات</span>
+        </a>
+      </div>
+
     </div>
+
+  </main>
+
+  <footer class="bg-black/50 border-t border-white/10 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 <strong>منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.
   </footer>
+
+  <script>
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        htmlEl.classList.remove('dark');
+        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+      } else {
+        htmlEl.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+      }
+      localStorage.setItem('samt_theme', theme);
+    }
+    applyTheme(localStorage.getItem('samt_theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+    });
+  </script>
+
 </body>
 </html>

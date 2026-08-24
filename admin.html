@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,17 +44,19 @@
   <style>
     body {
       font-family: 'Readex Pro', 'Cairo', sans-serif;
-      background-color: #070A12;
-      color: #FFFFFF;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    .glass-card {
-      background: rgba(14, 23, 46, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(0, 245, 212, 0.14);
-    }
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card { background: rgba(14, 23, 46, 0.85); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
+    
+    html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
+    html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
+    html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
+
     .btn-samt-glow {
       background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
-      color: #070A12;
+      color: #070A12 !important;
       font-weight: 800;
       box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
     }
@@ -63,18 +65,21 @@
 <body class="min-h-screen flex flex-col justify-between">
 
   <!-- Admin Navbar -->
-  <header class="h-20 bg-[#090E1E] border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50">
+  <header class="h-20 glass-card px-6 flex items-center justify-between sticky top-0 z-50">
     <div class="flex items-center gap-3">
       <a href="./index.html" class="flex items-center gap-2">
-        <span class="text-xl font-black text-white font-cairo">سَـمْـت</span>
+        <span class="text-xl font-black font-cairo">سَـمْـت</span>
         <span class="text-lg font-extrabold text-samt-cyan font-readex">SAMT</span>
       </a>
       <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-samt-gold/20 text-samt-gold border border-samt-gold/30">لوحة الإدارة</span>
     </div>
     
     <div class="flex items-center gap-4">
-      <a href="./courses.html" class="text-xs font-semibold text-slate-300 hover:text-white">معاينة الكورسات</a>
-      <a href="./index.html" class="text-xs font-semibold text-slate-300 hover:text-white">الرئيسية</a>
+      <button id="themeToggle" class="w-9 h-9 rounded-full glass-card flex items-center justify-center text-xs text-samt-gold">
+        <i id="themeIcon" class="fa-solid fa-sun"></i>
+      </button>
+      <a href="./courses.html" class="text-xs font-semibold hover:text-samt-cyan">أكاديمية الكورسات</a>
+      <a href="./index.html" class="text-xs font-semibold hover:text-samt-cyan">الرئيسية</a>
     </div>
   </header>
 
@@ -85,71 +90,105 @@
         <i class="fa-solid fa-lock"></i>
       </div>
       <div>
-        <h2 class="text-xl font-bold text-white font-cairo">تسجيل دخول المشرف</h2>
-        <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة للوصول إلى أدوات الإضافة والتعديل والحذف.</p>
+        <h2 class="text-xl font-bold font-cairo">تسجيل دخول المشرف</h2>
+        <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة لإدارة الكورسات، البرامج، والمشتركين.</p>
       </div>
-      <input type="password" id="pinInput" placeholder="الرمز السري الافتراضي: 1234" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
+      <input type="password" id="pinInput" placeholder="الرمز السري الافتراضي: 1234" class="w-full glass-card border border-white/20 focus:border-samt-cyan text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
       <button id="loginBtn" class="btn-samt-glow w-full py-3 rounded-xl text-sm font-bold">
         دخول لوحة التحكم
       </button>
     </div>
   </div>
 
-  <!-- Admin Dashboard Workspace (Hidden until login) -->
+  <!-- Admin Workspace -->
   <main id="adminPanel" class="hidden flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6 space-y-8">
     
-    <!-- Top Stats & Export Tools Bar -->
-    <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div>
-        <h2 class="text-2xl font-black text-white font-cairo">إدارة الكورسات والمحتوى</h2>
-        <p class="text-xs text-slate-400 mt-1">أضف دورات جديدة، عدل الروابط، واحفظ التعديلات لتطبيقها على الموقع.</p>
+    <!-- Tab Navigation -->
+    <div class="flex items-center gap-3 border-b border-white/10 pb-3">
+      <button id="tabCoursesBtn" class="px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space" onclick="switchTab('courses')">
+        <i class="fa-solid fa-graduation-cap ml-1"></i> إدارة الكورسات والدروس
+      </button>
+      <button id="tabSubscribersBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('subscribers')">
+        <i class="fa-solid fa-envelope ml-1"></i> قائمة الإيميلات المسجلة (<span id="subCountBadge">0</span>)
+      </button>
+    </div>
+
+    <!-- TAB 1: Courses Management -->
+    <div id="coursesSection" class="space-y-6">
+      <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-black font-cairo">الكورسات والدورات التعليمية</h2>
+          <p class="text-xs text-slate-400 mt-1">أضف كورسات جديدة، عدل الروابط، واحفظ ملف البيانات لنشره على GitHub.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="openNewCourseModal()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة كورس جديد</span>
+          </button>
+          <button onclick="exportUpdatedData()" class="px-5 py-2.5 rounded-xl glass-card hover:border-samt-cyan text-samt-cyan text-xs font-bold transition-all flex items-center gap-2">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>تصدير ملف البيانات (Export)</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-3 w-full md:w-auto">
-        <button onclick="openNewCourseModal()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 flex-grow md:flex-grow-0 justify-center">
-          <i class="fa-solid fa-plus"></i>
-          <span>إضافة كورس جديد</span>
-        </button>
-        <button onclick="exportUpdatedData()" class="px-5 py-2.5 rounded-xl bg-samt-card hover:bg-samt-navy border border-samt-cyan/40 text-samt-cyan text-xs font-bold transition-all flex items-center gap-2 flex-grow md:flex-grow-0 justify-center">
-          <i class="fa-solid fa-cloud-arrow-down"></i>
-          <span>تصدير / حفظ البيانات</span>
-        </button>
+      <div class="glass-card rounded-2xl overflow-hidden text-right">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead class="bg-black/30 text-xs text-slate-400 font-cairo border-b border-white/10">
+              <tr>
+                <th class="p-4">#</th>
+                <th class="p-4">عنوان الكورس</th>
+                <th class="p-4">التصنيف</th>
+                <th class="p-4">المدة</th>
+                <th class="p-4">المستوى</th>
+                <th class="p-4 text-center">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="coursesTableBody" class="divide-y divide-white/5 text-xs text-slate-300"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Courses Table & Management List -->
-    <div class="glass-card rounded-2xl overflow-hidden text-right">
-      <div class="p-5 border-b border-white/10 flex items-center justify-between">
-        <h3 class="text-base font-bold text-white font-cairo">الكورسات المتاحة حالياً (<span id="totalCoursesBadge">0</span>)</h3>
+    <!-- TAB 2: Email Subscribers Management -->
+    <div id="subscribersSection" class="hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-black font-cairo">المشتركون وقائمة الإيميلات المسجلة</h2>
+          <p class="text-xs text-slate-400 mt-1">قائمة الزوار الذين سجلوا للحصول على إشعارات الكورسات والبرامج الجديدة.</p>
+        </div>
+        <button onclick="exportSubscribersCSV()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+          <i class="fa-solid fa-file-csv"></i>
+          <span>تحميل قائمة الإيميلات (CSV)</span>
+        </button>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-right text-sm">
-          <thead class="bg-[#090E1E] text-xs text-slate-400 font-cairo border-b border-white/10">
-            <tr>
-              <th class="p-4">#</th>
-              <th class="p-4">عنوان الكورس</th>
-              <th class="p-4">التصنيف</th>
-              <th class="p-4">المدة</th>
-              <th class="p-4">المستوى</th>
-              <th class="p-4 text-center">الإجراءات</th>
-            </tr>
-          </thead>
-          <tbody id="coursesTableBody" class="divide-y divide-white/5 text-xs text-slate-300">
-            <!-- Populated via JS -->
-          </tbody>
-        </table>
+      <div class="glass-card rounded-2xl overflow-hidden text-right">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead class="bg-black/30 text-xs text-slate-400 font-cairo border-b border-white/10">
+              <tr>
+                <th class="p-4">#</th>
+                <th class="p-4">اسم المشترك</th>
+                <th class="p-4">البريد الإلكتروني</th>
+                <th class="p-4">تاريخ التسجيل</th>
+              </tr>
+            </thead>
+            <tbody id="subscribersTableBody" class="divide-y divide-white/5 text-xs text-slate-300"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
   </main>
 
-  <!-- Add/Edit Course Modal Form -->
+  <!-- Add/Edit Course Modal -->
   <div id="courseModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-card rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl text-right">
-      <div class="bg-[#090E1E] px-6 py-4 flex items-center justify-between border-b border-white/10">
-        <h3 id="modalHeaderTitle" class="text-base font-bold text-white font-cairo">إضافة كورس جديد</h3>
+      <div class="bg-black/40 px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <h3 id="modalHeaderTitle" class="text-base font-bold font-cairo">إضافة كورس جديد</h3>
         <button onclick="closeCourseModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
@@ -157,25 +196,24 @@
         <input type="hidden" id="editCourseId" />
         
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">عنوان الكورس:</label>
-          <input type="text" id="formTitle" required placeholder="مثال: احتراف إدارة المكالمات والـ KPIs" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none" />
+          <label class="block text-xs font-bold mb-1.5 font-cairo">عنوان الكورس:</label>
+          <input type="text" id="formTitle" required placeholder="مثال: أسرار التصفح السريع والإنتاجية" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none" />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">التصنيف:</label>
-            <select id="formCategory" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none">
+            <label class="block text-xs font-bold mb-1.5 font-cairo">التصنيف:</label>
+            <select id="formCategory" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none">
               <option value="basics">دليل المبتدئين</option>
-              <option value="analytics">التحليلات والـ KPIs</option>
-              <option value="ticketing">إدارة التذاكر</option>
-              <option value="recordings">تسجيل المكالمات</option>
-              <option value="database">قواعد البيانات</option>
+              <option value="productivity">الإنتاجية والتنظيم</option>
+              <option value="analytics">التحليلات ومؤشرات الأداء</option>
+              <option value="database">قواعد البيانات والسيرفرات</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">المستوى:</label>
-            <select id="formLevel" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none">
+            <label class="block text-xs font-bold mb-1.5 font-cairo">المستوى:</label>
+            <select id="formLevel" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none">
               <option value="مبتدئ">مبتدئ</option>
               <option value="متوسط">متوسط</option>
               <option value="متقدم">متقدم</option>
@@ -184,23 +222,23 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">المدة الزمنية:</label>
-            <input type="text" id="formDuration" placeholder="مثال: 12:45" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none" />
+            <label class="block text-xs font-bold mb-1.5 font-cairo">المدة الزمنية:</label>
+            <input type="text" id="formDuration" placeholder="مثال: 12:45" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none" />
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">رابط فيديو YouTube (رابط التضمين Embed أو الرابط العادي):</label>
-          <input type="text" id="formVideoUrl" required placeholder="https://www.youtube.com/watch?v=XXXX أو رابط التضمين" class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none text-left" dir="ltr" />
+          <label class="block text-xs font-bold mb-1.5 font-cairo">رابط فيديو YouTube:</label>
+          <input type="text" id="formVideoUrl" required placeholder="https://www.youtube.com/watch?v=XXXX أو Embed" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left" dir="ltr" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5 font-cairo">الوصف والملاحظات:</label>
-          <textarea id="formDescription" rows="3" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..." class="w-full bg-[#090E1E] border border-white/15 focus:border-samt-cyan text-white text-xs rounded-xl p-3 outline-none"></textarea>
+          <label class="block text-xs font-bold mb-1.5 font-cairo">الوصف والملاحظات:</label>
+          <textarea id="formDescription" rows="3" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none"></textarea>
         </div>
 
         <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
-          <button type="button" onclick="closeCourseModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white">إلغاء</button>
+          <button type="button" onclick="closeCourseModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400">إلغاء</button>
           <button type="submit" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold">حفظ الكورس</button>
         </div>
       </form>
@@ -210,17 +248,17 @@
   <!-- Export Code Modal -->
   <div id="exportModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-card rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl text-right">
-      <div class="bg-[#090E1E] px-6 py-4 flex items-center justify-between border-b border-white/10">
-        <h3 class="text-base font-bold text-samt-cyan font-cairo">تم تحديث بيانات الكورسات بنجاح! 🎉</h3>
+      <div class="bg-black/60 px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <h3 class="text-base font-bold text-samt-cyan font-cairo">تصدير بيانات الكورسات والمشتركين</h3>
         <button onclick="document.getElementById('exportModal').classList.add('hidden')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="p-6 space-y-4">
-        <p class="text-xs text-slate-300">
-          تم حفظ التعديلات في متصفحك محلياً. لتحديث ملف المشروع ورفعه على GitHub Pages، يمكنك تحميل الملف أو نسخ الكود واستبدال محتوى ملف <code class="text-samt-cyan font-mono">assets/js/courses-data.js</code>:
+        <p class="text-xs text-slate-400">
+          تم تحديث البيانات محلياً. يمكنك نسخ الكود بالأسفل واستبدال محتوى ملف <code class="text-samt-cyan font-mono">assets/js/courses-data.js</code> ورفعه إلى GitHub:
         </p>
 
-        <textarea id="exportCodeArea" readonly rows="10" class="w-full bg-black/70 border border-white/15 text-samt-cyan font-mono text-[11px] p-3 rounded-xl outline-none" dir="ltr"></textarea>
+        <textarea id="exportCodeArea" readonly rows="10" class="w-full bg-black/80 border border-white/15 text-samt-cyan font-mono text-[11px] p-3 rounded-xl outline-none" dir="ltr"></textarea>
 
         <div class="flex items-center justify-between pt-2">
           <button onclick="copyExportCode()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
@@ -229,86 +267,131 @@
           </button>
           <button onclick="downloadDataFile()" class="px-5 py-2.5 rounded-xl bg-samt-blue text-samt-space text-xs font-bold flex items-center gap-2">
             <i class="fa-solid fa-download"></i>
-            <span>تنزيل ملف courses-data.js</span>
+            <span>تنزيل courses-data.js</span>
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-[#050813] border-t border-white/10 py-6 text-center text-xs text-slate-500">
+  <footer class="bg-black/50 border-t border-white/10 py-6 text-center text-xs text-slate-500">
     &copy; 2026 <strong>منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
   </footer>
 
   <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
 
-  <!-- Admin Controller -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Theme
+      const htmlEl = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          htmlEl.classList.remove('dark');
+          themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+        } else {
+          htmlEl.classList.add('dark');
+          themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+        }
+        localStorage.setItem('samt_theme', theme);
+      }
+      applyTheme(localStorage.getItem('samt_theme') || 'dark');
+      themeToggle.addEventListener('click', () => {
+        applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+      });
+
+      // Data State
       let activeCourses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
+      let subscribers = JSON.parse(localStorage.getItem('samt_subscribers')) || window.AgentProData?.subscribers || [];
 
       const loginShield = document.getElementById('loginShield');
       const adminPanel = document.getElementById('adminPanel');
       const pinInput = document.getElementById('pinInput');
       const loginBtn = document.getElementById('loginBtn');
       const tableBody = document.getElementById('coursesTableBody');
-      const totalBadge = document.getElementById('totalCoursesBadge');
-      const courseForm = document.getElementById('courseForm');
+      const subTableBody = document.getElementById('subscribersTableBody');
+      const subCountBadge = document.getElementById('subCountBadge');
 
-      // Login handler (PIN: 1234)
       loginBtn.addEventListener('click', () => {
         if (pinInput.value === '1234' || pinInput.value === 'admin') {
           loginShield.classList.add('hidden');
           adminPanel.classList.remove('hidden');
-          renderTable();
+          renderCoursesTable();
+          renderSubscribersTable();
         } else {
-          alert('الرمز السري غير صحيح! الرمز الافتراضي هو 1234');
+          alert('الرمز السري غير صحيح! الرمز الافتراضي: 1234');
         }
       });
 
-      function renderTable() {
-        totalBadge.textContent = activeCourses.length;
+      function renderCoursesTable() {
         tableBody.innerHTML = activeCourses.map((c, idx) => `
           <tr class="hover:bg-white/5 transition-colors">
             <td class="p-4 font-bold text-slate-400">${idx + 1}</td>
-            <td class="p-4 font-bold text-white font-cairo">${c.title}</td>
+            <td class="p-4 font-bold font-cairo">${c.title}</td>
             <td class="p-4 text-samt-cyan font-bold">${c.categoryName || c.category}</td>
             <td class="p-4 font-mono">${c.duration}</td>
-            <td class="p-4"><span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[11px] font-bold">${c.level || 'معتمد'}</span></td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[11px] font-bold">${c.level || 'معتمد'}</span></td>
             <td class="p-4 text-center space-x-2 space-x-reverse">
-              <button onclick="editCourse('${c.id}')" class="px-3 py-1.5 rounded-lg bg-samt-blue/20 text-samt-blue hover:bg-samt-blue hover:text-black transition-all text-xs font-bold">
-                <i class="fa-solid fa-pen-to-square"></i> تعديل
-              </button>
-              <button onclick="deleteCourse('${c.id}')" class="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-bold">
-                <i class="fa-solid fa-trash"></i> حذف
-              </button>
+              <button onclick="editCourse('${c.id}')" class="px-3 py-1 rounded-lg bg-samt-blue/20 text-samt-blue text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
+              <button onclick="deleteCourse('${c.id}')" class="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
             </td>
           </tr>
         `).join('');
       }
 
-      // Open Modal for New Course
+      function renderSubscribersTable() {
+        subCountBadge.textContent = subscribers.length;
+        if (subscribers.length === 0) {
+          subTableBody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد مشتركون مسجلون حالياً</td></tr>';
+          return;
+        }
+        subTableBody.innerHTML = subscribers.map((s, idx) => `
+          <tr class="hover:bg-white/5 transition-colors">
+            <td class="p-4 text-slate-400 font-bold">${idx + 1}</td>
+            <td class="p-4 font-bold">${s.name}</td>
+            <td class="p-4 text-samt-cyan font-mono" dir="ltr">${s.email}</td>
+            <td class="p-4 text-slate-400">${s.date || '2026-08-24'}</td>
+          </tr>
+        `).join('');
+      }
+
+      window.switchTab = (tab) => {
+        const cSec = document.getElementById('coursesSection');
+        const sSec = document.getElementById('subscribersSection');
+        const cBtn = document.getElementById('tabCoursesBtn');
+        const sBtn = document.getElementById('tabSubscribersBtn');
+
+        if (tab === 'courses') {
+          cSec.classList.remove('hidden');
+          sSec.classList.add('hidden');
+          cBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
+          sBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white';
+        } else {
+          cSec.classList.add('hidden');
+          sSec.classList.remove('hidden');
+          sBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
+          cBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white';
+        }
+      };
+
       window.openNewCourseModal = () => {
         document.getElementById('modalHeaderTitle').textContent = 'إضافة كورس جديد';
         document.getElementById('editCourseId').value = '';
-        courseForm.reset();
+        document.getElementById('courseForm').reset();
         document.getElementById('courseModal').classList.remove('hidden');
         document.getElementById('courseModal').classList.add('flex');
       };
-
       window.closeCourseModal = () => {
         document.getElementById('courseModal').classList.add('hidden');
         document.getElementById('courseModal').classList.remove('flex');
       };
 
-      // Edit Course
       window.editCourse = (id) => {
         const item = activeCourses.find(c => c.id === id);
         if (!item) return;
-
-        document.getElementById('modalHeaderTitle').textContent = 'تعديل بيانات الكورس';
+        document.getElementById('modalHeaderTitle').textContent = 'تعديل الكورس';
         document.getElementById('editCourseId').value = item.id;
         document.getElementById('formTitle').value = item.title;
         document.getElementById('formCategory').value = item.category;
@@ -316,22 +399,19 @@
         document.getElementById('formDuration').value = item.duration;
         document.getElementById('formVideoUrl').value = item.videoUrl;
         document.getElementById('formDescription').value = item.description;
-
         document.getElementById('courseModal').classList.remove('hidden');
         document.getElementById('courseModal').classList.add('flex');
       };
 
-      // Delete Course
       window.deleteCourse = (id) => {
-        if (confirm('هل أنت متأكد من حذف هذا الكورس؟')) {
+        if (confirm('تأكيد حذف الكورس؟')) {
           activeCourses = activeCourses.filter(c => c.id !== id);
-          saveState();
-          renderTable();
+          localStorage.setItem('samt_admin_courses', JSON.stringify(activeCourses));
+          renderCoursesTable();
         }
       };
 
-      // Save form
-      courseForm.addEventListener('submit', (e) => {
+      document.getElementById('courseForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const editId = document.getElementById('editCourseId').value;
         const title = document.getElementById('formTitle').value;
@@ -341,7 +421,6 @@
         let videoUrl = document.getElementById('formVideoUrl').value;
         const description = document.getElementById('formDescription').value;
 
-        // Convert standard youtube link to embed if needed
         if (videoUrl.includes('watch?v=')) {
           const vId = videoUrl.split('watch?v=')[1].split('&')[0];
           videoUrl = `https://www.youtube-nocookie.com/embed/${vId}`;
@@ -350,53 +429,45 @@
           videoUrl = `https://www.youtube-nocookie.com/embed/${vId}`;
         }
 
-        const categoryNames = {
+        const catNames = {
           basics: 'دليل المبتدئين',
-          analytics: 'التحليلات والـ KPIs',
-          ticketing: 'إدارة التذاكر',
-          recordings: 'تسجيل المكالمات',
-          database: 'قواعد البيانات'
+          productivity: 'الإنتاجية والتنظيم',
+          analytics: 'التحليلات ومؤشرات الأداء',
+          database: 'قواعد البيانات والسيرفرات'
         };
 
         if (editId) {
-          // Update
           const idx = activeCourses.findIndex(c => c.id === editId);
           if (idx !== -1) {
             activeCourses[idx] = {
               ...activeCourses[idx],
-              title, category, categoryName: categoryNames[category] || category,
+              title, category, categoryName: catNames[category] || category,
               level, duration, videoUrl, description
             };
           }
         } else {
-          // Add new
-          const newCourse = {
+          activeCourses.unshift({
             id: 'course-' + Date.now(),
-            title, category, categoryName: categoryNames[category] || category,
+            title, category, categoryName: catNames[category] || category,
             level, duration, videoUrl, description,
             attachments: []
-          };
-          activeCourses.unshift(newCourse);
+          });
         }
 
-        saveState();
+        localStorage.setItem('samt_admin_courses', JSON.stringify(activeCourses));
         closeCourseModal();
-        renderTable();
+        renderCoursesTable();
       });
 
-      function saveState() {
-        localStorage.setItem('samt_admin_courses', JSON.stringify(activeCourses));
-      }
-
-      // Export tools
       window.exportUpdatedData = () => {
         const fullDataObj = {
+          releases: window.AgentProData?.releases || [],
           courses: activeCourses,
-          releases: window.AgentProData?.releases || []
+          subscribers: subscribers
         };
         const exportContent = `/**
- * AgentPro / SAMT - Central Database File
- * Auto-generated by SAMT Admin Dashboard on ${new Date().toLocaleString()}
+ * سمت SAMT - Central Database File
+ * Auto-generated on ${new Date().toLocaleString()}
  */
 
 const AgentProData = ${JSON.stringify(fullDataObj, null, 2)};
@@ -414,10 +485,8 @@ if (typeof window !== 'undefined') {
         const area = document.getElementById('exportCodeArea');
         area.select();
         navigator.clipboard.writeText(area.value);
-        document.getElementById('copyBtnText').textContent = 'تم النسخ بنجاح! ✔️';
-        setTimeout(() => {
-          document.getElementById('copyBtnText').textContent = 'نسخ الكود بالكامل';
-        }, 2500);
+        document.getElementById('copyBtnText').textContent = 'تم النسخ ✔️';
+        setTimeout(() => { document.getElementById('copyBtnText').textContent = 'نسخ الكود بالكامل'; }, 2000);
       };
 
       window.downloadDataFile = () => {
@@ -425,6 +494,18 @@ if (typeof window !== 'undefined') {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = 'courses-data.js';
+        a.click();
+      };
+
+      window.exportSubscribersCSV = () => {
+        let csv = 'Name,Email,Date\n';
+        subscribers.forEach(s => {
+          csv += `"${s.name}","${s.email}","${s.date}"\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'samt_subscribers.csv';
         a.click();
       };
     });
