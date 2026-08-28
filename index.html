@@ -373,7 +373,7 @@
   </section>
 
   <!-- ==========================================================================
-       3. Multi-Software Ecosystem Grid
+       3. Multi-Software Ecosystem Grid (Dynamic)
        ========================================================================== -->
   <section id="apps" class="py-20 subtle-bg relative">
     <div class="max-w-6xl mx-auto px-4 text-right">
@@ -390,69 +390,16 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- App 1: Browser -->
-        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
-          <div>
-            <div class="w-14 h-14 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mb-5">
-              <i class="fa-solid fa-compass"></i>
-            </div>
-            <span class="text-xs font-extrabold text-samt-cyan">تطبيق ويب وسطح مكتب</span>
-            <h3 class="text-lg font-bold mt-1 mb-2 font-cairo">متصفح سمت Anti-Gravity Browser</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">
-              متصفح فائق الخفة والسرعة مع محرك حجب إعلانات وتتبع مدمج واستهلاك ذاكرة منخفض للغاية.
-            </p>
-          </div>
-          <a href="./downloads.html" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-            <i class="fa-solid fa-download"></i>
-            <span>تحميل المتصفح (v3.2)</span>
-          </a>
-        </div>
-
-        <!-- App 2: Productivity Hub -->
-        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
-          <div>
-            <div class="w-14 h-14 rounded-2xl bg-samt-blue/10 border border-samt-blue/30 text-samt-blue text-2xl flex items-center justify-center mb-5">
-              <i class="fa-solid fa-cubes"></i>
-            </div>
-            <span class="text-xs font-extrabold text-samt-blue">أدوات تنظيم وإنتاجية</span>
-            <h3 class="text-lg font-bold mt-1 mb-2 font-cairo">برنامج سمت لإدارة المهام SAMT Hub</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">
-              مساحة عمل موحدة لإدارة المشاريع اليومية ومتابعة تحليلات الوقت ومؤشرات الأداء.
-            </p>
-          </div>
-          <a href="./downloads.html" class="glass-card hover:border-samt-blue w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
-            <i class="fa-solid fa-download"></i>
-            <span>تحميل البرنامج (v2.4)</span>
-          </a>
-        </div>
-
-        <!-- App 3: DB Tools -->
-        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
-          <div>
-            <div class="w-14 h-14 rounded-2xl bg-samt-purple/10 border border-samt-purple/30 text-samt-gold text-2xl flex items-center justify-center mb-5">
-              <i class="fa-solid fa-database"></i>
-            </div>
-            <span class="text-xs font-extrabold text-samt-gold">أدوات المطورين والسيرفرات</span>
-            <h3 class="text-lg font-bold mt-1 mb-2 font-cairo">أداة مزامنة ونقل قواعد البيانات</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">
-              أداة لربط ومزامنة قواعد البيانات السحابية والمحلية (PostgreSQL, MySQL, SQLite) بأمان كامل.
-            </p>
-          </div>
-          <a href="./downloads.html" class="glass-card hover:border-samt-gold w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
-            <i class="fa-solid fa-download"></i>
-            <span>تحميل أداة السيرفرات</span>
-          </a>
-        </div>
-
+      <!-- Dynamic Apps Container -->
+      <div id="homeAppsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- يتم التحميل ديناميكياً بواسطة JavaScript -->
       </div>
 
     </div>
   </section>
 
   <!-- ==========================================================================
-       4. Featured Courses Section
+       4. Featured Courses Section (Dynamic)
        ========================================================================== -->
   <section id="courses-preview" class="py-20 relative">
     <div class="max-w-6xl mx-auto px-4 text-right">
@@ -466,68 +413,17 @@
             أحدث الكورسات <span class="text-gradient">والشروحات التدريبية</span>
           </h2>
         </div>
-        <a href="./courses.html" class="btn-samt-glow px-6 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
-          <span>دخول مكتبة الكورسات الكاملة</span>
-          <i class="fa-solid fa-arrow-left text-xs"></i>
-        </a>
+        <div class="flex items-center gap-3">
+          <a href="./courses.html" class="btn-samt-glow px-6 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+            <span>دخول مكتبة الكورسات الكاملة</span>
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+          </a>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
-          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'دليل البداية مع منظومة سمت')">
-            <div class="w-12 h-12 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-base shadow-lg group-hover:scale-110 transition-transform">
-              <i class="fa-solid fa-play ml-0.5"></i>
-            </div>
-            <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">مبتدئ</span>
-          </div>
-          <div class="p-5 flex flex-col flex-grow">
-            <span class="text-xs font-bold text-samt-cyan mb-1">دليل البدء السريع</span>
-            <h3 class="text-base font-bold mb-2 font-cairo">تثبيت واستخدام منظومة سمت وبرامجها</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">خطوات تثبيت البرامج وتفعيل إعدادات الأداء الخارق وتخصيص بيئة العمل.</p>
-            <a href="./course-view.html?id=course-01" class="w-full mt-auto py-2 rounded-xl bg-samt-cyan/10 hover:bg-samt-cyan hover:text-samt-space border border-samt-cyan/30 text-samt-cyan text-xs font-bold transition-all flex items-center justify-center gap-2">
-              <i class="fa-solid fa-graduation-cap"></i>
-              <span>دراسة الكورس وحساب التقدم</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
-          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'أسرار الإنتاجية والتصفح السريع')">
-            <div class="w-12 h-12 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-base shadow-lg group-hover:scale-110 transition-transform">
-              <i class="fa-solid fa-play ml-0.5"></i>
-            </div>
-            <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-samt-blue/20 text-samt-blue border border-samt-blue/30">متوسط</span>
-          </div>
-          <div class="p-5 flex flex-col flex-grow">
-            <span class="text-xs font-bold text-samt-blue mb-1">الإنتاجية المتقدمة</span>
-            <h3 class="text-base font-bold mb-2 font-cairo">أسرار الإنتاجية ومضاعفة سرعة العمل</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">اختصارات لوحة المفاتيح، إدارة مساحات العمل، واستخدام أدوات الذكاء الاصطناعي.</p>
-            <a href="./course-view.html?id=course-02" class="w-full mt-auto py-2 rounded-xl bg-samt-blue/10 hover:bg-samt-blue hover:text-samt-space border border-samt-blue/30 text-samt-blue text-xs font-bold transition-all flex items-center justify-center gap-2">
-              <i class="fa-solid fa-graduation-cap"></i>
-              <span>دراسة الكورس وحساب التقدم</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between">
-          <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer" onclick="openVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'التحليلات ومؤشرات الأداء')">
-            <div class="w-12 h-12 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-base shadow-lg group-hover:scale-110 transition-transform">
-              <i class="fa-solid fa-play ml-0.5"></i>
-            </div>
-            <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-samt-gold/20 text-samt-gold border border-samt-gold/30">شامل</span>
-          </div>
-          <div class="p-5 flex flex-col flex-grow">
-            <span class="text-xs font-bold text-samt-gold mb-1">التحليلات والمؤشرات</span>
-            <h3 class="text-base font-bold mb-2 font-cairo">التحليلات ومؤشرات الأداء الذكية</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">إنشاء واستخراج لوحات التقارير والرسوم البيانية وتصديرها بصيغ متعددة.</p>
-            <a href="./course-view.html?id=course-03" class="w-full mt-auto py-2 rounded-xl bg-samt-gold/10 hover:bg-samt-gold hover:text-samt-space border border-samt-gold/30 text-samt-gold text-xs font-bold transition-all flex items-center justify-center gap-2">
-              <i class="fa-solid fa-graduation-cap"></i>
-              <span>دراسة الكورس وحساب التقدم</span>
-            </a>
-          </div>
-        </div>
-
+      <!-- Dynamic Courses Container -->
+      <div id="homeCoursesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- يتم التحميل ديناميكياً بواسطة JavaScript -->
       </div>
 
     </div>
@@ -659,6 +555,141 @@
       }, 5000);
     });
 
+    // Dynamic Home Apps & Courses Renderer
+    function getHomeReleases() {
+      try {
+        const stored = localStorage.getItem('samt_admin_releases');
+        if (stored) return JSON.parse(stored);
+      } catch(e) {}
+      return window.AgentProData?.releases || [];
+    }
+
+    function getHomeCourses() {
+      try {
+        const stored = localStorage.getItem('samt_admin_courses');
+        if (stored) return JSON.parse(stored);
+      } catch(e) {}
+      return window.AgentProData?.courses || [];
+    }
+
+    function extractYoutubeThumbnail(url) {
+      if (!url) return '';
+      let videoId = '';
+      if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
+      else if (url.includes('v=')) videoId = url.split('v=')[1]?.split('&')[0];
+      else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+    }
+
+    function renderHomeApps() {
+      const container = document.getElementById('homeAppsContainer');
+      if (!container) return;
+
+      const releases = getHomeReleases();
+      if (!releases || releases.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 px-6 glass-card rounded-2xl border border-white/10 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-slate-500 text-2xl flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-cairo">لا توجد برامج وتطبيقات مضافة حالياً</h4>
+            <p class="text-xs text-slate-400 mt-1">سيتم إدراج البرامج والتطبيقات فور نشرها من قبل إدارة منظومة سمت.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = releases.slice(0, 3).map(app => `
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-2xl">${app.icon || '🚀'}</span>
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-samt-cyan/20 text-samt-cyan border border-samt-cyan/30">${app.badge || app.version || 'إصدار رسمي'}</span>
+            </div>
+            <span class="text-xs font-extrabold text-samt-cyan">${app.category || 'تطبيقات سمت'}</span>
+            <h3 class="text-base font-bold mt-1 mb-2 font-cairo">${app.name}</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">${app.desc || ''}</p>
+          </div>
+          <a href="${app.downloadUrl || './downloads.html'}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download"></i>
+            <span>تحميل البرنامج (${app.fileSize || 'مباشر'})</span>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function renderHomeCourses() {
+      const container = document.getElementById('homeCoursesContainer');
+      if (!container) return;
+
+      const courses = getHomeCourses();
+      const isAdmin = window.SamtAuth && window.SamtAuth.isAdmin();
+
+      if (!courses || courses.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 px-6 glass-card rounded-2xl border border-white/10 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-cairo">لا توجد شروحات أو كورسات منشورة حالياً</h4>
+            <p class="text-xs text-slate-400 mt-1">سيتم إدراج الكورسات والدروس التدريبية فور إضافتها من قبل المشرف.</p>
+            ${isAdmin ? `
+              <button onclick="window.SamtAuth.openNewCourseInline()" class="btn-samt-glow mt-4 px-5 py-2 rounded-xl text-xs font-bold inline-flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>إضافة أول كورس الآن</span>
+              </button>
+            ` : ''}
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = courses.slice(0, 3).map(course => {
+        const thumb = extractYoutubeThumbnail(course.videoUrl);
+        const adminControls = isAdmin ? `
+          <div class="absolute top-3 left-3 flex items-center gap-1 z-20">
+            <button onclick="event.stopPropagation(); window.SamtAuth.editCourseInline('${course.id}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-samt-gold text-samt-gold hover:text-black border border-samt-gold/40 text-[10px] font-bold shadow-md transition-all">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button onclick="event.stopPropagation(); window.SamtAuth.deleteCourseInline('${course.id}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 text-[10px] font-bold shadow-md transition-all">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        ` : '';
+
+        return `
+          <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between relative transition-all">
+            ${adminControls}
+            <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal('${course.videoUrl}', '${course.title.replace(/'/g, "\\'")}')">
+              ${thumb ? `<img src="${thumb}" alt="${course.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute w-12 h-12 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-base shadow-xl group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-play ml-0.5"></i>
+              </div>
+              <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-black/70 text-samt-cyan border border-samt-cyan/30 z-10 backdrop-blur-md">
+                ${course.level || 'شامل'}
+              </span>
+              ${course.duration ? `
+                <span class="absolute bottom-2 left-2 px-2 py-0.5 text-[9px] font-bold rounded bg-black/80 text-white z-10">
+                  <i class="fa-regular fa-clock ml-1"></i>${course.duration}
+                </span>
+              ` : ''}
+            </div>
+
+            <div class="p-5 flex flex-col flex-grow">
+              <span class="text-xs font-bold text-samt-cyan mb-1">${course.categoryName || 'شروحات عامة'}</span>
+              <h3 class="text-sm sm:text-base font-bold mb-2 font-cairo leading-snug">${course.title}</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${course.description || ''}</p>
+              <a href="./course-view.html?id=${course.id}" class="w-full mt-auto py-2 rounded-xl bg-samt-cyan/10 hover:bg-samt-cyan hover:text-samt-space border border-samt-cyan/30 text-samt-cyan text-xs font-bold transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>دراسة الكورس وحساب التقدم</span>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // Video Modal Handlers
     function openVideoModal(url, title) {
       document.getElementById('modalTitle').textContent = title;
@@ -678,6 +709,12 @@
     });
 
     document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Initial Dynamic Render
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHomeApps();
+      renderHomeCourses();
+    });
   </script>
 
 </body>

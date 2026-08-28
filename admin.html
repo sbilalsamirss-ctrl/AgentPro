@@ -379,6 +379,10 @@
       });
 
       function renderCoursesTable() {
+        if (!activeCourses || activeCourses.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400">لا توجد كورسات مضافة حالياً. اضغط على "إضافة كورس جديد" بالأعلى للبدء.</td></tr>';
+          return;
+        }
         tableBody.innerHTML = activeCourses.map((c, idx) => `
           <tr class="hover:bg-white/5 transition-colors">
             <td class="p-4 font-bold text-slate-400">${idx + 1}</td>

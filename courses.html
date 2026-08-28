@@ -206,21 +206,45 @@
         } catch (e) { return 0; }
       }
 
+      function extractYoutubeThumbnail(url) {
+        if (!url) return '';
+        let videoId = '';
+        if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
+        else if (url.includes('v=')) videoId = url.split('v=')[1]?.split('&')[0];
+        else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+      }
+
       function render() {
         let list = courses;
         if (currentCategory !== 'all') list = list.filter(c => c.category === currentCategory);
         if (searchTerm.trim() !== '') {
           const q = searchTerm.toLowerCase();
-          list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.categoryName.toLowerCase().includes(q));
+          list = list.filter(c => c.title.toLowerCase().includes(q) || (c.description && c.description.toLowerCase().includes(q)) || (c.categoryName && c.categoryName.toLowerCase().includes(q)));
         }
 
         if (list.length === 0) {
-          grid.innerHTML = '<div class="col-span-full text-center py-16 glass-card rounded-2xl"><i class="fa-solid fa-book-open text-4xl text-slate-500 mb-3"></i><h3 class="text-lg font-bold mb-1">لم يتم العثور على كورسات</h3><p class="text-xs text-slate-400">جرب كلمة بحث أخرى أو تصنيفاً مختلفاً.</p></div>';
+          grid.innerHTML = `
+            <div class="col-span-full text-center py-16 glass-card rounded-2xl border border-white/10">
+              <div class="w-16 h-16 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <h3 class="text-base font-bold mb-1 font-cairo text-white">لا توجد كورسات منشورة حالياً</h3>
+              <p class="text-xs text-slate-400">سيتم إدراج الكورسات والدروس التدريبية فور إضافتها من قبل المشرف.</p>
+              ${isAdmin ? `
+                <button onclick="window.SamtAuth.openNewCourseInline()" class="btn-samt-glow mt-4 px-6 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
+                  <i class="fa-solid fa-plus"></i>
+                  <span>إضافة أول كورس الآن</span>
+                </button>
+              ` : ''}
+            </div>
+          `;
           return;
         }
 
         grid.innerHTML = list.map(c => {
           const progress = getProgress(c.id, c.lessons ? c.lessons.length : 3);
+          const thumb = extractYoutubeThumbnail(c.videoUrl);
           
           // Inline Admin Action Buttons (تظهر فقط عند تسجيل دخول المشرف)
           const adminControls = isAdmin ? `
@@ -234,20 +258,47 @@
             </div>
           ` : '';
 
-          return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative">' +
-            adminControls +
-            '<div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">' +
-              '<div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-play ml-0.5"></i></div>' +
-              '<span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">' + (c.level || 'كورس معتمد') + '</span>' +
-              '<span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white"><i class="fa-regular fa-clock ml-1"></i>' + c.duration + '</span>' +
-            '</div>' +
-            '<div class="p-5 flex flex-col flex-grow text-right">' +
-              '<div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5"><span>' + c.categoryName + '</span><span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span></div>' +
-              '<h3 class="text-base font-bold mb-2 leading-snug font-cairo">' + c.title + '</h3>' +
-              '<p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">' + c.description + '</p>' +
-              '<div class="mt-auto pt-3 border-t border-white/10 mb-4"><div class="flex items-center justify-between text-[11px] font-bold mb-1"><span class="text-slate-400">نسبة التقدم:</span><span class="' + (progress === 100 ? 'text-emerald-400' : 'text-samt-cyan') + '">' + progress + '%</span></div><div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full" style="width:' + progress + '%"></div></div></div>' +
-              '<a href="./course-view.html?id=' + c.id + '" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black flex items-center justify-center gap-2"><i class="fa-solid fa-graduation-cap"></i><span>' + (progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس') + '</span></a>' +
-            '</div></div>';
+          return `
+            <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative transition-all">
+              ${adminControls}
+              <div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">
+                ${thumb ? `<img src="${thumb}" alt="${c.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div class="absolute w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+                <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-black/70 text-samt-cyan border border-samt-cyan/30 backdrop-blur-md z-10">
+                  ${c.level || 'كورس معتمد'}
+                </span>
+                ${c.duration ? `
+                  <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white z-10">
+                    <i class="fa-regular fa-clock ml-1"></i>${c.duration}
+                  </span>
+                ` : ''}
+              </div>
+              <div class="p-5 flex flex-col flex-grow text-right">
+                <div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5">
+                  <span>${c.categoryName || 'شروحات عامة'}</span>
+                  <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span>
+                </div>
+                <h3 class="text-base font-bold mb-2 leading-snug font-cairo">${c.title}</h3>
+                <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${c.description || ''}</p>
+                <div class="mt-auto pt-3 border-t border-white/10 mb-4">
+                  <div class="flex items-center justify-between text-[11px] font-bold mb-1">
+                    <span class="text-slate-400">نسبة التقدم:</span>
+                    <span class="${progress === 100 ? 'text-emerald-400' : 'text-samt-cyan'}">${progress}%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full" style="width:${progress}%"></div>
+                  </div>
+                </div>
+                <a href="./course-view.html?id=${c.id}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                  <span>${progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس'}</span>
+                </a>
+              </div>
+            </div>
+          `;
         }).join('');
       }
 

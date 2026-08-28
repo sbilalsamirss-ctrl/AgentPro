@@ -100,75 +100,9 @@
       </p>
     </div>
 
-    <!-- Software Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-      
-      <!-- App 1 -->
-      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-        <div>
-          <div class="w-14 h-14 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mb-4">
-            <i class="fa-solid fa-compass"></i>
-          </div>
-          <span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[10px] font-extrabold">v3.2.0 (74.5 MB)</span>
-          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">متصفح سمت Anti-Gravity</h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">
-            متصفح فائق السرعة مع حجب إعلانات وتوفير استهلاك الرام (Zero Lag).
-          </p>
-          <ul class="space-y-2 text-xs text-slate-300 mb-6">
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> متوافق مع Windows 10/11</li>
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> يدعم macOS Universal (M1..M4)</li>
-          </ul>
-        </div>
-        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-          <i class="fa-solid fa-download"></i>
-          <span>تحميل المتصفح</span>
-        </a>
-      </div>
-
-      <!-- App 2 -->
-      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-        <div>
-          <div class="w-14 h-14 rounded-2xl bg-samt-blue/10 border border-samt-blue/30 text-samt-blue text-2xl flex items-center justify-center mb-4">
-            <i class="fa-solid fa-cubes"></i>
-          </div>
-          <span class="px-2.5 py-0.5 rounded-full bg-samt-blue/10 text-samt-blue text-[10px] font-extrabold">v2.4.2 (68.4 MB)</span>
-          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">برنامج سمت SAMT Hub</h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">
-            منصة إدارة المهام ومؤشرات الأداء وتحليل الصوت والاتصالات.
-          </p>
-          <ul class="space-y-2 text-xs text-slate-300 mb-6">
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> محرك Direct WASAPI و CoreAudio</li>
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> دعم بروتوكولات SIP / WebRTC</li>
-          </ul>
-        </div>
-        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="glass-card hover:border-samt-blue w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
-          <i class="fa-solid fa-download"></i>
-          <span>تحميل SAMT Hub</span>
-        </a>
-      </div>
-
-      <!-- App 3 -->
-      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
-        <div>
-          <div class="w-14 h-14 rounded-2xl bg-samt-purple/10 border border-samt-purple/30 text-samt-gold text-2xl flex items-center justify-center mb-4">
-            <i class="fa-solid fa-database"></i>
-          </div>
-          <span class="px-2.5 py-0.5 rounded-full bg-samt-gold/10 text-samt-gold text-[10px] font-extrabold">v1.8.0 (14.2 MB)</span>
-          <h3 class="text-lg font-bold mt-2 mb-2 font-cairo">أداة مزامنة قواعد البيانات</h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">
-            أداة سريعة لربط قواعد بيانات PostgreSQL, MySQL, SQLite مع تشفير TLS 1.3.
-          </p>
-          <ul class="space-y-2 text-xs text-slate-300 mb-6">
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> متوافقة مع جميع الأنظمة</li>
-            <li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i> مزامنة سحابية تلقائية</li>
-          </ul>
-        </div>
-        <a href="https://github.com/sbilalsamirss-ctrl/AgentPro/releases" class="glass-card hover:border-samt-gold w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all">
-          <i class="fa-solid fa-download"></i>
-          <span>تحميل أداة السيرفرات</span>
-        </a>
-      </div>
-
+    <!-- Software Grid (Dynamic) -->
+    <div id="downloadsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <!-- يتم التحميل ديناميكياً بواسطة JavaScript -->
     </div>
 
   </main>
@@ -197,6 +131,54 @@
     applyTheme(localStorage.getItem('samt_theme') || 'dark');
     themeToggle.addEventListener('click', () => {
       applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    // Dynamic Downloads Engine
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('downloadsGrid');
+      let releases = [];
+      try {
+        releases = JSON.parse(localStorage.getItem('samt_admin_releases')) || window.AgentProData?.releases || [];
+      } catch(e) {
+        releases = window.AgentProData?.releases || [];
+      }
+
+      if (!releases || releases.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-16 glass-card rounded-2xl border border-white/10">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 text-slate-500 text-3xl flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <h3 class="text-base font-bold font-cairo text-white">لا توجد برامج وتطبيقات مرفوعة حالياً</h3>
+            <p class="text-xs text-slate-400 mt-1">سيتم إدراج روابط وتفاصيل التنزيل فور نشرها من قبل إدارة منظومة سمت.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = releases.map(app => `
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">${app.icon || '📦'}</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[10px] font-extrabold border border-samt-cyan/30">
+                ${app.version || 'إصدار رسمي'} (${app.fileSize || 'مباشر'})
+              </span>
+            </div>
+            <h3 class="text-lg font-bold mb-2 font-cairo">${app.name}</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">${app.desc || ''}</p>
+            ${app.platforms ? `
+              <ul class="space-y-1.5 text-xs text-slate-300 mb-6">
+                ${app.platforms.map(p => `<li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i>${p}</li>`).join('')}
+              </ul>
+            ` : ''}
+          </div>
+          <a href="${app.downloadUrl || '#'}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download"></i>
+            <span>تحميل البرنامج</span>
+          </a>
+        </div>
+      `).join('');
     });
   </script>
 
