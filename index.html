@@ -429,44 +429,7 @@
     </div>
   </section>
 
-  <!-- ==========================================================================
-       5. Email Registration / Newsletter Subscription System
-       ========================================================================== -->
-  <section id="newsletter" class="py-20 subtle-bg relative">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      
-      <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden border border-samt-cyan/40">
-        
-        <div class="w-16 h-16 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mx-auto mb-6">
-          <i class="fa-solid fa-envelope-open-text"></i>
-        </div>
 
-        <h2 class="text-2xl sm:text-4xl font-black mb-3 font-cairo">
-          انضم لمجتمع <span class="text-gradient">سمت SAMT</span> واحصل على الجديد أولاً
-        </h2>
-        
-        <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto mb-8 leading-relaxed">
-          سجل بريدك الإلكتروني ليصلك إشعار فوري عند صدور برامج جديدة، تحديثات، أو دورات تدريبية جديدة في الأكاديمية.
-        </p>
-
-        <!-- Registration Form -->
-        <form id="subscribeForm" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
-          <input type="text" id="subName" placeholder="اسمك الكريم" required class="glass-card px-4 py-3.5 rounded-xl text-xs sm:text-sm text-right outline-none focus:border-samt-cyan flex-grow sm:w-1/3" />
-          <input type="email" id="subEmail" placeholder="بريدك الإلكتروني (example@mail.com)" required class="glass-card px-4 py-3.5 rounded-xl text-xs sm:text-sm text-right outline-none focus:border-samt-cyan flex-grow sm:w-2/3" dir="ltr" />
-          <button type="submit" class="btn-samt-glow px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 flex-shrink-0">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span>تسجيل واشتراك</span>
-          </button>
-        </form>
-
-        <div id="subSuccessMsg" class="hidden mt-4 text-xs sm:text-sm font-bold text-emerald-400">
-          🎉 تم تسجيل بريدك بنجاح! ستصلك أحدث الكورسات والبرامج فور نشرها.
-        </div>
-
-      </div>
-
-    </div>
-  </section>
 
   <!-- ==========================================================================
        6. Footer
@@ -528,42 +491,16 @@
       applyTheme(isDark ? 'light' : 'dark');
     });
 
-    // Email Subscription Handler
-    const subscribeForm = document.getElementById('subscribeForm');
-    const subSuccessMsg = document.getElementById('subSuccessMsg');
 
-    subscribeForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('subName').value.trim();
-      const email = document.getElementById('subEmail').value.trim();
-
-      if (!email) return;
-
-      let subs = JSON.parse(localStorage.getItem('samt_subscribers')) || window.AgentProData?.subscribers || [];
-      subs.unshift({
-        name: name || 'زائر',
-        email: email,
-        date: new Date().toISOString().split('T')[0]
-      });
-
-      localStorage.setItem('samt_subscribers', JSON.stringify(subs));
-
-      subscribeForm.reset();
-      subSuccessMsg.classList.remove('hidden');
-      setTimeout(() => {
-        subSuccessMsg.classList.add('hidden');
-      }, 5000);
-    });
 
     // Dynamic Home Apps & Courses Renderer (Clean Slate)
     function cleanupOldDummyCourses() {
       try {
-        const stored = localStorage.getItem('samt_admin_courses');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.some(c => (c.videoUrl && c.videoUrl.includes('dQw4w9WgXcQ')) || c.id === 'course-01' || c.id === 'course-02')) {
-            localStorage.removeItem('samt_admin_courses');
-          }
+        if (localStorage.getItem('samt_v2026_clean_slate') !== 'true') {
+          localStorage.removeItem('samt_admin_courses');
+          localStorage.removeItem('samt_admin_releases');
+          localStorage.removeItem('samt_subscribers');
+          localStorage.setItem('samt_v2026_clean_slate', 'true');
         }
       } catch(e) {}
     }

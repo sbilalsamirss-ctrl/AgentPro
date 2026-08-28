@@ -191,14 +191,13 @@
 
     // Course Catalog Engine
     document.addEventListener('DOMContentLoaded', () => {
-      // تنظيف تلقائي لأي بيانات وهمية قديمة
+      // تنظيف تلقائي إجباري لأي بيانات وهمية قديمة
       try {
-        const stored = localStorage.getItem('samt_admin_courses');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.some(c => (c.videoUrl && c.videoUrl.includes('dQw4w9WgXcQ')) || c.id === 'course-01' || c.id === 'course-02')) {
-            localStorage.removeItem('samt_admin_courses');
-          }
+        if (localStorage.getItem('samt_v2026_clean_slate') !== 'true') {
+          localStorage.removeItem('samt_admin_courses');
+          localStorage.removeItem('samt_admin_releases');
+          localStorage.removeItem('samt_subscribers');
+          localStorage.setItem('samt_v2026_clean_slate', 'true');
         }
       } catch(e) {}
 
