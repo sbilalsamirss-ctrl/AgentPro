@@ -555,7 +555,20 @@
       }, 5000);
     });
 
-    // Dynamic Home Apps & Courses Renderer
+    // Dynamic Home Apps & Courses Renderer (Clean Slate)
+    function cleanupOldDummyCourses() {
+      try {
+        const stored = localStorage.getItem('samt_admin_courses');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.some(c => (c.videoUrl && c.videoUrl.includes('dQw4w9WgXcQ')) || c.id === 'course-01' || c.id === 'course-02')) {
+            localStorage.removeItem('samt_admin_courses');
+          }
+        }
+      } catch(e) {}
+    }
+    cleanupOldDummyCourses();
+
     function getHomeReleases() {
       try {
         const stored = localStorage.getItem('samt_admin_releases');
