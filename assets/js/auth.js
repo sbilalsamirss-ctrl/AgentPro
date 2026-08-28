@@ -483,27 +483,25 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div>
-                <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور:</label>
-                <div class="relative">
-                  <input type="password" id="authRegPassword" required placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-9 pl-9 outline-none text-left bg-black/40 text-white" dir="ltr" />
-                  <i class="fa-solid fa-lock absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegPassword', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
+            <div>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور:</label>
+              <div class="relative">
+                <input type="password" id="authRegPassword" required placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
               </div>
+            </div>
 
-              <div>
-                <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">أعد كتابة كلمة المرور:</label>
-                <div class="relative">
-                  <input type="password" id="authRegConfirmPassword" required placeholder="تأكيد كلمة المرور" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-9 pl-9 outline-none text-left bg-black/40 text-white" dir="ltr" />
-                  <i class="fa-solid fa-shield-check absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegConfirmPassword', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
+            <div>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">أعد كتابة كلمة المرور:</label>
+              <div class="relative">
+                <input type="password" id="authRegConfirmPassword" required placeholder="تأكيد كلمة المرور" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <i class="fa-solid fa-shield-check absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegConfirmPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
               </div>
             </div>
 
@@ -513,9 +511,9 @@
                 رمز الصلاحية الإدارية (اختياري للمشرفين):
               </label>
               <div class="relative">
-                <input type="password" id="authRegAdminCode" placeholder="كود المشرف: SAMT-ADMIN-2026" class="w-full glass-card border border-white/10 focus:border-samt-gold text-xs rounded-xl py-2 pr-9 pl-9 outline-none text-left font-mono bg-black/40 text-white" dir="ltr" />
-                <i class="fa-solid fa-crown absolute right-3 top-1/2 -translate-y-1/2 text-yellow-500/70 text-xs pointer-events-none"></i>
-                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegAdminCode', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-yellow-400 text-xs p-1 focus:outline-none" title="إظهار/إخفاء الكود">
+                <input type="password" id="authRegAdminCode" placeholder="كود المشرف: SAMT-ADMIN-2026" class="w-full glass-card border border-white/10 focus:border-samt-gold text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left font-mono bg-black/40 text-white" dir="ltr" />
+                <i class="fa-solid fa-crown absolute right-3.5 top-1/2 -translate-y-1/2 text-yellow-500/70 text-xs pointer-events-none"></i>
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegAdminCode', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-yellow-400 text-xs p-1 focus:outline-none" title="إظهار/إخفاء الكود">
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -637,25 +635,23 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div>
-                <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور الجديدة:</label>
-                <div class="relative">
-                  <input type="password" id="settingsNewPass" required placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-4 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('settingsNewPass', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
+            <div>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور الجديدة:</label>
+              <div class="relative">
+                <input type="password" id="settingsNewPass" required placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-4 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('settingsNewPass', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
               </div>
+            </div>
 
-              <div>
-                <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">تأكيد كلمة المرور:</label>
-                <div class="relative">
-                  <input type="password" id="settingsConfirmNewPass" required placeholder="إعادة الجديدة" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-4 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('settingsConfirmNewPass', this)" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
+            <div>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">تأكيد كلمة المرور الجديدة:</label>
+              <div class="relative">
+                <input type="password" id="settingsConfirmNewPass" required placeholder="إعادة كتابة كلمة المرور الجديدة" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-4 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('settingsConfirmNewPass', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
               </div>
             </div>
 
