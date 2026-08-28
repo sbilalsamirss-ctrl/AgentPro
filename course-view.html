@@ -5,15 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>مشغل الكورس والدروس | أكاديمية سمت SAMT</title>
 
-  <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,13 +18,8 @@
         extend: {
           colors: {
             samt: {
-              space: '#070A12',
-              navy: '#0B132B',
-              card: '#0E172E',
-              cyan: '#00F5D4',
-              blue: '#00BBF9',
-              purple: '#7928CA',
-              gold: '#FFB703',
+              space: '#070A12', navy: '#0B132B', card: '#0E172E',
+              cyan: '#00F5D4', blue: '#00BBF9', purple: '#7928CA', gold: '#FFB703',
               border: 'rgba(0, 245, 212, 0.18)'
             }
           },
@@ -42,13 +33,32 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Readex Pro', 'Cairo', sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+    *, *::before, *::after {
+      transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    html.dark body { background-color: #070A12; color: #FFFFFF; }
-    html.dark .glass-card { background: rgba(14, 23, 46, 0.85); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
-    
+    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; }
+
+    html.dark body {
+      background-color: #070A12;
+      background-image:
+        radial-gradient(circle at 50% 12%, rgba(0, 187, 249, 0.14), transparent 48%),
+        radial-gradient(circle at 85% 30%, rgba(121, 40, 202, 0.12), transparent 42%),
+        radial-gradient(2px 2px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 100px 90px, rgba(0, 245, 212, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 180px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 340px 80px, rgba(0, 187, 249, 0.7), rgba(0,0,0,0));
+      background-size: 100% 100%, 100% 100%, 450px 450px, 450px 450px, 450px 450px, 450px 450px;
+      color: #FFFFFF;
+    }
+    html.dark .glass-card {
+      background: rgba(14, 23, 46, 0.85); backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF;
+    }
+
     html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
     html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
     html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
@@ -73,7 +83,6 @@
       <h1 id="topCourseTitle" class="text-xs sm:text-sm font-bold truncate max-w-xs sm:max-w-md font-cairo">جاري تحميل الكورس...</h1>
     </div>
 
-    <!-- Live Overall Progress & Theme Toggle -->
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3">
         <div class="text-right hidden sm:block">
@@ -84,16 +93,17 @@
           <div id="progressBar" class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full transition-all" style="width: 0%"></div>
         </div>
       </div>
-      <button id="themeToggle" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-xs text-samt-gold">
-        <i id="themeIcon" class="fa-solid fa-sun"></i>
+      <button id="themeToggle" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-xs">
+        <i id="themeIcon" class="fa-solid fa-sun text-samt-gold"></i>
       </button>
+      <div class="samt-auth-slot"></div>
     </div>
   </header>
 
-  <!-- Classroom Workspace Grid -->
+  <!-- Classroom Workspace -->
   <div class="flex-grow flex flex-col lg:flex-row max-w-7xl mx-auto w-full p-4 sm:p-6 gap-6">
     
-    <!-- Main Video Player & Lesson Details (Center/Left) -->
+    <!-- Video Player & Details -->
     <div class="flex-grow flex flex-col space-y-4">
       <div class="relative aspect-video rounded-2xl overflow-hidden glass-card shadow-2xl bg-black border border-white/15">
         <iframe id="mainPlayer" class="w-full h-full border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -105,25 +115,21 @@
             <span id="lessonCategory" class="text-xs font-extrabold text-samt-cyan uppercase">الدرس 1</span>
             <h2 id="lessonTitle" class="text-xl font-bold mt-1 font-cairo">عنوان الدرس</h2>
           </div>
-          <button id="toggleCompleteBtn" class="px-5 py-2.5 rounded-xl border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold transition-all flex items-center gap-2">
-            <i class="fa-solid fa-check"></i>
+          <button id="toggleCompleteBtn" class="px-4 py-2 rounded-xl glass-card border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold flex items-center gap-2 transition-all">
+            <i class="fa-regular fa-circle-check"></i>
             <span>تحديد الدرس كمكتمل</span>
           </button>
         </div>
-
-        <p id="lessonDesc" class="text-slate-300 text-sm leading-relaxed">وصف الدرس والملاحظات العملية...</p>
-
+        <p id="lessonDesc" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+        <!-- Attachments & Files -->
         <div id="attachmentsBox" class="pt-4 border-t border-white/10 hidden">
-          <div class="text-xs font-bold text-samt-gold mb-2.5 flex items-center gap-2">
-            <i class="fa-solid fa-paperclip"></i>
-            <span>الملفات والمرفقات الخاصة بهذا الدرس:</span>
-          </div>
-          <div id="attachmentsList" class="flex flex-wrap gap-2"></div>
+          <div class="text-xs font-bold mb-3 text-slate-400">الملفات وقوالب العمل المرفقة:</div>
+          <div id="attachmentsList" class="flex items-center gap-3 flex-wrap"></div>
         </div>
       </div>
     </div>
 
-    <!-- Sidebar: Course Syllabus / Lessons List (Right) -->
+    <!-- Sidebar: Lessons List -->
     <div class="w-full lg:w-96 flex-shrink-0">
       <div class="glass-card rounded-2xl p-5 sticky top-24 space-y-4 text-right">
         <div class="flex items-center justify-between border-b border-white/10 pb-3">
@@ -133,42 +139,31 @@
         <div id="lessonsList" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1"></div>
       </div>
     </div>
-
   </div>
 
-  <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
+  <script src="./assets/js/auth.js"></script>
 
   <script>
+    // Theme
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     function applyTheme(theme) {
-      if (theme === 'light') {
-        htmlEl.classList.remove('dark');
-        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
-      } else {
-        htmlEl.classList.add('dark');
-        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
-      }
+      if (theme === 'light') { htmlEl.classList.remove('dark'); themeIcon.className = 'fa-solid fa-moon text-samt-blue'; }
+      else { htmlEl.classList.add('dark'); themeIcon.className = 'fa-solid fa-sun text-samt-gold'; }
       localStorage.setItem('samt_theme', theme);
     }
     applyTheme(localStorage.getItem('samt_theme') || 'dark');
-    themeToggle.addEventListener('click', () => {
-      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
-    });
+    themeToggle.addEventListener('click', () => { applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark'); });
 
+    // Classroom Engine
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const courseId = urlParams.get('id') || 'course-01';
-
       const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
       const course = courses.find(c => c.id === courseId) || courses[0];
-
-      if (!course) {
-        window.location.href = './courses.html';
-        return;
-      }
+      if (!course) { window.location.href = './courses.html'; return; }
 
       const lessons = course.lessons || [
         { id: 'l1', title: course.title + ' (الجزء الأول)', duration: '04:15', videoUrl: course.videoUrl, desc: course.description },
@@ -177,7 +172,7 @@
       ];
 
       let currentLessonIndex = 0;
-      let completedLessons = JSON.parse(localStorage.getItem(`samt_completed_${course.id}`) || '[]');
+      let completedLessons = JSON.parse(localStorage.getItem('samt_completed_' + course.id) || '[]');
 
       const topTitle = document.getElementById('topCourseTitle');
       const player = document.getElementById('mainPlayer');
@@ -193,83 +188,57 @@
       const attachmentsList = document.getElementById('attachmentsList');
 
       topTitle.textContent = course.title;
-      lessonsCount.textContent = `${lessons.length} دروس`;
+      lessonsCount.textContent = lessons.length + ' دروس';
 
       function updateProgress() {
         const percent = Math.round((completedLessons.length / lessons.length) * 100);
-        progressPercent.textContent = `${percent}%`;
-        progressBar.style.width = `${percent}%`;
-        localStorage.setItem(`samt_completed_${course.id}`, JSON.stringify(completedLessons));
+        progressPercent.textContent = percent + '%';
+        progressBar.style.width = percent + '%';
+        localStorage.setItem('samt_completed_' + course.id, JSON.stringify(completedLessons));
       }
 
       function renderLessons() {
         lessonsList.innerHTML = lessons.map((l, idx) => {
           const isDone = completedLessons.includes(l.id);
           const isActive = idx === currentLessonIndex;
-          return `
-            <div class="lesson-item p-3.5 rounded-xl border border-white/10 glass-card cursor-pointer transition-all flex items-center justify-between gap-3 ${isActive ? 'active' : ''}" onclick="selectLesson(${idx})">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDone ? 'bg-emerald-500 text-black' : 'bg-white/10 text-slate-400'}">
-                  ${isDone ? '<i class="fa-solid fa-check"></i>' : (idx + 1)}
-                </span>
-                <div>
-                  <h4 class="text-xs sm:text-sm font-bold font-cairo">${l.title}</h4>
-                  <span class="text-[10px] text-slate-400 font-mono">${l.duration}</span>
-                </div>
-              </div>
-              <i class="fa-solid ${isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-400 text-xs'}"></i>
-            </div>
-          `;
+          return '<div class="lesson-item p-3.5 rounded-xl border border-white/10 glass-card cursor-pointer flex items-center justify-between gap-3 ' + (isActive ? 'active' : '') + '" onclick="selectLesson(' + idx + ')">' +
+            '<div class="flex items-center gap-3"><span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ' + (isDone ? 'bg-emerald-500 text-black' : 'bg-white/10 text-slate-400') + '">' + (isDone ? '<i class="fa-solid fa-check"></i>' : (idx + 1)) + '</span><div><h4 class="text-xs sm:text-sm font-bold font-cairo">' + l.title + '</h4><span class="text-[10px] text-slate-400 font-mono">' + l.duration + '</span></div></div>' +
+            '<i class="fa-solid ' + (isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-400 text-xs') + '"></i></div>';
         }).join('');
       }
 
       window.selectLesson = function(index) {
         currentLessonIndex = index;
-        const currentLesson = lessons[index];
+        const cl = lessons[index];
+        player.src = cl.videoUrl;
+        lessonTitle.textContent = cl.title;
+        lessonDesc.textContent = cl.desc || course.description;
+        lessonCategory.textContent = 'الدرس ' + (index + 1) + ' من ' + lessons.length;
 
-        player.src = currentLesson.videoUrl;
-        lessonTitle.textContent = currentLesson.title;
-        lessonDesc.textContent = currentLesson.desc || course.description;
-        lessonCategory.textContent = `الدرس ${index + 1} من ${lessons.length}`;
-
-        const isDone = completedLessons.includes(currentLesson.id);
-        if (isDone) {
-          toggleCompleteBtn.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم إكمال هذا الدرس (اضغط للإلغاء)</span>';
-          toggleCompleteBtn.classList.add('bg-emerald-500/20');
-        } else {
-          toggleCompleteBtn.innerHTML = '<i class="fa-regular fa-circle-check"></i><span>تحديد الدرس كمكتمل</span>';
-          toggleCompleteBtn.classList.remove('bg-emerald-500/20');
-        }
+        const isDone = completedLessons.includes(cl.id);
+        toggleCompleteBtn.innerHTML = isDone
+          ? '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم الإكمال (اضغط للإلغاء)</span>'
+          : '<i class="fa-regular fa-circle-check"></i><span>تحديد الدرس كمكتمل</span>';
+        toggleCompleteBtn.classList.toggle('bg-emerald-500/20', isDone);
 
         if (course.attachments && course.attachments.length > 0) {
           attachmentsBox.classList.remove('hidden');
-          attachmentsList.innerHTML = course.attachments.map(a => `
-            <a href="${a.url}" class="px-3 py-1.5 rounded-lg glass-card text-xs font-bold hover:text-samt-cyan border border-white/10 flex items-center gap-2 transition-all">
-              <i class="fa-solid fa-download text-samt-cyan text-xs"></i>
-              <span>${a.name}</span>
-            </a>
-          `).join('');
-        } else {
-          attachmentsBox.classList.add('hidden');
-        }
+          attachmentsList.innerHTML = course.attachments.map(a => '<a href="' + a.url + '" class="px-3 py-1.5 rounded-lg glass-card text-xs font-bold hover:text-samt-cyan flex items-center gap-2"><i class="fa-solid fa-download text-samt-cyan text-xs"></i><span>' + a.name + '</span></a>').join('');
+        } else { attachmentsBox.classList.add('hidden'); }
 
         renderLessons();
         updateProgress();
       };
 
       toggleCompleteBtn.addEventListener('click', () => {
-        const currentLesson = lessons[currentLessonIndex];
-        if (completedLessons.includes(currentLesson.id)) {
-          completedLessons = completedLessons.filter(id => id !== currentLesson.id);
-        } else {
-          completedLessons.push(currentLesson.id);
-        }
+        const cl = lessons[currentLessonIndex];
+        if (completedLessons.includes(cl.id)) completedLessons = completedLessons.filter(id => id !== cl.id);
+        else completedLessons.push(cl.id);
         selectLesson(currentLessonIndex);
       });
 
       selectLesson(0);
     });
   </script>
-
 </body>
 </html>

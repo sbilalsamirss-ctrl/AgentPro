@@ -4,17 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>أكاديمية سمت SAMT | منصة الكورسات والدروس التفاعلية</title>
-  <meta name="description" content="أكاديمية سمت SAMT - دورات تدريبية متقدمة في البرمجيات، إدارة المشروعات، وتحليلات البيانات." />
+  <meta name="description" content="أكاديمية سمت SAMT - دورات تدريبية متقدمة في البرمجيات والإنتاجية وتحليلات البيانات." />
 
-  <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,13 +19,8 @@
         extend: {
           colors: {
             samt: {
-              space: '#070A12',
-              navy: '#0B132B',
-              card: '#0E172E',
-              cyan: '#00F5D4',
-              blue: '#00BBF9',
-              purple: '#7928CA',
-              gold: '#FFB703',
+              space: '#070A12', navy: '#0B132B', card: '#0E172E',
+              cyan: '#00F5D4', blue: '#00BBF9', purple: '#7928CA', gold: '#FFB703',
               border: 'rgba(0, 245, 212, 0.18)'
             }
           },
@@ -43,36 +34,79 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Readex Pro', 'Cairo', sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+    *, *::before, *::after {
+      transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    html.dark body { background-color: #070A12; color: #FFFFFF; }
-    html.dark .glass-card { background: rgba(14, 23, 46, 0.75); border: 1px solid rgba(0, 245, 212, 0.14); color: #FFFFFF; }
-    
+    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; }
+
+    /* 🌌 Dark Mode */
+    html.dark body {
+      background-color: #070A12;
+      background-image:
+        radial-gradient(circle at 50% 12%, rgba(0, 187, 249, 0.14), transparent 48%),
+        radial-gradient(circle at 85% 30%, rgba(121, 40, 202, 0.12), transparent 42%),
+        radial-gradient(circle at 15% 60%, rgba(0, 245, 212, 0.1), transparent 38%),
+        radial-gradient(2px 2px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 100px 90px, rgba(0, 245, 212, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 180px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 260px 200px, rgba(0, 187, 249, 0.7), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 340px 80px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 440px 300px, rgba(0, 245, 212, 0.6), rgba(0,0,0,0));
+      background-size: 100% 100%, 100% 100%, 100% 100%, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px;
+      color: #FFFFFF;
+    }
+    html.dark .glass-card {
+      background: rgba(14, 23, 46, 0.78);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.16);
+      color: #FFFFFF;
+    }
+    html.dark .glass-card:hover {
+      border-color: rgba(0, 245, 212, 0.45);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 0 25px rgba(0, 245, 212, 0.18);
+    }
+
+    /* ☀️ Light Mode */
     html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
-    html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
+    html:not(.dark) .glass-card {
+      background: #FFFFFF; border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05); color: #0F172A;
+    }
+    html:not(.dark) .glass-card:hover { border-color: #00BBF9; box-shadow: 0 12px 35px rgba(0, 187, 249, 0.15); }
     html:not(.dark) .text-slate-400 { color: #475569 !important; }
     html:not(.dark) .text-white { color: #0F172A !important; }
 
-    .glass-card:hover {
-      border-color: rgba(0, 245, 212, 0.4);
-      box-shadow: 0 10px 30px rgba(0, 245, 212, 0.12);
-    }
     .btn-samt-glow {
       background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
-      color: #070A12 !important;
-      font-weight: 800;
+      color: #070A12 !important; font-weight: 800;
       box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #00BBF9 0%, #00F5D4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-  <!-- Floating Glass Navbar -->
+  <!-- Navbar -->
   <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
       <a href="./index.html" class="flex items-center gap-3">
+        <div class="relative w-9 h-9">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-samt-cyan">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3" opacity="0.6"/>
+            <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="50" y1="6" x2="50" y2="94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="6" y1="50" x2="94" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="6" fill="#00BBF9"/>
+            <circle cx="85" cy="50" r="4" fill="#00F5D4"/>
+          </svg>
+        </div>
         <span class="text-2xl font-black font-cairo">سَـمْـت</span>
         <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
       </a>
@@ -80,18 +114,18 @@
         <a href="./index.html" class="text-sm font-semibold hover:text-samt-cyan">الرئيسية</a>
         <a href="./courses.html" class="text-sm font-bold text-samt-cyan">أكاديمية الكورسات</a>
         <a href="./downloads.html" class="text-sm font-semibold hover:text-samt-cyan">مركز التحميل</a>
-        <a href="./admin.html" class="text-sm font-semibold text-samt-gold hover:text-white"><i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن</a>
       </nav>
       <div class="flex items-center gap-3">
-        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm text-samt-gold">
-          <i id="themeIcon" class="fa-solid fa-sun"></i>
+        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm">
+          <i id="themeIcon" class="fa-solid fa-sun text-samt-gold text-base"></i>
         </button>
-        <a href="./downloads.html" class="btn-samt-glow px-5 py-2 rounded-full text-xs font-bold">تحميل البرامج</a>
+        <div class="samt-auth-slot"></div>
+        <a href="./downloads.html" class="hidden sm:flex btn-samt-glow px-4 py-2 rounded-full text-xs font-bold">تحميل البرامج</a>
       </div>
     </div>
   </header>
 
-  <!-- Courses Hero & Filter Header -->
+  <!-- Courses Hero & Filter -->
   <main class="pt-32 pb-20 max-w-7xl mx-auto px-4 w-full">
     
     <div class="text-center max-w-3xl mx-auto mb-12">
@@ -99,59 +133,54 @@
         🎓 منصة التعليم التفاعلية
       </span>
       <h1 class="text-3xl sm:text-5xl font-black mt-4 mb-4 font-cairo">
-        دورات <span class="text-samt-cyan">سمت SAMT</span> التدريبية
+        دورات <span class="text-gradient">سمت SAMT</span> التدريبية
       </h1>
       <p class="text-slate-400 text-sm sm:text-base">
         اختر مسارك التعليمي، تابع دروس الفيديو، وحمّل ملفات التطبيق وقوالب العمل مباشرة.
       </p>
 
-      <!-- Search Bar -->
       <div class="relative max-w-xl mx-auto mt-8">
         <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-        <input type="text" id="courseSearch" placeholder="ابحث باسم الكورس أو الموضوع (مثل: التثبيت، KPIs، إنتاجية)..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-full py-3.5 pr-11 pl-4 outline-none transition-all shadow-inner" />
+        <input type="text" id="courseSearch" placeholder="ابحث باسم الكورس أو الموضوع..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-full py-3.5 pr-11 pl-4 outline-none" />
       </div>
 
-      <!-- Categories Filter Pills -->
       <div class="flex items-center justify-center gap-2 flex-wrap mt-6">
-        <button class="filter-btn active px-4 py-2 rounded-full text-xs font-bold bg-samt-cyan text-samt-space transition-all" data-category="all">جميع الكورسات</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="basics">دليل المبتدئين</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="productivity">الإنتاجية والتنظيم</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="analytics">التحليلات والـ KPIs</button>
-        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card hover:border-samt-cyan text-slate-400 hover:text-white transition-all" data-category="database">قواعد البيانات</button>
+        <button class="filter-btn active px-4 py-2 rounded-full text-xs font-bold bg-samt-cyan text-samt-space" data-category="all">جميع الكورسات</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card text-slate-400 hover:text-white" data-category="basics">دليل المبتدئين</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card text-slate-400 hover:text-white" data-category="productivity">الإنتاجية والتنظيم</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card text-slate-400 hover:text-white" data-category="analytics">التحليلات والـ KPIs</button>
+        <button class="filter-btn px-4 py-2 rounded-full text-xs font-bold glass-card text-slate-400 hover:text-white" data-category="database">قواعد البيانات</button>
       </div>
     </div>
 
-    <!-- Courses Grid Container -->
     <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
   </main>
 
-  <!-- Footer -->
   <footer class="bg-black/50 border-t border-white/10 py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 <strong>أكاديمية سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
       <div class="flex items-center gap-4">
         <a href="./index.html" class="text-slate-400 hover:text-white">الرئيسية</a>
-        <a href="./admin.html" class="text-samt-gold hover:text-white">لوحة تحكم الأدمن</a>
+        <a href="./downloads.html" class="text-slate-400 hover:text-white">مركز التحميل</a>
       </div>
     </div>
   </footer>
 
-  <!-- Central Data Script -->
   <script src="./assets/js/courses-data.js"></script>
+  <script src="./assets/js/auth.js"></script>
 
-  <!-- Theme & Catalog Engine -->
   <script>
+    // Theme Engine (Smooth Cinematic Fade)
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     function applyTheme(theme) {
       if (theme === 'light') {
         htmlEl.classList.remove('dark');
-        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+        themeIcon.className = 'fa-solid fa-moon text-samt-blue text-base';
       } else {
         htmlEl.classList.add('dark');
-        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+        themeIcon.className = 'fa-solid fa-sun text-samt-gold text-base';
       }
       localStorage.setItem('samt_theme', theme);
     }
@@ -160,109 +189,80 @@
       applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
     });
 
+    // Course Catalog Engine
     document.addEventListener('DOMContentLoaded', () => {
       const grid = document.getElementById('coursesGrid');
       const searchInput = document.getElementById('courseSearch');
       const filterBtns = document.querySelectorAll('.filter-btn');
-
       let currentCategory = 'all';
       let searchTerm = '';
-
       const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
+      const isAdmin = window.SamtAuth?.isAdmin();
 
       function getProgress(courseId, totalLessons = 3) {
         try {
-          const completed = JSON.parse(localStorage.getItem(`samt_completed_${courseId}`) || '[]');
+          const completed = JSON.parse(localStorage.getItem('samt_completed_' + courseId) || '[]');
           return Math.round((completed.length / totalLessons) * 100);
-        } catch (e) {
-          return 0;
-        }
+        } catch (e) { return 0; }
       }
 
       function render() {
         let list = courses;
-        if (currentCategory !== 'all') {
-          list = list.filter(c => c.category === currentCategory);
-        }
+        if (currentCategory !== 'all') list = list.filter(c => c.category === currentCategory);
         if (searchTerm.trim() !== '') {
           const q = searchTerm.toLowerCase();
           list = list.filter(c => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.categoryName.toLowerCase().includes(q));
         }
 
         if (list.length === 0) {
-          grid.innerHTML = `
-            <div class="col-span-full text-center py-16 glass-card rounded-2xl">
-              <i class="fa-solid fa-book-open text-4xl text-slate-500 mb-3"></i>
-              <h3 class="text-lg font-bold mb-1">لم يتم العثور على كورسات تطابق بحثك</h3>
-              <p class="text-xs text-slate-400">جرب كتابة كلمة بحث أخرى أو اختر تصنيفاً مختلفاً.</p>
-            </div>
-          `;
+          grid.innerHTML = '<div class="col-span-full text-center py-16 glass-card rounded-2xl"><i class="fa-solid fa-book-open text-4xl text-slate-500 mb-3"></i><h3 class="text-lg font-bold mb-1">لم يتم العثور على كورسات</h3><p class="text-xs text-slate-400">جرب كلمة بحث أخرى أو تصنيفاً مختلفاً.</p></div>';
           return;
         }
 
         grid.innerHTML = list.map(c => {
           const progress = getProgress(c.id, c.lessons ? c.lessons.length : 3);
-          return `
-            <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300">
-              
-              <div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">
-                <div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
-                  <i class="fa-solid fa-play ml-0.5"></i>
-                </div>
-                <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">${c.level || 'كورس معتمد'}</span>
-                <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white"><i class="fa-regular fa-clock ml-1"></i>${c.duration}</span>
-              </div>
-
-              <div class="p-5 flex flex-col flex-grow text-right">
-                <div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5">
-                  <span>${c.categoryName}</span>
-                  <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span>
-                </div>
-                <h3 class="text-base font-bold mb-2 leading-snug font-cairo">${c.title}</h3>
-                <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${c.description}</p>
-
-                <div class="mt-auto pt-3 border-t border-white/10 mb-4">
-                  <div class="flex items-center justify-between text-[11px] font-bold mb-1">
-                    <span class="text-slate-400">نسبة التقدم في الكورس:</span>
-                    <span class="${progress === 100 ? 'text-emerald-400' : 'text-samt-cyan'}">${progress}%</span>
-                  </div>
-                  <div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full transition-all" style="width: ${progress}%"></div>
-                  </div>
-                </div>
-
-                <a href="./course-view.html?id=${c.id}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black transition-all flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-graduation-cap"></i>
-                  <span>${progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس'}</span>
-                </a>
-              </div>
-
+          
+          // Inline Admin Action Buttons (تظهر فقط عند تسجيل دخول المشرف)
+          const adminControls = isAdmin ? `
+            <div class="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-gold/40 shadow-lg">
+              <button onclick="window.SamtAuth.editCourseInline('${c.id}')" title="تعديل هذا الكورس" class="w-7 h-7 rounded-lg bg-samt-gold/20 hover:bg-samt-gold/40 text-samt-gold flex items-center justify-center text-xs transition-colors">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button onclick="window.SamtAuth.deleteCourseInline('${c.id}')" title="حذف هذا الكورس" class="w-7 h-7 rounded-lg bg-rose-500/20 hover:bg-rose-500/40 text-rose-400 flex items-center justify-center text-xs transition-colors">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </div>
-          `;
+          ` : '';
+
+          return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative">' +
+            adminControls +
+            '<div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">' +
+              '<div class="w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-play ml-0.5"></i></div>' +
+              '<span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">' + (c.level || 'كورس معتمد') + '</span>' +
+              '<span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white"><i class="fa-regular fa-clock ml-1"></i>' + c.duration + '</span>' +
+            '</div>' +
+            '<div class="p-5 flex flex-col flex-grow text-right">' +
+              '<div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5"><span>' + c.categoryName + '</span><span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>3 دروس</span></div>' +
+              '<h3 class="text-base font-bold mb-2 leading-snug font-cairo">' + c.title + '</h3>' +
+              '<p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">' + c.description + '</p>' +
+              '<div class="mt-auto pt-3 border-t border-white/10 mb-4"><div class="flex items-center justify-between text-[11px] font-bold mb-1"><span class="text-slate-400">نسبة التقدم:</span><span class="' + (progress === 100 ? 'text-emerald-400' : 'text-samt-cyan') + '">' + progress + '%</span></div><div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full" style="width:' + progress + '%"></div></div></div>' +
+              '<a href="./course-view.html?id=' + c.id + '" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black flex items-center justify-center gap-2"><i class="fa-solid fa-graduation-cap"></i><span>' + (progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس') + '</span></a>' +
+            '</div></div>';
         }).join('');
       }
 
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => {
-            b.classList.remove('bg-samt-cyan', 'text-samt-space');
-            b.classList.add('glass-card', 'text-slate-400');
-          });
+          filterBtns.forEach(b => { b.classList.remove('bg-samt-cyan', 'text-samt-space'); b.classList.add('glass-card', 'text-slate-400'); });
           btn.classList.remove('glass-card', 'text-slate-400');
           btn.classList.add('bg-samt-cyan', 'text-samt-space');
           currentCategory = btn.dataset.category;
           render();
         });
       });
-
-      searchInput?.addEventListener('input', (e) => {
-        searchTerm = e.target.value;
-        render();
-      });
-
+      searchInput?.addEventListener('input', (e) => { searchTerm = e.target.value; render(); });
       render();
     });
   </script>
-
 </body>
 </html>

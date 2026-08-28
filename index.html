@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سمت SAMT | منصة البرمجيات الحديثة وأكاديمية الكورسات المتطورة</title>
-  <meta name="description" content="منظومة سمت SAMT - المنصة الشاملة لتطبيقات الويب، برامج الإنتاجية، وأكاديمية الكورسات والتدريب العملي." />
+  <title>سمت SAMT | منظومة البرمجيات الحديثة وأكاديمية الكورسات المتطورة</title>
+  <meta name="description" content="منظومة سمت SAMT - المنصة الشاملة لتطبيقات الويب، برامج الإنتاجية، وأكاديمية الكورسات والتدريب العملي بتصميم فلكي فائق الفخامة." />
 
   <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,14 +26,12 @@
               space: '#070A12',
               navy: '#0B132B',
               card: '#0E172E',
-              cardLight: '#F8FAFC',
-              cardBorderLight: '#E2E8F0',
+              cardLight: '#FFFFFF',
               cyan: '#00F5D4',
               blue: '#00BBF9',
               purple: '#7928CA',
               gold: '#FFB703',
-              border: 'rgba(0, 245, 212, 0.18)',
-              borderSubtle: 'rgba(255, 255, 255, 0.08)'
+              border: 'rgba(0, 245, 212, 0.18)'
             }
           },
           fontFamily: {
@@ -46,53 +44,85 @@
   </script>
 
   <style>
-    /* Global Transitions for Dark/Light Mode */
-    body {
-      font-family: 'Readex Pro', 'Cairo', sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+    /* ==========================================================================
+       Smooth Cinematic Theme Transitions (تأثير تلاشي ناعم وبطيء)
+       ========================================================================== */
+    *, *::before, *::after {
+      transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Dark Mode Theme */
+    body {
+      font-family: 'Readex Pro', 'Cairo', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* 🌌 Dark Mode: Deep Celestial Space with Stars & Glowing Nebulae */
     html.dark body {
       background-color: #070A12;
+      background-image: 
+        radial-gradient(circle at 50% 12%, rgba(0, 187, 249, 0.16), transparent 48%),
+        radial-gradient(circle at 88% 28%, rgba(121, 40, 202, 0.14), transparent 42%),
+        radial-gradient(circle at 12% 65%, rgba(0, 245, 212, 0.12), transparent 38%),
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 80px, rgba(0, 245, 212, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 150px 140px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 240px 190px, rgba(0, 187, 249, 0.7), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 320px 70px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 420px 280px, rgba(0, 245, 212, 0.6), rgba(0,0,0,0));
+      background-size: 100% 100%, 100% 100%, 100% 100%, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px;
       color: #FFFFFF;
     }
     html.dark .glass-nav {
-      background: rgba(7, 10, 18, 0.85);
+      background: rgba(7, 10, 18, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     html.dark .glass-card {
-      background: rgba(14, 23, 46, 0.75);
-      border: 1px solid rgba(0, 245, 212, 0.14);
+      background: rgba(14, 23, 46, 0.78);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.16);
       color: #FFFFFF;
     }
     html.dark .glass-card:hover {
-      border-color: rgba(0, 245, 212, 0.4);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(0, 245, 212, 0.15);
+      border-color: rgba(0, 245, 212, 0.45);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.2);
     }
     html.dark .subtle-bg {
       background-color: #0A0F20;
     }
+    html.dark .astrolabe-layer {
+      opacity: 0.12;
+    }
 
-    /* Light Mode Theme */
+    /* ☀️ Light Mode: Crisp, Clean Frosted Glass */
     html:not(.dark) body {
       background-color: #F8FAFC;
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(0, 187, 249, 0.08), transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(121, 40, 202, 0.05), transparent 40%);
       color: #0F172A;
     }
     html:not(.dark) .glass-nav {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid #E2E8F0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     }
     html:not(.dark) .glass-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       color: #0F172A;
     }
     html:not(.dark) .glass-card:hover {
       border-color: #00BBF9;
-      box-shadow: 0 12px 30px rgba(0, 187, 249, 0.15);
+      box-shadow: 0 12px 35px rgba(0, 187, 249, 0.15);
     }
     html:not(.dark) .subtle-bg {
       background-color: #F1F5F9;
@@ -102,6 +132,9 @@
     }
     html:not(.dark) .text-white {
       color: #0F172A !important;
+    }
+    html:not(.dark) .astrolabe-layer {
+      opacity: 0.035;
     }
 
     /* Buttons */
@@ -117,7 +150,15 @@
       transform: translateY(-2px);
     }
 
-    /* Floating Animation */
+    /* Keyframes */
+    @keyframes spinAstrolabe {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-astrolabe {
+      animation: spinAstrolabe 140s linear infinite;
+    }
+
     @keyframes floatSlow {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
@@ -140,6 +181,11 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    /* Theme Toggle Icon Transition */
+    .theme-icon-rotate {
+      transform: rotate(360deg) scale(1.1);
+    }
   </style>
 </head>
 <body class="min-h-screen">
@@ -147,10 +193,10 @@
   <!-- ==========================================================================
        1. Floating Glass Navbar
        ========================================================================== -->
-  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
-      <!-- Right: Brand Logo (سمت SAMT) -->
+      <!-- Right: Brand Logo (سمت SAMT مع رمز الأسترلاب الفلكي) -->
       <a href="./index.html" class="flex items-center gap-3 group">
         <div class="relative w-10 h-10 flex items-center justify-center">
           <svg viewBox="0 0 100 100" class="w-full h-full text-samt-cyan transition-transform group-hover:rotate-45 duration-700">
@@ -159,6 +205,7 @@
             <line x1="50" y1="6" x2="50" y2="94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
             <line x1="6" y1="50" x2="94" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
             <circle cx="50" cy="50" r="6" fill="#00BBF9"/>
+            <circle cx="50" cy="50" r="10" fill="none" stroke="#00F5D4" stroke-width="1.5" opacity="0.8"/>
             <circle cx="85" cy="50" r="4" fill="#00F5D4"/>
           </svg>
         </div>
@@ -177,20 +224,20 @@
         </a>
         <a href="#features" class="text-sm font-bold hover:text-samt-cyan transition-colors">المميزات</a>
         <a href="./downloads.html" class="text-sm font-bold hover:text-samt-cyan transition-colors">مركز التنزيلات</a>
-        <a href="./admin.html" class="text-sm font-bold text-samt-gold hover:opacity-80 transition-colors">
-          <i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن
-        </a>
       </nav>
 
-      <!-- Left: Theme Toggle & CTA -->
+      <!-- Left: Theme Switcher & Auth Slot & Actions -->
       <div class="flex items-center gap-3">
         
-        <!-- Day / Night Mode Toggle Button -->
-        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm hover:border-samt-cyan transition-all" aria-label="Toggle Theme">
-          <i id="themeIcon" class="fa-solid fa-sun text-samt-gold"></i>
+        <!-- Smooth Dynamic Theme Toggle Button ☀️/🌙 -->
+        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm hover:border-samt-cyan transition-all shadow-md" aria-label="Toggle Theme">
+          <i id="themeIcon" class="fa-solid fa-sun text-samt-gold text-base transition-transform duration-500"></i>
         </button>
 
-        <a href="#newsletter" class="btn-samt-glow px-5 py-2.5 rounded-full text-xs sm:text-sm flex items-center gap-2">
+        <!-- Universal Auth Slot (تسجيل الدخول / حساب المستخدم) -->
+        <div class="samt-auth-slot"></div>
+
+        <a href="#newsletter" class="hidden sm:flex btn-samt-glow px-4 py-2 rounded-full text-xs font-bold items-center gap-2">
           <i class="fa-solid fa-bell text-xs"></i>
           <span>اشترك بالتحديثات</span>
         </a>
@@ -202,20 +249,42 @@
 
     </div>
 
-    <!-- Mobile Menu Drawer -->
+    <!-- Mobile Drawer -->
     <div id="mobileMenu" class="hidden md:hidden glass-nav border-t border-white/10 px-6 py-5 space-y-4">
+      <div class="samt-auth-slot pb-3 border-b border-white/10"></div>
       <a href="#apps" class="block font-bold py-1.5">البرامج والتطبيقات</a>
       <a href="./courses.html" class="block text-samt-cyan font-bold py-1.5">أكاديمية سمت للكورسات</a>
       <a href="#features" class="block font-bold py-1.5">المميزات والسرعة</a>
       <a href="./downloads.html" class="block font-bold py-1.5">مركز التحميل</a>
-      <a href="./admin.html" class="block text-samt-gold font-bold py-1.5">لوحة تحكم المشرف (Admin)</a>
     </div>
   </header>
 
   <!-- ==========================================================================
-       2. Hero Section
+       2. Hero Section (مع الأسترلاب والدوائر الفلكية الدوارة)
        ========================================================================== -->
   <section class="relative pt-36 pb-20 overflow-hidden">
+    
+    <!-- 🌌 Astrolabe Background Vectors (النجوم والأسترلاب الفلكي) -->
+    <div class="astrolabe-layer absolute top-6 right-[-90px] w-[500px] h-[500px] pointer-events-none transition-opacity duration-700">
+      <svg viewBox="0 0 400 400" class="w-full h-full text-samt-cyan animate-astrolabe">
+        <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+        <circle cx="200" cy="200" r="145" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="200" cy="200" r="95" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="200" y1="15" x2="200" y2="385" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="15" y1="200" x2="385" y2="200" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="200,55 210,190 345,200 210,210 200,345 190,210 55,200 190,190" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <div class="astrolabe-layer absolute top-36 left-[-90px] w-[400px] h-[400px] pointer-events-none transition-opacity duration-700">
+      <svg viewBox="0 0 300 300" class="w-full h-full text-samt-blue">
+        <circle cx="150" cy="150" r="135" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="150" cy="150" r="75" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M 50 150 Q 150 40 250 150 T 50 150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="250" cy="150" r="5" fill="#00F5D4"/>
+      </svg>
+    </div>
+
     <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
       
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8 shadow-lg">
@@ -309,7 +378,7 @@
   </section>
 
   <!-- ==========================================================================
-       3. Multi-Software Ecosystem Grid (البرامج والتطبيقات المتاحة)
+       3. Multi-Software Ecosystem Grid
        ========================================================================== -->
   <section id="apps" class="py-20 subtle-bg relative">
     <div class="max-w-6xl mx-auto px-4 text-right">
@@ -470,7 +539,7 @@
   </section>
 
   <!-- ==========================================================================
-       5. Email Registration / Newsletter Subscription System (تسجيل الإيميلات)
+       5. Email Registration / Newsletter Subscription System
        ========================================================================== -->
   <section id="newsletter" class="py-20 subtle-bg relative">
     <div class="max-w-4xl mx-auto px-4 text-center">
@@ -486,7 +555,7 @@
         </h2>
         
         <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto mb-8 leading-relaxed">
-          سجل بريدك الإلكتروني ليصلك إشعار فوري عند صدور برامج جديدة، تحديثات، أو كورسات تدريبية جديدة في الأكاديمية.
+          سجل بريدك الإلكتروني ليصلك إشعار فوري عند صدور برامج جديدة، تحديثات، أو دورات تدريبية جديدة في الأكاديمية.
         </p>
 
         <!-- Registration Form -->
@@ -518,7 +587,6 @@
         <div class="flex items-center gap-4">
           <a href="./courses.html" class="hover:text-samt-cyan">أكاديمية الكورسات</a>
           <a href="./downloads.html" class="hover:text-samt-cyan">مركز التحميل</a>
-          <a href="./admin.html" class="text-samt-gold hover:text-white">لوحة الأدمن</a>
         </div>
       </div>
     </div>
@@ -537,23 +605,26 @@
     </div>
   </div>
 
-  <!-- Central Data Script -->
+  <!-- Central Data & Auth Scripts -->
   <script src="./assets/js/courses-data.js"></script>
+  <script src="./assets/js/auth.js"></script>
 
-  <!-- Interactive Scripts -->
+  <!-- Dynamic Smooth Theme Switcher Engine -->
   <script>
-    // Theme Switcher (Dark / Light Mode)
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
 
     function applyTheme(theme) {
+      themeIcon.classList.add('theme-icon-rotate');
+      setTimeout(() => themeIcon.classList.remove('theme-icon-rotate'), 500);
+
       if (theme === 'light') {
         htmlEl.classList.remove('dark');
-        themeIcon.className = 'fa-solid fa-moon text-samt-blue';
+        themeIcon.className = 'fa-solid fa-moon text-samt-blue text-base';
       } else {
         htmlEl.classList.add('dark');
-        themeIcon.className = 'fa-solid fa-sun text-samt-gold';
+        themeIcon.className = 'fa-solid fa-sun text-samt-gold text-base';
       }
       localStorage.setItem('samt_theme', theme);
     }

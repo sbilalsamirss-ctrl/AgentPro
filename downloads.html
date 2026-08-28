@@ -76,11 +76,13 @@
         <a href="./index.html" class="text-sm font-semibold hover:text-samt-cyan">الرئيسية</a>
         <a href="./courses.html" class="text-sm font-semibold hover:text-samt-cyan">أكاديمية الكورسات</a>
         <a href="./downloads.html" class="text-sm font-bold text-samt-cyan">مركز التحميل</a>
-        <a href="./admin.html" class="text-sm font-semibold text-samt-gold"><i class="fa-solid fa-lock text-xs ml-1"></i>لوحة الأدمن</a>
       </nav>
-      <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm text-samt-gold">
-        <i id="themeIcon" class="fa-solid fa-sun"></i>
-      </button>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm text-samt-gold">
+          <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
+        <div class="samt-auth-slot"></div>
+      </div>
     </div>
   </header>
 
@@ -174,6 +176,9 @@
   <footer class="bg-black/50 border-t border-white/10 py-6 text-center text-xs text-slate-500">
     &copy; 2026 <strong>منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.
   </footer>
+
+  <script src="./assets/js/courses-data.js"></script>
+  <script src="./assets/js/auth.js"></script>
 
   <script>
     const htmlEl = document.documentElement;
