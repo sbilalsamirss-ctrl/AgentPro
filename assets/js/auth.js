@@ -1297,7 +1297,19 @@
     }
   };
 
+  function cleanupOldDummyData() {
+    try {
+      if (localStorage.getItem('samt_v2026_clean_slate') !== 'true') {
+        localStorage.removeItem(STORAGE_KEYS.COURSES);
+        localStorage.removeItem('samt_admin_releases');
+        localStorage.removeItem(STORAGE_KEYS.SUBSCRIBERS);
+        localStorage.setItem('samt_v2026_clean_slate', 'true');
+      }
+    } catch (e) {}
+  }
+
   function init() {
+    cleanupOldDummyData();
     initUsers();
     injectAuthModal();
     injectUserSettingsModal();
