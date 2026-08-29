@@ -1,13 +1,13 @@
 /**
  * ==========================================================================
- * ط³ظ…طھ SAMT - ظ…ط­ط±ظƒ ط§ظ„ظ…طµط§ط¯ظ‚ط©طŒ ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط­ط³ط§ط¨طŒ ظˆط­ط°ظپ ط§ظ„ط­ط³ط§ط¨ ظ†ظ‡ط§ط¦ظٹط§ظ‹
+ * سمت SAMT - محرك المصادقة، إعدادات الحساب، وحذف الحساب نهائياً
  * ==========================================================================
- * 1. طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ط§ظ„ظ…ظˆط­ط¯ ظ„ظ„ط¹ظ…ظ„ط§ط، ظˆط§ظ„ظ…ط´ط±ظپظٹظ†.
- * 2. ظ†ط§ظپط°ط© ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط­ط³ط§ط¨ ط§ظ„ط´ط§ظ…ظ„ط© (طھط¹ط¯ظٹظ„ ط§ظ„ط§ط³ظ…طŒ طھط؛ظٹظٹط± ط§ظ„ط¥ظٹظ…ظٹظ„طŒ طھط؛ظٹظٹط± ط§ظ„ط¨ط§ط³ظˆظˆط±ط¯).
- * 3. ط®ط§طµظٹط© ط­ط°ظپ ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط¨ط±ظٹط¯ ظ†ظ‡ط§ط¦ظٹط§ظ‹ (Delete Account & Data).
- * 4. ط¥ط±ط³ط§ظ„ ظƒظˆط¯ ط§ظ„طھط­ظ‚ظ‚ OTP ط¥ظ„ظ‰ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط­ظ‚ظٹظ‚ظٹ + ط¥ط®ظپط§ط، ط§ظ„ظƒظˆط¯ ظ…ظ† ط§ظ„ط´ط§ط´ط©.
- * 5. ط£ط²ط±ط§ط± ط¥ط¸ظ‡ط§ط± ظˆط¥ط®ظپط§ط، ط§ظ„ط¨ط§ط³ظˆظˆط±ط¯ ط¨ط§ظ„ط¹ظٹظ† ًں‘پï¸ڈ.
- * 6. ظ‚ط§ط¦ظ…ط© ظ…ظ†ط³ط¯ظ„ط© ط«ط§ط¨طھط© 100% ط¨ط§ظ„ط¶ط؛ط· (Click-to-Toggle).
+ * 1. تسجيل الدخول الموحد للعملاء والمشرفين.
+ * 2. نافذة إعدادات الحساب الشاملة (تعديل الاسم، تغيير الإيميل، تغيير الباسوورد).
+ * 3. خاصية حذف الحساب والبريد نهائياً (Delete Account & Data).
+ * 4. إرسال كود التحقق OTP إلى البريد الحقيقي + إخفاء الكود من الشاشة.
+ * 5. أزرار إظهار وإخفاء الباسوورد بالعين 👁️.
+ * 6. قائمة منسدلة ثابتة 100% بالضغط (Click-to-Toggle).
  */
 
 (function () {
@@ -25,7 +25,7 @@
     } catch (e) {}
   })();
 
-  // ط¥ط¹ط¯ط§ط¯ط§طھ ط®ط¯ظ…ط© ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط§ظ„ط­ظ‚ظٹظ‚ظٹ (EmailJS)
+  // إعدادات خدمة البريد الإلكتروني الحقيقي (EmailJS)
   const EMAIL_SERVICE_CONFIG = {
     SERVICE_ID: 'service_samt',
     TEMPLATE_ID: 'template_samt_otp',
@@ -33,13 +33,13 @@
     ENABLED: false
   };
 
-  // ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط§ظپطھط±ط§ط¶ظٹط© ظ„ط­ط³ط§ط¨ ط§ظ„ظ…ط´ط±ظپ ط§ظ„ط±ط¦ظٹط³ظٹ
+  // الإعدادات الافتراضية لحساب المشرف الرئيسي
   const MASTER_ADMIN = {
-    name: 'ط§ظ„ظ…ط´ط±ظپ ط§ظ„ط¹ط§ظ…',
+    name: 'المشرف العام',
     email: 'admin@samt.com',
     password: 'admin1234',
     role: 'admin',
-    avatar: 'ًں‘‘',
+    avatar: '👑',
     emailVerified: true,
     notificationsEnabled: true
   };
@@ -85,16 +85,16 @@
               to_email: recipientEmail,
               to_name: recipientName,
               otp_code: otpCode,
-              app_name: 'ظ…ظ†ط¸ظˆظ…ط© ط³ظ…طھ SAMT'
+              app_name: 'منظومة سمت SAMT'
             }
           })
         });
         if (response.ok) {
-          console.log('âœ… طھظ… ط¥ط±ط³ط§ظ„ ظƒظˆط¯ ط§ظ„طھط­ظ‚ظ‚ ط¨ظ†ط¬ط§ط­ ط¥ظ„ظ‰ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ.');
+          console.log('✅ تم إرسال كود التحقق بنجاح إلى البريد الإلكتروني.');
           return true;
         }
       } catch (err) {
-        console.warn('طھط¹ط°ط± ط§ظ„ط¥ط±ط³ط§ظ„ ط¹ط¨ط± ط§ظ„ط³ظٹط±ظپط± ط§ظ„ط®ط§ط±ط¬ظٹطŒ ط¬ط§ط±ظٹ ط§ظ„ط¹ظ…ظ„ ط¨ط§ظ„ظˆط¶ط¹ ط§ظ„ظ…ط­ظ„ظٹ:', err);
+        console.warn('تعذر الإرسال عبر السيرفر الخارجي، جاري العمل بالوضع المحلي:', err);
       }
     }
     return false;
@@ -128,7 +128,7 @@
           name: user.name,
           email: user.email,
           role: user.role || 'user',
-          avatar: user.role === 'admin' ? 'ًں‘‘' : 'ًں‘¤',
+          avatar: user.role === 'admin' ? '👑' : '👤',
           emailVerified: user.emailVerified !== undefined ? user.emailVerified : true,
           notificationsEnabled: user.notificationsEnabled !== undefined ? user.notificationsEnabled : true,
           loginTime: new Date().toISOString()
@@ -136,7 +136,7 @@
         localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(sessionData));
         return { success: true, user: sessionData };
       }
-      return { success: false, message: 'ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط£ظˆ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط؛ظٹط± طµط­ظٹط­ط©.' };
+      return { success: false, message: 'البريد الإلكتروني أو كلمة المرور غير صحيحة.' };
     },
 
     startRegister: function (name, email, password, confirmPassword, adminPasscode) {
@@ -147,19 +147,19 @@
       const cleanConfirmPass = (confirmPassword || '').trim();
 
       if (!cleanEmail || !cleanPass || !cleanName || !cleanConfirmPass) {
-        return { success: false, message: 'ظٹط±ط¬ظ‰ ظ…ظ„ط، ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ„ ط§ظ„ظ…ط·ظ„ظˆط¨ط©.' };
+        return { success: false, message: 'يرجى ملء جميع الحقول المطلوبة.' };
       }
 
       if (cleanPass !== cleanConfirmPass) {
-        return { success: false, message: 'ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ظˆطھط£ظƒظٹط¯ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط؛ظٹط± ظ…طھط·ط§ط¨ظ‚طھظٹظ†!' };
+        return { success: false, message: 'كلمة المرور وتأكيد كلمة المرور غير متطابقتين!' };
       }
 
       if (cleanPass.length < 6) {
-        return { success: false, message: 'ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ظٹط¬ط¨ ط£ظ† ظ„ط§ طھظ‚ظ„ ط¹ظ† 6 ط£ط­ط±ظپ ط£ظˆ ط£ط±ظ‚ط§ظ….' };
+        return { success: false, message: 'كلمة المرور يجب أن لا تقل عن 6 أحرف أو أرقام.' };
       }
 
       if (users.some(u => u.email.toLowerCase() === cleanEmail)) {
-        return { success: false, message: 'ظ‡ط°ط§ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ظ…ط³ط¬ظ„ ظ…ط³ط¨ظ‚ط§ظ‹.' };
+        return { success: false, message: 'هذا البريد الإلكتروني مسجل مسبقاً.' };
       }
 
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -170,7 +170,7 @@
         email: cleanEmail,
         password: cleanPass,
         role: isGrantingAdmin ? 'admin' : 'user',
-        avatar: isGrantingAdmin ? 'ًں‘‘' : 'ًں‘¤',
+        avatar: isGrantingAdmin ? '👑' : '👤',
         otp: otpCode,
         notificationsEnabled: true,
         createdAt: Date.now()
@@ -188,12 +188,12 @@
 
     verifyAndCompleteRegister: function (enteredOtp) {
       if (!pendingRegistration) {
-        return { success: false, message: 'ط§ظ†طھظ‡طھ طµظ„ط§ط­ظٹط© ط¬ظ„ط³ط© ط§ظ„طھط³ط¬ظٹظ„طŒ ظٹط±ط¬ظ‰ ط¥ط¹ط§ط¯ط© ط§ظ„ظ…ط­ط§ظˆظ„ط©.' };
+        return { success: false, message: 'انتهت صلاحية جلسة التسجيل، يرجى إعادة المحاولة.' };
       }
 
       const cleanEntered = (enteredOtp || '').trim();
       if (cleanEntered !== pendingRegistration.otp) {
-        return { success: false, message: 'ط±ظ…ط² ط§ظ„طھط­ظ‚ظ‚ ط؛ظٹط± طµط­ظٹط­طŒ ظٹط±ط¬ظ‰ ظ…ط±ط§ط¬ط¹ط© ط§ظ„ط¨ط±ظٹط¯ ظˆط§ظ„ظ…ط­ط§ظˆظ„ط© ط«ط§ظ†ظٹط©.' };
+        return { success: false, message: 'رمز التحقق غير صحيح، يرجى مراجعة البريد والمحاولة ثانية.' };
       }
 
       const users = initUsers();
@@ -240,32 +240,32 @@
       return {
         success: true,
         user: sessionData,
-        message: isAdm ? 'طھظ… طھط£ظƒظٹط¯ ط§ظ„ط¨ط±ظٹط¯ ظˆط¥ظ†ط´ط§ط، ط­ط³ط§ط¨ ط§ظ„ظ…ط´ط±ظپ (Admin) ط¨ظ†ط¬ط§ط­! ًں‘‘' : 'طھظ… طھط£ظƒظٹط¯ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ظˆطھظپط¹ظٹظ„ ط§ظ„ط¥ط´ط¹ط§ط±ط§طھ ط¨ظ†ط¬ط§ط­! ًںژ‰'
+        message: isAdm ? 'تم تأكيد البريد وإنشاء حساب المشرف (Admin) بنجاح! 👑' : 'تم تأكيد البريد الإلكتروني وتفعيل الإشعارات بنجاح! 🎉'
       };
     },
 
-    // ط­ظپط¸ طھط¹ط¯ظٹظ„ط§طھ ط§ظ„ظ…ظ„ظپ ط§ظ„ط´ط®طµظٹ (ط§ظ„ط§ط³ظ… ظˆط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ)
+    // حفظ تعديلات الملف الشخصي (الاسم والبريد الإلكتروني)
     updateProfile: function (newName, newEmail) {
       const user = this.getCurrentUser();
-      if (!user) return { success: false, message: 'ظٹط±ط¬ظ‰ طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ط£ظˆظ„ط§ظ‹.' };
+      if (!user) return { success: false, message: 'يرجى تسجيل الدخول أولاً.' };
 
       const cleanName = (newName || '').trim();
       const cleanEmail = (newEmail || '').trim().toLowerCase();
 
       if (!cleanName || !cleanEmail) {
-        return { success: false, message: 'ظٹط±ط¬ظ‰ ظ…ظ„ط، ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ„.' };
+        return { success: false, message: 'يرجى ملء جميع الحقول.' };
       }
 
       let users = initUsers();
-      // ط§ظ„طھط­ظ‚ظ‚ ط¥ظ† ظƒط§ظ† ط§ظ„ط¥ظٹظ…ظٹظ„ ط§ظ„ط¬ط¯ظٹط¯ ظ…ط³طھط®ط¯ظ…ط§ظ‹ ظ…ظ† ط­ط³ط§ط¨ ط¢ط®ط±
+      // التحقق إن كان الإيميل الجديد مستخدماً من حساب آخر
       const emailTaken = users.some(u => u.email.toLowerCase() === cleanEmail && u.email.toLowerCase() !== user.email.toLowerCase());
       if (emailTaken) {
-        return { success: false, message: 'ظ‡ط°ط§ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ظ…ط³طھط®ط¯ظ… ظ„ط­ط³ط§ط¨ ط¢ط®ط±.' };
+        return { success: false, message: 'هذا البريد الإلكتروني مستخدم لحساب آخر.' };
       }
 
       const oldEmail = user.email.toLowerCase();
 
-      // طھط­ط¯ظٹط« ظپظٹ ط¬ط¯ظˆظ„ ط§ظ„ظ…ط³طھط®ط¯ظ…ظٹظ†
+      // تحديث في جدول المستخدمين
       const userIdx = users.findIndex(u => u.email.toLowerCase() === oldEmail);
       if (userIdx !== -1) {
         users[userIdx].name = cleanName;
@@ -273,80 +273,80 @@
         localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
       }
 
-      // طھط­ط¯ظٹط« ظپظٹ ط¬ط¯ظˆظ„ ط§ظ„ظ…ط´طھط±ظƒظٹظ†
+      // تحديث في جدول المشتركين
       try {
         let subs = JSON.parse(localStorage.getItem(STORAGE_KEYS.SUBSCRIBERS)) || [];
         subs = subs.map(s => s.email.toLowerCase() === oldEmail ? { ...s, name: cleanName, email: cleanEmail } : s);
         localStorage.setItem(STORAGE_KEYS.SUBSCRIBERS, JSON.stringify(subs));
       } catch (e) {}
 
-      // طھط­ط¯ظٹط« ط§ظ„ط¬ظ„ط³ط©
+      // تحديث الجلسة
       user.name = cleanName;
       user.email = cleanEmail;
       localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(user));
 
-      return { success: true, message: 'طھظ… طھط­ط¯ظٹط« ط¨ظٹط§ظ†ط§طھ ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط¨ط±ظٹط¯ ط¨ظ†ط¬ط§ط­!' };
+      return { success: true, message: 'تم تحديث بيانات الحساب والبريد بنجاح!' };
     },
 
-    // طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±
+    // تغيير كلمة المرور
     updatePassword: function (oldPass, newPass, confirmPass) {
       const user = this.getCurrentUser();
-      if (!user) return { success: false, message: 'ظٹط±ط¬ظ‰ طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ط£ظˆظ„ط§ظ‹.' };
+      if (!user) return { success: false, message: 'يرجى تسجيل الدخول أولاً.' };
 
       const cleanOld = (oldPass || '').trim();
       const cleanNew = (newPass || '').trim();
       const cleanConfirm = (confirmPass || '').trim();
 
       if (!cleanOld || !cleanNew || !cleanConfirm) {
-        return { success: false, message: 'ظٹط±ط¬ظ‰ ظ…ظ„ط، ط¬ظ…ظٹط¹ ط­ظ‚ظˆظ„ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±.' };
+        return { success: false, message: 'يرجى ملء جميع حقول كلمة المرور.' };
       }
 
       if (cleanNew !== cleanConfirm) {
-        return { success: false, message: 'ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط§ظ„ط¬ط¯ظٹط¯ط© ظˆطھط£ظƒظٹط¯ظ‡ط§ ط؛ظٹط± ظ…طھط·ط§ط¨ظ‚طھظٹظ†!' };
+        return { success: false, message: 'كلمة المرور الجديدة وتأكيدها غير متطابقتين!' };
       }
 
       if (cleanNew.length < 6) {
-        return { success: false, message: 'ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط§ظ„ط¬ط¯ظٹط¯ط© ظٹط¬ط¨ ط£ظ† ظ„ط§ طھظ‚ظ„ ط¹ظ† 6 ط£ط­ط±ظپ.' };
+        return { success: false, message: 'كلمة المرور الجديدة يجب أن لا تقل عن 6 أحرف.' };
       }
 
       let users = initUsers();
       const uIdx = users.findIndex(u => u.email.toLowerCase() === user.email.toLowerCase());
       if (uIdx === -1 || users[uIdx].password !== cleanOld) {
-        return { success: false, message: 'ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط§ظ„ط­ط§ظ„ظٹط© ط؛ظٹط± طµط­ظٹط­ط©!' };
+        return { success: false, message: 'كلمة المرور الحالية غير صحيحة!' };
       }
 
       users[uIdx].password = cleanNew;
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
 
-      return { success: true, message: 'طھظ… طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط¨ظ†ط¬ط§ط­!' };
+      return { success: true, message: 'تم تغيير كلمة المرور بنجاح!' };
     },
 
-    // ط­ط°ظپ ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط¨ط±ظٹط¯ ظ†ظ‡ط§ط¦ظٹط§ظ‹ (Delete Account)
+    // حذف الحساب والبريد نهائياً (Delete Account)
     deleteCurrentAccount: function () {
       const user = this.getCurrentUser();
       if (!user) return;
 
-      const confirmMsg = `ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ طھظ…ط§ظ…ط§ظ‹ ظ…ظ† ط­ط°ظپ ط­ط³ط§ط¨ظƒ (${user.email}) ظ†ظ‡ط§ط¦ظٹط§ظ‹طں\n\nط³ظٹطھظ… ظ…ط³ط­ ط¨ظٹط§ظ†ط§طھظƒ ظˆط§ط´طھط±ط§ظƒط§طھظƒ ط¨ط§ظ„ظƒط§ظ…ظ„ ظˆظ„ط§ ظٹظ…ظƒظ† ط§ظ„طھط±ط§ط¬ط¹ ط¹ظ† ظ‡ط°ط§ ط§ظ„ط¥ط¬ط±ط§ط،.`;
+      const confirmMsg = `هل أنت متأكد تماماً من حذف حسابك (${user.email}) نهائياً؟\n\nسيتم مسح بياناتك واشتراكاتك بالكامل ولا يمكن التراجع عن هذا الإجراء.`;
       if (!confirm(confirmMsg)) return;
 
       const targetEmail = user.email.toLowerCase();
 
-      // ط­ط°ظپ ظ…ظ† ط§ظ„ظ…ط³طھط®ط¯ظ…ظٹظ†
+      // حذف من المستخدمين
       let users = initUsers();
       users = users.filter(u => u.email.toLowerCase() !== targetEmail);
       localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
 
-      // ط­ط°ظپ ظ…ظ† ط§ظ„ظ…ط´طھط±ظƒظٹظ†
+      // حذف من المشتركين
       try {
         let subs = JSON.parse(localStorage.getItem(STORAGE_KEYS.SUBSCRIBERS)) || [];
         subs = subs.filter(s => s.email.toLowerCase() !== targetEmail);
         localStorage.setItem(STORAGE_KEYS.SUBSCRIBERS, JSON.stringify(subs));
       } catch (e) {}
 
-      // ظ…ط³ط­ ط§ظ„ط¬ظ„ط³ط©
+      // مسح الجلسة
       localStorage.removeItem(STORAGE_KEYS.SESSION);
 
-      this.toast('طھظ… ط­ط°ظپ ط­ط³ط§ط¨ظƒ ظˆط¥ظ„ط؛ط§ط، طھط³ط¬ظٹظ„ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط¨ظ†ط¬ط§ط­ ًں—‘ï¸ڈ', 'info');
+      this.toast('تم حذف حسابك وإلغاء تسجيل البريد الإلكتروني بنجاح 🗑️', 'info');
       setTimeout(() => {
         window.location.href = './index.html';
       }, 700);
@@ -374,9 +374,9 @@
       }
 
       if (newStatus) {
-        this.toast('طھظ… طھظپط¹ظٹظ„ ط¥ط´ط¹ط§ط±ط§طھ ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ظ„ظ„طھط­ط¯ظٹط«ط§طھ ًں””', 'success');
+        this.toast('تم تفعيل إشعارات البريد الإلكتروني للتحديثات 🔔', 'success');
       } else {
-        this.toast('طھظ… ط¥ظٹظ‚ط§ظپ ط§ط³طھظ„ط§ظ… ط¥ط´ط¹ط§ط±ط§طھ ط§ظ„ط¨ط±ظٹط¯ ًں”•', 'info');
+        this.toast('تم إيقاف استلام إشعارات البريد 🔕', 'info');
       }
 
       updateNavbars();
@@ -413,7 +413,7 @@
     }
   };
 
-  // ط­ظ‚ظ† ظ†ط§ظپط°ط© طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ظˆط¥ظ†ط´ط§ط، ط§ظ„ط­ط³ط§ط¨
+  // حقن نافذة تسجيل الدخول وإنشاء الحساب
   function injectAuthModal() {
     if (document.getElementById('samtAuthModal')) return;
 
@@ -424,7 +424,7 @@
         <!-- Header -->
         <div class="bg-black/50 px-6 py-4 flex items-center justify-between border-b border-white/10">
           <div class="flex items-center gap-2">
-            <span class="text-lg font-black font-cairo text-white">ط³ظژظ€ظ…ظ’ظ€طھ</span>
+            <span class="text-lg font-black font-cairo text-white">سَـمْـت</span>
             <span class="text-sm font-extrabold text-samt-cyan font-readex">SAMT</span>
           </div>
           <button type="button" onclick="window.SamtAuth.closeAuthModal()" class="text-slate-400 hover:text-white text-lg p-1">
@@ -435,10 +435,10 @@
         <!-- Auth Tabs -->
         <div id="authTabsHeader" class="flex border-b border-white/10 bg-black/20 text-xs font-bold">
           <button type="button" id="authTabLogin" onclick="window.SamtAuth.switchAuthTab('login')" class="flex-1 py-3 text-center border-b-2 border-samt-cyan text-samt-cyan transition-colors">
-            <i class="fa-solid fa-right-to-bracket ml-1"></i> طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„
+            <i class="fa-solid fa-right-to-bracket ml-1"></i> تسجيل الدخول
           </button>
           <button type="button" id="authTabRegister" onclick="window.SamtAuth.switchAuthTab('register')" class="flex-1 py-3 text-center border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">
-            <i class="fa-solid fa-user-plus ml-1"></i> ط­ط³ط§ط¨ ط¬ط¯ظٹط¯
+            <i class="fa-solid fa-user-plus ml-1"></i> حساب جديد
           </button>
         </div>
 
@@ -448,7 +448,7 @@
           <!-- 1. LOGIN FORM -->
           <form id="samtLoginForm" onsubmit="window.SamtAuth.handleLoginSubmit(event)" class="space-y-4">
             <div>
-              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ:</label>
+              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">البريد الإلكتروني:</label>
               <div class="relative">
                 <input type="email" id="authLoginEmail" required placeholder="admin@samt.com" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -457,13 +457,13 @@
 
             <div>
               <div class="flex items-center justify-between mb-1.5">
-                <label class="block text-xs font-bold font-cairo text-slate-300">ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±:</label>
-                <button type="button" onclick="window.SamtAuth.fillDemoAdmin()" class="text-[10px] text-samt-cyan hover:underline font-bold">طھط¬ط±ط¨ط© ط­ط³ط§ط¨ ط§ظ„ط£ط¯ظ…ظ†</button>
+                <label class="block text-xs font-bold font-cairo text-slate-300">كلمة المرور:</label>
+                <button type="button" onclick="window.SamtAuth.fillDemoAdmin()" class="text-[10px] text-samt-cyan hover:underline font-bold">تجربة حساب الأدمن</button>
               </div>
               <div class="relative">
-                <input type="password" id="authLoginPassword" required placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <input type="password" id="authLoginPassword" required placeholder="••••••••" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authLoginPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="ط¥ط¸ظ‡ط§ط±/ط¥ط®ظپط§ط، ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±">
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authLoginPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -473,22 +473,22 @@
 
             <button type="submit" class="btn-samt-glow w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg">
               <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              <span>ط¯ط®ظˆظ„ ط¥ظ„ظ‰ ط§ظ„ظ…ظ†ط¸ظˆظ…ط©</span>
+              <span>دخول إلى المنظومة</span>
             </button>
           </form>
 
           <!-- 2. REGISTER FORM -->
           <form id="samtRegisterForm" onsubmit="window.SamtAuth.handleRegisterSubmit(event)" class="space-y-3.5 hidden">
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">ط§ظ„ط§ط³ظ… ط§ظ„ظƒط§ظ…ظ„:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">الاسم الكامل:</label>
               <div class="relative">
-                <input type="text" id="authRegName" required placeholder="ظ…ط«ط§ظ„: ط¨ظ„ط§ظ„ ط³ظ…ظٹط±" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white" />
+                <input type="text" id="authRegName" required placeholder="مثال: بلال سمير" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white" />
                 <i class="fa-solid fa-user absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">البريد الإلكتروني:</label>
               <div class="relative">
                 <input type="email" id="authRegEmail" required placeholder="name@gmail.com" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -496,11 +496,11 @@
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور:</label>
               <div class="relative">
-                <input type="password" id="authRegPassword" required oninput="window.SamtAuth.checkRegPasswordStrength(this.value)" placeholder="6 ط£ط­ط±ظپ ظپط£ظƒط«ط±" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <input type="password" id="authRegPassword" required oninput="window.SamtAuth.checkRegPasswordStrength(this.value)" placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="ط¥ط¸ظ‡ط§ط±/ط¥ط®ظپط§ط، ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±">
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -508,8 +508,8 @@
               <!-- Password strength meter (Requirement 6) -->
               <div id="authRegPasswordStrength" class="mt-2 hidden text-[10px] font-bold">
                 <div class="flex items-center justify-between mb-1">
-                  <span class="text-slate-400">ظ‚ظˆط© ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±:</span>
-                  <span id="strengthText" class="text-rose-400">ط¶ط¹ظٹظپ ط¬ط¯ط§ظ‹</span>
+                  <span class="text-slate-400">قوة كلمة المرور:</span>
+                  <span id="strengthText" class="text-rose-400">ضعيف جداً</span>
                 </div>
                 <div class="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
                   <div id="strengthBar" class="h-full w-1/4 bg-rose-500 transition-all duration-300"></div>
@@ -518,16 +518,16 @@
 
               <!-- Password recommendation notice (Requirement 7) -->
               <p class="text-[9px] text-slate-400 mt-1.5 leading-relaxed font-cairo">
-                â„¹ï¸ڈ ظٹظڈظ†طµط­ ط¨ط£ظ† طھطھظƒظˆظ† ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ظ…ظ† 8 ط®ط§ظ†ط§طھ ط¹ظ„ظ‰ ط§ظ„ط£ظ‚ظ„ طھط­طھظˆظٹ ط¹ظ„ظ‰ ط­ط±ظˆظپ (ظƒط¨ظٹط±ط© ظˆطµط؛ظٹط±ط©) ظˆط£ط±ظ‚ط§ظ… ظˆط±ظ…ظˆط² ط®ط§طµط©.
+                ℹ️ يُنصح بأن تتكون كلمة المرور من 8 خانات على الأقل تحتوي على حروف (كبيرة وصغيرة) وأرقام ورموز خاصة.
               </p>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">ط£ط¹ط¯ ظƒطھط§ط¨ط© ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">أعد كتابة كلمة المرور:</label>
               <div class="relative">
-                <input type="password" id="authRegConfirmPassword" required placeholder="طھط£ظƒظٹط¯ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <input type="password" id="authRegConfirmPassword" required placeholder="تأكيد كلمة المرور" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-shield-check absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegConfirmPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="ط¥ط¸ظ‡ط§ط±/ط¥ط®ظپط§ط، ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±">
+                <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegConfirmPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
                   <i class="fa-solid fa-eye"></i>
                 </button>
               </div>
@@ -538,19 +538,19 @@
               <div class="flex items-center justify-between">
                 <label class="text-[11px] font-bold font-cairo text-slate-300 flex items-center gap-1.5 cursor-pointer select-none">
                   <input type="checkbox" id="regAdminToggle" onchange="window.SamtAuth.toggleAdminRegistrationField(this.checked)" class="rounded border-white/10 text-samt-cyan focus:ring-0 focus:ring-offset-0 bg-black/40">
-                  <span>ط§ظ„طھط³ط¬ظٹظ„ ط¨طµظ„ط§ط­ظٹط§طھ ظ…ط´ط±ظپ (ط£ط¯ظ…ظ†)</span>
+                  <span>التسجيل بصلاحيات مشرف (أدمن)</span>
                 </label>
                 <i class="fa-solid fa-crown text-samt-gold text-[10px]"></i>
               </div>
               
               <div id="regAdminCodeSection" class="hidden space-y-2 pt-2 border-t border-white/5">
                 <p class="text-[10px] text-slate-400 font-cairo leading-relaxed">
-                  ًں’، ظ„طھط£ظƒظٹط¯ طµظ„ط§ط­ظٹط© ط§ظ„ط£ط¯ظ…ظ†طŒ ظٹط±ط¬ظ‰ ظƒطھط§ط¨ط© ظƒظˆط¯ ط§ظ„ظ…ط´ط±ظپ ط§ظ„ط§ظپطھط±ط§ط¶ظٹ ظ„ظ„ظ…ظ†ط¸ظˆظ…ط©: <code class="bg-black/50 text-samt-gold font-mono px-1.5 py-0.5 rounded text-[10px] select-all">SAMT-ADMIN-2026</code>
+                  💡 لتأكيد صلاحية الأدمن، يرجى كتابة كود المشرف الافتراضي للمنظومة: <code class="bg-black/50 text-samt-gold font-mono px-1.5 py-0.5 rounded text-[10px] select-all">SAMT-ADMIN-2026</code>
                 </p>
                 <div class="relative">
-                  <input type="password" id="authRegAdminCode" placeholder="ط£ط¯ط®ظ„ ظƒظˆط¯ ط§ظ„ظ…ط´ط±ظپ ظ‡ظ†ط§" class="w-full glass-card border border-white/10 focus:border-samt-gold text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left font-mono bg-black/40 text-white" dir="ltr" />
+                  <input type="password" id="authRegAdminCode" placeholder="أدخل كود المشرف هنا" class="w-full glass-card border border-white/10 focus:border-samt-gold text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left font-mono bg-black/40 text-white" dir="ltr" />
                   <i class="fa-solid fa-key absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegAdminCode', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-yellow-400 text-xs p-1 focus:outline-none" title="ط¥ط¸ظ‡ط§ط±/ط¥ط®ظپط§ط، ط§ظ„ظƒظˆط¯">
+                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegAdminCode', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-yellow-400 text-xs p-1 focus:outline-none" title="إظهار/إخفاء الكود">
                     <i class="fa-solid fa-eye"></i>
                   </button>
                 </div>
@@ -561,7 +561,7 @@
 
             <button type="submit" class="btn-samt-glow w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg">
               <i class="fa-solid fa-paper-plane"></i>
-              <span>ظ…طھط§ط¨ط¹ط© ظˆط§ظ„طھط­ظ‚ظ‚ ظ…ظ† ط§ظ„ط¨ط±ظٹط¯</span>
+              <span>متابعة والتحقق من البريد</span>
             </button>
           </form>
 
@@ -612,7 +612,7 @@
     document.body.insertAdjacentHTML('beforeend', modalHTML);
   }
 
-  // نافذة إعدادات وتعديل الحساب وحذف الإيميل (User Account Settings Modal - Full Screen Browser Style)
+    // نافذة إعدادات وتعديل الحساب وحذف الإيميل (User Account Settings Modal - Full Screen Browser Style)
   function injectUserSettingsModal() {
     if (document.getElementById('samtUserSettingsModal')) return;
 
@@ -769,6 +769,7 @@
     document.body.insertAdjacentHTML('beforeend', modalHTML);
   }
 
+  // نافذة إضافة / تعديل كورس فوري من المتصفح
   function injectCourseModal() {
     if (document.getElementById('samtInlineCourseModal')) return;
 
@@ -779,7 +780,7 @@
         <div class="bg-black/50 px-6 py-4 flex items-center justify-between border-b border-white/10">
           <div class="flex items-center gap-2">
             <span class="text-samt-gold text-lg"><i class="fa-solid fa-pen-to-square"></i></span>
-            <h3 id="inlineModalTitle" class="text-sm font-bold font-cairo text-white">ط¥ط¶ط§ظپط© ظƒظˆط±ط³ ط¬ط¯ظٹط¯</h3>
+            <h3 id="inlineModalTitle" class="text-sm font-bold font-cairo text-white">إضافة كورس جديد</h3>
           </div>
           <button type="button" onclick="window.SamtAuth.closeInlineCourseModal()" class="text-slate-400 hover:text-white text-lg p-1">
             <i class="fa-solid fa-xmark"></i>
@@ -790,52 +791,52 @@
           <input type="hidden" id="inlineCourseId" />
 
           <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط¹ظ†ظˆط§ظ† ط§ظ„ظƒظˆط±ط³ / ط§ظ„ط¯ط±ط³:</label>
-            <input type="text" id="inlineFormTitle" required placeholder="ظ…ط«ط§ظ„: ط£ط³ط±ط§ط± ط§ظ„طھطµظپط­ ط§ظ„ط³ط±ظٹط¹ ظˆط§ظ„ط¥ظ†طھط§ط¬ظٹط©" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white" />
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">عنوان الكورس / الدرس:</label>
+            <input type="text" id="inlineFormTitle" required placeholder="مثال: أسرار التصفح السريع والإنتاجية" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white" />
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط§ظ„طھطµظ†ظٹظپ:</label>
+              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">التصنيف:</label>
               <select id="inlineFormCategory" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white">
-                <option value="basics">ط¯ظ„ظٹظ„ ط§ظ„ظ…ط¨طھط¯ط¦ظٹظ†</option>
-                <option value="productivity">ط§ظ„ط¥ظ†طھط§ط¬ظٹط© ظˆط§ظ„طھظ†ط¸ظٹظ…</option>
-                <option value="analytics">ط§ظ„طھط­ظ„ظٹظ„ط§طھ ظˆط§ظ„ظ€ KPIs</option>
-                <option value="database">ظ‚ظˆط§ط¹ط¯ ط§ظ„ط¨ظٹط§ظ†ط§طھ</option>
+                <option value="basics">دليل المبتدئين</option>
+                <option value="productivity">الإنتاجية والتنظيم</option>
+                <option value="analytics">التحليلات والـ KPIs</option>
+                <option value="database">قواعد البيانات</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط§ظ„ظ…ط³طھظˆظ‰:</label>
+              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">المستوى:</label>
               <select id="inlineFormLevel" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white">
-                <option value="ظ…ط¨طھط¯ط¦">ظ…ط¨طھط¯ط¦</option>
-                <option value="ظ…طھظˆط³ط·">ظ…طھظˆط³ط·</option>
-                <option value="ظ…طھظ‚ط¯ظ…">ظ…طھظ‚ط¯ظ…</option>
-                <option value="ط´ط§ظ…ظ„">ط´ط§ظ…ظ„</option>
+                <option value="مبتدئ">مبتدئ</option>
+                <option value="متوسط">متوسط</option>
+                <option value="متقدم">متقدم</option>
+                <option value="شامل">شامل</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط§ظ„ظ…ط¯ط©:</label>
+              <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">المدة:</label>
               <input type="text" id="inlineFormDuration" placeholder="10:30" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white" />
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط±ط§ط¨ط· ط§ظ„ظپظٹط¯ظٹظˆ (YouTube Embed ط£ظˆ Watch):</label>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">رابط الفيديو (YouTube Embed أو Watch):</label>
             <input type="text" id="inlineFormVideoUrl" required placeholder="https://www.youtube.com/watch?v=..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">ط§ظ„ظˆطµظپ ظˆط§ظ„ط´ط±ط­:</label>
-            <textarea id="inlineFormDesc" rows="3" placeholder="ظ…ظ„ط®طµ ظ…ط§ ظٹطھط¹ظ„ظ…ظ‡ ط§ظ„ط·ط§ظ„ط¨ ظپظٹ ظ‡ط°ط§ ط§ظ„ظƒظˆط±ط³..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white"></textarea>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">الوصف والشرح:</label>
+            <textarea id="inlineFormDesc" rows="3" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white"></textarea>
           </div>
 
           <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
-            <button type="button" onclick="window.SamtAuth.closeInlineCourseModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white">ط¥ظ„ط؛ط§ط،</button>
+            <button type="button" onclick="window.SamtAuth.closeInlineCourseModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white">إلغاء</button>
             <button type="submit" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
               <i class="fa-solid fa-floppy-disk"></i>
-              <span>ط­ظپط¸ ط§ظ„ظƒظˆط±ط³</span>
+              <span>حفظ الكورس</span>
             </button>
           </div>
         </form>
@@ -847,7 +848,7 @@
     document.body.insertAdjacentHTML('beforeend', modalHTML);
   }
 
-  // طھط­ط¯ظٹط« ط´ط±ظٹط· ط§ظ„طھظ†ظ‚ظ„ (Navbar) ظ…ط¹ ط²ط± ظˆظ‚ط§ط¦ظ…ط© ط«ط§ط¨طھط© ط¨ط§ظ„ط¶ط؛ط· (Click-to-Toggle)
+  // تحديث شريط التنقل (Navbar) مع زر وقائمة ثابتة بالضغط (Click-to-Toggle)
   function updateNavbars() {
     const user = SamtAuth.getCurrentUser();
     const isAdmin = SamtAuth.isAdmin();
@@ -873,7 +874,7 @@
         slot.innerHTML = `
           <button type="button" onclick="window.SamtAuth.openAuthModal()" class="px-4 py-2 rounded-full glass-card hover:border-samt-cyan text-xs font-bold flex items-center gap-2 transition-all shadow-sm">
             <i class="fa-regular fa-user text-samt-cyan"></i>
-            <span>طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„</span>
+            <span>تسجيل الدخول</span>
           </button>
         `;
       } else {
@@ -883,68 +884,64 @@
 
         slot.innerHTML = `
           <div class="relative inline-block text-right" style="position: relative;">
-            <!-- ط²ط± ط§ظ„ط­ط³ط§ط¨ (ظٹظپطھط­ ظˆظٹط«ط¨طھ ط§ظ„ظ‚ط§ط¦ظ…ط© ط¨ط§ظ„ط¶ط؛ط·) -->
+            <!-- زر الحساب (يفتح ويثبت القائمة بالضغط) -->
             <button type="button" onclick="window.SamtAuth.toggleDropdown(event, '${dropdownId}')" class="px-3.5 py-1.5 rounded-full glass-card border ${isAdm ? 'border-samt-gold/50 text-samt-gold' : 'border-samt-cyan/40 text-white'} text-xs font-bold flex items-center gap-2 shadow-md hover:border-samt-cyan transition-all select-none cursor-pointer">
-              <span class="w-6 h-6 rounded-full flex items-center justify-center bg-black/50 text-xs">${user.avatar || (isAdm ? 'ًں‘‘' : 'ًں‘¤')}</span>
+              <span class="w-6 h-6 rounded-full flex items-center justify-center bg-black/50 text-xs">${user.avatar || (isAdm ? '👑' : '👤')}</span>
               <span class="truncate max-w-[100px] sm:max-w-[140px]">${user.name}</span>
               <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i>
             </button>
 
-            <!-- ط§ظ„ظ‚ط§ط¦ظ…ط© ط§ظ„ظ…ظ†ط³ط¯ظ„ط© ط§ظ„ط«ط§ط¨طھط© ط¹ظ„ظ‰ ط§ظ„ط¶ط؛ط· -->
+            <!-- القائمة المنسدلة الثابتة على الضغط -->
             <div id="${dropdownId}" onclick="event.stopPropagation()" class="samt-dropdown-menu absolute left-0 top-full mt-2 w-64 rounded-2xl shadow-2xl border border-white/20 py-2 z-[99999] text-right bg-[#0B132B] text-white" style="display: none;">
               
               <!-- User Info Card -->
               <div class="px-4 py-2.5 border-b border-white/10">
                 <div class="text-xs font-bold text-white truncate flex items-center justify-between">
                   <span>${user.name}</span>
-                  <span class="text-[11px] text-emerald-400 flex items-center gap-1" title="ط­ط³ط§ط¨ ظ…ظˆط«ظ‚"><i class="fa-solid fa-circle-check"></i></span>
+                  <span class="text-[11px] text-emerald-400 flex items-center gap-1" title="حساب موثق"><i class="fa-solid fa-circle-check"></i></span>
                 </div>
                 <div class="text-[10px] text-slate-400 truncate mt-0.5" dir="ltr">${user.email}</div>
                 <div class="mt-1.5 inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold ${isAdm ? 'bg-samt-gold/20 text-samt-gold border border-samt-gold/40' : 'bg-samt-cyan/20 text-samt-cyan border border-samt-cyan/40'}">
-                  ${isAdm ? 'ًں‘‘ ظ…ط´ط±ظپ ط§ظ„ظ…ظ†ط¸ظˆظ…ط© (Admin)' : 'ًں‘¤ ط­ط³ط§ط¨ ظ…ط³طھط®ط¯ظ… ظ…ظˆط«ظ‚'}
+                  ${isAdm ? '👑 مشرف المنظومة (Admin)' : '👤 حساب مستخدم موثق'}
                 </div>
               </div>
 
-              <!-- ط²ط± ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط­ط³ط§ط¨ (طھط¹ط¯ظٹظ„ ط§ظ„ط§ط³ظ… ظˆط§ظ„ط¨ط±ظٹط¯ ظˆط§ظ„ط¨ط§ط³ظˆظˆط±ط¯) -->
+              <!-- زر إعدادات الحساب (تعديل الاسم والبريد والباسوورد) -->
               <button type="button" onclick="window.SamtAuth.openUserSettingsModal()" class="w-full text-right px-4 py-2.5 text-xs text-samt-cyan hover:bg-white/5 font-bold transition-colors flex items-center gap-2 border-b border-white/10">
                 <i class="fa-solid fa-gear text-xs"></i>
-                <span>ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط­ط³ط§ط¨ ظˆط§ظ„ط¨ط±ظٹط¯</span>
+                <span>إعدادات الحساب والبريد</span>
               </button>
 
-              
-                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${notifOn ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-700 text-slate-400'}">
-                  ${notifOn ? 'ظ…ظپط¹ظ„ط© âœ…' : 'ظ…ط¹ط·ظ„ط© ًں”•'}
-                </span>
-              </div>
+
 
               ${isAdm ? `
                 <a href="./admin.html" class="block px-4 py-2 text-xs text-samt-gold hover:bg-white/5 font-bold transition-colors">
-                  <i class="fa-solid fa-chart-line ml-2"></i> ظ„ظˆط­ط© ط§ظ„طھط­ظƒظ… ط§ظ„ط´ط§ظ…ظ„ط©
+                  <i class="fa-solid fa-chart-line ml-2"></i> لوحة التحكم الشاملة
                 </a>
                 <button type="button" onclick="window.SamtAuth.openNewCourseInline()" class="w-full text-right px-4 py-2 text-xs text-samt-cyan hover:bg-white/5 font-bold transition-colors">
-                  <i class="fa-solid fa-plus-circle ml-2"></i> ط¥ط¶ط§ظپط© ظƒظˆط±ط³ ط¬ط¯ظٹط¯
+                  <i class="fa-solid fa-plus-circle ml-2"></i> إضافة كورس جديد
                 </button>
                 <button type="button" onclick="window.SamtAuth.exportDataFile()" class="w-full text-right px-4 py-2 text-xs text-slate-300 hover:bg-white/5 font-semibold transition-colors">
-                  <i class="fa-solid fa-download ml-2"></i> طھطµط¯ظٹط± ط§ظ„ط¨ظٹط§ظ†ط§طھ (Export)
+                  <i class="fa-solid fa-download ml-2"></i> تصدير البيانات (Export)
                 </button>
               ` : ''}
 
               <a href="./courses.html" class="block px-4 py-2 text-xs text-slate-300 hover:bg-white/5 font-semibold transition-colors">
-                <i class="fa-solid fa-graduation-cap ml-2"></i> ظ…ظƒطھط¨ط© ط§ظ„ظƒظˆط±ط³ط§طھ
+                <i class="fa-solid fa-graduation-cap ml-2"></i> مكتبة الكورسات
               </a>
 
               <div class="border-t border-white/10 my-1"></div>
               
-              <!-- ط²ط± ط­ط°ظپ ط§ظ„ط­ط³ط§ط¨ -->
+              <!-- زر حذف الحساب -->
               <button type="button" onclick="window.SamtAuth.deleteCurrentAccount()" class="w-full text-right px-4 py-2 text-xs text-rose-400 hover:bg-rose-500/10 font-bold transition-colors flex items-center gap-1.5">
                 <i class="fa-solid fa-trash-can ml-1 text-xs"></i>
-                <span>ط­ط°ظپ ط§ظ„ط­ط³ط§ط¨ ظ†ظ‡ط§ط¦ظٹط§ظ‹</span>
+                <span>حذف الحساب نهائياً</span>
               </button>
 
-              <!-- ط²ط± طھط³ط¬ظٹظ„ ط§ظ„ط®ط±ظˆط¬ -->
+              <!-- زر تسجيل الخروج -->
               <button type="button" onclick="window.SamtAuth.logout()" class="w-full text-right px-4 py-2 text-xs text-slate-400 hover:bg-white/5 font-bold transition-colors flex items-center gap-1.5">
                 <i class="fa-solid fa-right-from-bracket ml-1 text-xs"></i>
-                <span>طھط³ط¬ظٹظ„ ط§ظ„ط®ط±ظˆط¬</span>
+                <span>تسجيل الخروج</span>
               </button>
             </div>
           </div>
@@ -957,7 +954,7 @@
     }
   }
 
-  // ط¥ط؛ظ„ط§ظ‚ ط§ظ„ظ‚ظˆط§ط¦ظ… ط¹ظ†ط¯ ط§ظ„ظ†ظ‚ط± ظپظٹ ط£ظٹ ظ…ظƒط§ظ† ط®ط§ط±ط¬ظ‡ط§
+  // إغلاق القوائم عند النقر في أي مكان خارجها
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.samt-dropdown-menu') && !e.target.closest('button[onclick*="toggleDropdown"]')) {
       document.querySelectorAll('.samt-dropdown-menu').forEach(menu => {
@@ -966,7 +963,7 @@
     }
   });
 
-  // ط­ظ‚ظ† ط´ط±ظٹط· ط§ظ„ط£ط¯ظ…ظ† ط§ظ„طھظپط§ط¹ظ„ظٹ ط§ظ„ط³ط±ظٹط¹ ط£ط¹ظ„ظ‰ ط§ظ„طµظپط­ط©
+  // حقن شريط الأدمن التفاعلي السريع أعلى الصفحة
   function injectAdminTopBar() {
     if (document.getElementById('samtAdminLiveBar')) return;
 
@@ -977,19 +974,19 @@
       <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
         <div class="flex items-center gap-2 text-yellow-400 font-bold">
           <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
-          <span>ظˆط¶ط¹ ط§ظ„ظ…ط´ط±ظپ ظ†ط´ط· (Admin Mode)</span>
+          <span>وضع المشرف نشط (Admin Mode)</span>
         </div>
 
         <div class="flex items-center gap-2">
           <button type="button" onclick="window.SamtAuth.openNewCourseInline()" class="btn-samt-glow px-3 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5">
             <i class="fa-solid fa-plus"></i>
-            <span>ط¥ط¶ط§ظپط© ظƒظˆط±ط³</span>
+            <span>إضافة كورس</span>
           </button>
           <a href="./admin.html" class="px-3 py-1 rounded-lg glass-card text-yellow-400 hover:border-yellow-400 text-[11px] font-bold">
-            <i class="fa-solid fa-sliders ml-1"></i> ظ„ظˆط­ط© ط§ظ„ط¥ط¯ط§ط±ط©
+            <i class="fa-solid fa-sliders ml-1"></i> لوحة الإدارة
           </a>
           <button type="button" onclick="window.SamtAuth.exportDataFile()" class="px-3 py-1 rounded-lg glass-card text-slate-300 hover:text-white text-[11px] font-bold">
-            <i class="fa-solid fa-file-code ml-1"></i> طھطµط¯ظٹط± ط§ظ„ط¨ظٹط§ظ†ط§طھ
+            <i class="fa-solid fa-file-code ml-1"></i> تصدير البيانات
           </button>
         </div>
       </div>
@@ -1012,11 +1009,11 @@
     }
   }
 
-  // ط§ظ„ظˆط§ط¬ظ‡ط© ط§ظ„ط¨ط±ظ…ط¬ظٹط© ط§ظ„ط¹ط§ظ…ط© window.SamtAuth
+  // الواجهة البرمجية العامة window.SamtAuth
   window.SamtAuth = {
     ...SamtAuth,
 
-    // ظپطھط­ ظ†ط§ظپط°ط© ط¥ط¹ط¯ط§ط¯ط§طھ ط§ظ„ط­ط³ط§ط¨
+    // فتح نافذة إعدادات الحساب
         openUserSettingsModal: function () {
       const user = this.getCurrentUser();
       if (!user) return;
@@ -1052,7 +1049,7 @@
       }
     },
 
-    // ظ…ط¹ط§ظ„ط¬ط© طھط­ط¯ظٹط« ط§ظ„ط§ط³ظ… ظˆط§ظ„ط¨ط±ظٹط¯
+    // معالجة تحديث الاسم والبريد
     handleProfileUpdateSubmit: function (e) {
       e.preventDefault();
       const name = document.getElementById('settingsUserName').value;
@@ -1068,7 +1065,7 @@
       }
     },
 
-    // ظ…ط¹ط§ظ„ط¬ط© طھط؛ظٹظٹط± ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±
+    // معالجة تغيير كلمة المرور
     handlePasswordChangeSubmit: function (e) {
       e.preventDefault();
       const oldP = document.getElementById('settingsCurrentPass').value;
@@ -1291,7 +1288,7 @@
       const res = SamtAuth.login(email, pass);
       if (res.success) {
         this.closeAuthModal();
-        SamtAuth.toast(`ظ…ط±ط­ط¨ط§ظ‹ ط¨ظƒ ظٹط§ ${res.user.name} (${res.user.role === 'admin' ? 'ظ…ط´ط±ظپ' : 'ظ…ط³طھط®ط¯ظ…'})`, 'success');
+        SamtAuth.toast(`مرحباً بك يا ${res.user.name} (${res.user.role === 'admin' ? 'مشرف' : 'مستخدم'})`, 'success');
         setTimeout(() => window.location.reload(), 400);
       } else {
         errEl.textContent = res.message;
@@ -1320,7 +1317,7 @@
         document.getElementById('otpInput').value = '';
         document.getElementById('otpInput').focus();
 
-        SamtAuth.toast(`طھظ… ط¥ط±ط³ط§ظ„ ط±ظ…ط² ط§ظ„طھط­ظ‚ظ‚ ط¥ظ„ظ‰ ط¨ط±ظٹط¯ظƒ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ًں“©`, 'info');
+        SamtAuth.toast(`تم إرسال رمز التحقق إلى بريدك الإلكتروني 📩`, 'info');
       } else {
         errEl.textContent = res.message;
         errEl.classList.remove('hidden');
@@ -1348,14 +1345,14 @@
         pendingRegistration.otp = newOtp;
         dispatchRealOtpEmail(pendingRegistration.email, pendingRegistration.name, newOtp);
         document.getElementById('otpError').classList.add('hidden');
-        SamtAuth.toast(`طھظ…طھ ط¥ط¹ط§ط¯ط© ط¥ط±ط³ط§ظ„ ط±ظ…ط² ط§ظ„طھط­ظ‚ظ‚ ط¥ظ„ظ‰ ط¨ط±ظٹط¯ظƒ ًں“©`, 'info');
+        SamtAuth.toast(`تمت إعادة إرسال رمز التحقق إلى بريدك 📩`, 'info');
       }
     },
 
     openNewCourseInline: function () {
       injectCourseModal();
       document.getElementById('inlineCourseId').value = '';
-      document.getElementById('inlineModalTitle').textContent = 'ط¥ط¶ط§ظپط© ظƒظˆط±ط³ ط¬ط¯ظٹط¯';
+      document.getElementById('inlineModalTitle').textContent = 'إضافة كورس جديد';
       document.getElementById('inlineFormTitle').value = '';
       document.getElementById('inlineFormDuration').value = '10:00';
       document.getElementById('inlineFormVideoUrl').value = '';
@@ -1373,10 +1370,10 @@
       if (!course) return;
 
       document.getElementById('inlineCourseId').value = course.id;
-      document.getElementById('inlineModalTitle').textContent = `طھط¹ط¯ظٹظ„: ${course.title}`;
+      document.getElementById('inlineModalTitle').textContent = `تعديل: ${course.title}`;
       document.getElementById('inlineFormTitle').value = course.title;
       document.getElementById('inlineFormCategory').value = course.category || 'basics';
-      document.getElementById('inlineFormLevel').value = course.level || 'ظ…ط¨طھط¯ط¦';
+      document.getElementById('inlineFormLevel').value = course.level || 'مبتدئ';
       document.getElementById('inlineFormDuration').value = course.duration || '';
       document.getElementById('inlineFormVideoUrl').value = course.videoUrl || '';
       document.getElementById('inlineFormDesc').value = course.description || '';
@@ -1405,10 +1402,10 @@
       const description = document.getElementById('inlineFormDesc').value.trim();
 
       const categoryNames = {
-        basics: 'ط¯ظ„ظٹظ„ ط§ظ„ظ…ط¨طھط¯ط¦ظٹظ†',
-        productivity: 'ط§ظ„ط¥ظ†طھط§ط¬ظٹط© ظˆط§ظ„طھظ†ط¸ظٹظ…',
-        analytics: 'ط§ظ„طھط­ظ„ظٹظ„ط§طھ ظˆظ…ط¤ط´ط±ط§طھ ط§ظ„ط£ط¯ط§ط،',
-        database: 'ظ‚ظˆط§ط¹ط¯ ط§ظ„ط¨ظٹط§ظ†ط§طھ ظˆط§ظ„ط³ظٹط±ظپط±ط§طھ'
+        basics: 'دليل المبتدئين',
+        productivity: 'الإنتاجية والتنظيم',
+        analytics: 'التحليلات ومؤشرات الأداء',
+        database: 'قواعد البيانات والسيرفرات'
       };
 
       let courses = getCoursesList();
@@ -1420,30 +1417,30 @@
             ...courses[index],
             title,
             category,
-            categoryName: categoryNames[category] || 'ط´ط±ظˆط­ط§طھ ط¹ط§ظ…ط©',
+            categoryName: categoryNames[category] || 'شروحات عامة',
             level,
             duration,
             videoUrl,
             description
           };
-          SamtAuth.toast('طھظ… طھط­ط¯ظٹط« ط¨ظٹط§ظ†ط§طھ ط§ظ„ظƒظˆط±ط³ ط¨ظ†ط¬ط§ط­!', 'success');
+          SamtAuth.toast('تم تحديث بيانات الكورس بنجاح!', 'success');
         }
       } else {
         const newCourse = {
           id: 'course-' + Date.now().toString().slice(-4),
           title,
           category,
-          categoryName: categoryNames[category] || 'ط´ط±ظˆط­ط§طھ ط¹ط§ظ…ط©',
+          categoryName: categoryNames[category] || 'شروحات عامة',
           level,
           duration,
           videoUrl,
           description,
           attachments: [
-            { name: 'ًں“„ ط¯ظ„ظٹظ„ ط§ظ„ط´ط±ط­ ظˆط§ظ„ظ…ظ„ظپط§طھ ط§ظ„ظ…ط±ظپظ‚ط©', url: 'downloads.html' }
+            { name: '📄 دليل الشرح والملفات المرفقة', url: 'downloads.html' }
           ]
         };
         courses.unshift(newCourse);
-        SamtAuth.toast('طھظ…طھ ط¥ط¶ط§ظپط© ط§ظ„ظƒظˆط±ط³ ط§ظ„ط¬ط¯ظٹط¯ ط¨ظ†ط¬ط§ط­!', 'success');
+        SamtAuth.toast('تمت إضافة الكورس الجديد بنجاح!', 'success');
       }
 
       saveCoursesList(courses);
@@ -1452,11 +1449,11 @@
     },
 
     deleteCourseInline: function (id) {
-      if (!confirm('ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† ط­ط°ظپ ظ‡ط°ط§ ط§ظ„ظƒظˆط±ط³ ظ†ظ‡ط§ط¦ظٹط§ظ‹طں')) return;
+      if (!confirm('هل أنت متأكد من حذف هذا الكورس نهائياً؟')) return;
       let courses = getCoursesList();
       courses = courses.filter(c => c.id !== id);
       saveCoursesList(courses);
-      SamtAuth.toast('طھظ… ط­ط°ظپ ط§ظ„ظƒظˆط±ط³ ط¨ظ†ط¬ط§ط­.', 'info');
+      SamtAuth.toast('تم حذف الكورس بنجاح.', 'info');
       setTimeout(() => window.location.reload(), 400);
     },
 
@@ -1471,14 +1468,14 @@
         subscribers
       };
 
-      const codeContent = `/**\n * ط³ظ…طھ SAMT - ظ‚ط§ط¹ط¯ط© ط§ظ„ط¨ظٹط§ظ†ط§طھ ط§ظ„ظ…ط±ظƒط²ظٹط© ط§ظ„ظ…ط­ط¯ط«ط©\n * طھظ… ط§ظ„طھطµط¯ظٹط± ط¨ظˆط§ط³ط·ط© ظ„ظˆط­ط© طھط­ظƒظ… ط§ظ„ظ…ط´ط±ظپ\n */\n\nconst AgentProData = ${JSON.stringify(fullData, null, 2)};\n\nif (typeof window !== 'undefined') {\n  window.AgentProData = AgentProData;\n}\n`;
+      const codeContent = `/**\n * سمت SAMT - قاعدة البيانات المركزية المحدثة\n * تم التصدير بواسطة لوحة تحكم المشرف\n */\n\nconst AgentProData = ${JSON.stringify(fullData, null, 2)};\n\nif (typeof window !== 'undefined') {\n  window.AgentProData = AgentProData;\n}\n`;
 
       const blob = new Blob([codeContent], { type: 'application/javascript;charset=utf-8' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'courses-data.js';
       link.click();
-      SamtAuth.toast('طھظ… طھط­ظ…ظٹظ„ ظ…ظ„ظپ courses-data.js ط§ظ„ظ…ط­ط¯ط«!', 'success');
+      SamtAuth.toast('تم تحميل ملف courses-data.js المحدث!', 'success');
     }
   };
 
