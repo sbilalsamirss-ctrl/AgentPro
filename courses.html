@@ -192,6 +192,28 @@
     footer, footer a { color: #94A3B8 !important; }
     footer a:hover { color: #00F5D4 !important; }
     footer strong { color: #FFFFFF !important; }
+  
+    /* 🌓 CSS-Driven Theme Toggle Icon (Prevents Flashing) */
+    .theme-toggle-icon::before {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+    html.dark .theme-toggle-icon::before {
+      content: "\f185" !important; /* Sun icon */
+    }
+    html.dark .theme-toggle-icon {
+      color: #FFB703 !important; /* gold */
+    }
+    html:not(.dark) .theme-toggle-icon::before {
+      content: "\f186" !important; /* Moon icon */
+    }
+    html:not(.dark) .theme-toggle-icon {
+      color: #00BBF9 !important; /* cyan/blue */
+    }
+
   </style>
   <script src="./assets/js/auth.js" charset="utf-8"></script>
 </head>
@@ -232,7 +254,7 @@
       </nav>
       <div class="flex items-center gap-3">
         <button id="themeToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-sm">
-          <i id="themeIcon" class="fa-solid fa-sun text-samt-gold text-base"></i>
+          <i id="themeIcon" class="fa-solid theme-toggle-icon text-base"></i>
         </button>
         <div class="samt-auth-slot"></div>
         <a href="./downloads.html" class="hidden sm:flex btn-samt-glow px-4 py-2 rounded-full text-xs font-bold">تحميل البرامج</a>
@@ -288,22 +310,25 @@
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
-    function applyTheme(theme) {
-      themeIcon.classList.add('theme-icon-rotate');
-      setTimeout(() => themeIcon.classList.remove('theme-icon-rotate'), 500);
+        function applyTheme(theme, animate = false) {
+      if (animate && themeIcon) {
+        themeIcon.classList.add('theme-icon-rotate');
+        setTimeout(() => themeIcon.classList.remove('theme-icon-rotate'), 500);
+      }
 
       if (theme === 'light') {
         htmlEl.classList.remove('dark');
-        themeIcon.className = 'fa-solid fa-moon text-samt-blue text-base';
       } else {
         htmlEl.classList.add('dark');
-        themeIcon.className = 'fa-solid fa-sun text-samt-gold text-base';
       }
       localStorage.setItem('samt_theme', theme);
     }
-    applyTheme(localStorage.getItem('samt_theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('samt_theme') || 'dark';
+    applyTheme(savedTheme, false);
+
     themeToggle.addEventListener('click', () => {
-      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark', true);
     });
 
     // Course Catalog Engine

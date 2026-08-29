@@ -198,6 +198,28 @@
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.05); }
     }
+  
+    /* 🌓 CSS-Driven Theme Toggle Icon (Prevents Flashing) */
+    .theme-toggle-icon::before {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+    html.dark .theme-toggle-icon::before {
+      content: "\f185" !important; /* Sun icon */
+    }
+    html.dark .theme-toggle-icon {
+      color: #FFB703 !important; /* gold */
+    }
+    html:not(.dark) .theme-toggle-icon::before {
+      content: "\f186" !important; /* Moon icon */
+    }
+    html:not(.dark) .theme-toggle-icon {
+      color: #00BBF9 !important; /* cyan/blue */
+    }
+
   </style>
   <script src="./assets/js/auth.js" charset="utf-8"></script>
 </head>
@@ -235,7 +257,7 @@
 
       <!-- Theme Toggle -->
       <button id="themeToggle" class="w-10 h-10 rounded-full flex items-center justify-center glass-card cursor-pointer hover:scale-110 transition-transform" aria-label="تبديل السمة">
-        <i id="themeIcon" class="fa-solid fa-sun text-samt-gold text-base"></i>
+        <i id="themeIcon" class="fa-solid theme-toggle-icon text-base"></i>
       </button>
     </div>
   </nav>
@@ -321,13 +343,26 @@
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
-    function applyTheme(theme) {
-      if (theme === 'light') { htmlEl.classList.remove('dark'); themeIcon.className = 'fa-solid fa-moon text-samt-blue text-base'; }
-      else { htmlEl.classList.add('dark'); themeIcon.className = 'fa-solid fa-sun text-samt-gold text-base'; }
+        function applyTheme(theme, animate = false) {
+      if (animate && themeIcon) {
+        themeIcon.classList.add('theme-icon-rotate');
+        setTimeout(() => themeIcon.classList.remove('theme-icon-rotate'), 500);
+      }
+
+      if (theme === 'light') {
+        htmlEl.classList.remove('dark');
+      } else {
+        htmlEl.classList.add('dark');
+      }
       localStorage.setItem('samt_theme', theme);
     }
-    applyTheme(localStorage.getItem('samt_theme') || 'dark');
-    themeToggle.addEventListener('click', () => { applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark'); });
+
+    const savedTheme = localStorage.getItem('samt_theme') || 'dark';
+    applyTheme(savedTheme, false);
+
+    themeToggle.addEventListener('click', () => {
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark', true);
+    });
   </script>
 
 </body>
