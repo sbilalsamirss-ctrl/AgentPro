@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="sidebarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="100%" stop-color="#0A0F1D" />
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D2FF" />
+      <stop offset="100%" stop-color="#0077FE" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#0077FE" stop-opacity="0.0" />
+    </linearGradient>
+    <linearGradient id="callActiveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0077FE" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Window Container -->
+  <rect x="10" y="10" width="980" height="600" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5" filter="url(#glow)"/>
+
+  <!-- Window Top Bar -->
+  <path d="M 10 26 A 16 16 0 0 1 26 10 L 974 10 A 16 16 0 0 1 990 26 L 990 48 L 10 48 Z" fill="#0A0F1D" />
+  <!-- Window Controls -->
+  <circle cx="32" cy="29" r="6" fill="#EF4444"/>
+  <circle cx="50" cy="29" r="6" fill="#F59E0B"/>
+  <circle cx="68" cy="29" r="6" fill="#10B981"/>
+  <text x="500" y="33" text-anchor="middle" fill="#64748B" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600">AgentPro Enterprise v2.4 - Live Monitoring &amp; Telephony Hub</text>
+
+  <!-- Left Sidebar -->
+  <rect x="10" y="48" width="180" height="562" fill="url(#sidebarGrad)" stroke-right="#1E293B"/>
+  <line x1="190" y1="48" x2="190" y2="610" stroke="#1E293B" stroke-width="1"/>
+
+  <!-- Sidebar Items -->
+  <rect x="25" y="70" width="150" height="36" rx="8" fill="url(#accentBlue)" />
+  <circle cx="45" cy="88" r="6" fill="#FFFFFF"/>
+  <text x="60" y="93" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="700">Dashboard</text>
+
+  <rect x="25" y="116" width="150" height="34" rx="8" fill="transparent" />
+  <circle cx="45" cy="133" r="5" fill="#64748B"/>
+  <text x="60" y="137" fill="#94A3B8" font-family="sans-serif" font-size="13">Active Calls (14)</text>
+
+  <rect x="25" y="160" width="150" height="34" rx="8" fill="transparent" />
+  <circle cx="45" cy="177" r="5" fill="#64748B"/>
+  <text x="60" y="181" fill="#94A3B8" font-family="sans-serif" font-size="13">Agents (32)</text>
+
+  <rect x="25" y="204" width="150" height="34" rx="8" fill="transparent" />
+  <circle cx="45" cy="221" r="5" fill="#64748B"/>
+  <text x="60" y="225" fill="#94A3B8" font-family="sans-serif" font-size="13">Recordings</text>
+
+  <rect x="25" y="248" width="150" height="34" rx="8" fill="transparent" />
+  <circle cx="45" cy="265" r="5" fill="#64748B"/>
+  <text x="60" y="269" fill="#94A3B8" font-family="sans-serif" font-size="13">Support Tickets</text>
+
+  <rect x="25" y="292" width="150" height="34" rx="8" fill="transparent" />
+  <circle cx="45" cy="309" r="5" fill="#64748B"/>
+  <text x="60" y="313" fill="#94A3B8" font-family="sans-serif" font-size="13">KPI Analytics</text>
+
+  <!-- Sidebar Status Box -->
+  <rect x="25" y="520" width="150" height="70" rx="10" fill="#1E293B" stroke="#334155" stroke-width="1"/>
+  <circle cx="42" cy="542" r="4" fill="#10B981"/>
+  <text x="52" y="546" fill="#10B981" font-family="sans-serif" font-size="11" font-weight="700">PBX CONNECTED</text>
+  <text x="42" y="565" fill="#94A3B8" font-family="sans-serif" font-size="10">Latency: 12ms | Jitter: 0</text>
+  <text x="42" y="579" fill="#64748B" font-family="sans-serif" font-size="9">SSL AES-256 Enabled</text>
+
+  <!-- Main Content Area -->
+  <!-- Top Stat Cards (Row 1) -->
+  <!-- Card 1: Total Calls -->
+  <rect x="210" y="68" width="175" height="90" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="228" y="93" fill="#94A3B8" font-family="sans-serif" font-size="12" font-weight="600">TOTAL CALLS TODAY</text>
+  <text x="228" y="128" fill="#FFFFFF" font-family="sans-serif" font-size="26" font-weight="800">1,482</text>
+  <text x="325" y="128" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">+14.2%</text>
+
+  <!-- Card 2: Average Handle Time -->
+  <rect x="405" y="68" width="175" height="90" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="423" y="93" fill="#94A3B8" font-family="sans-serif" font-size="12" font-weight="600">AVG HANDLE TIME</text>
+  <text x="423" y="128" fill="#00D2FF" font-family="sans-serif" font-size="26" font-weight="800">2m 45s</text>
+  <text x="520" y="128" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">-18s</text>
+
+  <!-- Card 3: First Call Resolution -->
+  <rect x="600" y="68" width="175" height="90" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="618" y="93" fill="#94A3B8" font-family="sans-serif" font-size="12" font-weight="600">FCR RATE</text>
+  <text x="618" y="128" fill="#F59E0B" font-family="sans-serif" font-size="26" font-weight="800">92.8%</text>
+  <text x="720" y="128" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="700">Optimal</text>
+
+  <!-- Card 4: CSAT Score -->
+  <rect x="795" y="68" width="175" height="90" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="813" y="93" fill="#94A3B8" font-family="sans-serif" font-size="12" font-weight="600">CSAT SATISFACTION</text>
+  <text x="813" y="128" fill="#10B981" font-family="sans-serif" font-size="26" font-weight="800">4.9 / 5.0</text>
+  <text x="918" y="128" fill="#00D2FF" font-family="sans-serif" font-size="12">★★★★★</text>
+
+  <!-- Chart Section (Call Traffic & Real-time Volume) -->
+  <rect x="210" y="175" width="460" height="235" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="230" y="202" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Call Traffic &amp; Peak Hours Analytics</text>
+  <text x="610" y="202" fill="#00D2FF" font-family="sans-serif" font-size="11" font-weight="600">● Live Feed</text>
+  
+  <!-- Grid Lines -->
+  <line x1="230" y1="230" x2="645" y2="230" stroke="#334155" stroke-dasharray="3,3"/>
+  <line x1="230" y1="270" x2="645" y2="270" stroke="#334155" stroke-dasharray="3,3"/>
+  <line x1="230" y1="310" x2="645" y2="310" stroke="#334155" stroke-dasharray="3,3"/>
+  <line x1="230" y1="350" x2="645" y2="350" stroke="#334155" stroke-dasharray="3,3"/>
+  
+  <!-- Wave Graph Area -->
+  <path d="M 230 350 L 230 310 Q 280 290 320 240 T 410 260 T 490 210 T 570 230 T 645 190 L 645 350 Z" fill="url(#chartGrad)"/>
+  <!-- Stroke -->
+  <path d="M 230 310 Q 280 290 320 240 T 410 260 T 490 210 T 570 230 T 645 190" fill="none" stroke="#00D2FF" stroke-width="3"/>
+  <!-- Data Points -->
+  <circle cx="320" cy="240" r="4" fill="#00D2FF" stroke="#FFFFFF" stroke-width="2"/>
+  <circle cx="490" cy="210" r="5" fill="#0077FE" stroke="#FFFFFF" stroke-width="2"/>
+  <circle cx="645" cy="190" r="4" fill="#00D2FF" stroke="#FFFFFF" stroke-width="2"/>
+
+  <!-- Live Active Call Console (Top Right) -->
+  <rect x="690" y="175" width="280" height="235" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="708" y="202" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Active Priority Call</text>
+  <rect x="910" y="188" width="48" height="18" rx="9" fill="url(#callActiveGrad)"/>
+  <text x="934" y="201" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="800">LIVE</text>
+
+  <!-- Call Details Box -->
+  <rect x="705" y="218" width="250" height="75" rx="8" fill="#0F172A" stroke="#1E293B"/>
+  <circle cx="730" cy="245" r="14" fill="#3B82F6"/>
+  <text x="730" y="250" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="bold">JD</text>
+  <text x="754" y="240" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700">John Doe (VIP Client)</text>
+  <text x="754" y="256" fill="#94A3B8" font-family="sans-serif" font-size="11">+1 (800) 459-0921</text>
+  <text x="754" y="272" fill="#00D2FF" font-family="sans-serif" font-size="10">Agent: Sarah Jenkins (Line 04)</text>
+
+  <!-- Audio Waveform Live Spectrum -->
+  <rect x="705" y="302" width="250" height="42" rx="6" fill="#0B132B"/>
+  <g transform="translate(715, 310)">
+    <rect x="5" y="8" width="3" height="10" rx="1.5" fill="#00D2FF"/>
+    <rect x="12" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
+    <rect x="19" y="1" width="3" height="24" rx="1.5" fill="#0077FE"/>
+    <rect x="26" y="6" width="3" height="14" rx="1.5" fill="#00D2FF"/>
+    <rect x="33" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
+    <rect x="40" y="5" width="3" height="16" rx="1.5" fill="#00D2FF"/>
+    <rect x="47" y="10" width="3" height="6" rx="1.5" fill="#00D2FF"/>
+    <rect x="54" y="3" width="3" height="20" rx="1.5" fill="#10B981"/>
+    <rect x="61" y="7" width="3" height="12" rx="1.5" fill="#10B981"/>
+    <rect x="68" y="1" width="3" height="24" rx="1.5" fill="#10B981"/>
+    <rect x="75" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
+    <rect x="82" y="9" width="3" height="8" rx="1.5" fill="#00D2FF"/>
+    <rect x="89" y="2" width="3" height="22" rx="1.5" fill="#0077FE"/>
+    <rect x="96" y="6" width="3" height="14" rx="1.5" fill="#0077FE"/>
+    <rect x="103" y="1" width="3" height="24" rx="1.5" fill="#00D2FF"/>
+    <rect x="110" y="8" width="3" height="10" rx="1.5" fill="#00D2FF"/>
+    <rect x="117" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
+    <rect x="124" y="1" width="3" height="24" rx="1.5" fill="#0077FE"/>
+    <rect x="131" y="7" width="3" height="12" rx="1.5" fill="#0077FE"/>
+    <rect x="138" y="3" width="3" height="20" rx="1.5" fill="#00D2FF"/>
+    <rect x="145" y="9" width="3" height="8" rx="1.5" fill="#00D2FF"/>
+    <rect x="152" y="2" width="3" height="22" rx="1.5" fill="#10B981"/>
+    <rect x="159" y="5" width="3" height="16" rx="1.5" fill="#10B981"/>
+    <rect x="166" y="8" width="3" height="10" rx="1.5" fill="#00D2FF"/>
+    <rect x="173" y="3" width="3" height="20" rx="1.5" fill="#00D2FF"/>
+    <rect x="180" y="6" width="3" height="14" rx="1.5" fill="#00D2FF"/>
+    <rect x="187" y="1" width="3" height="24" rx="1.5" fill="#0077FE"/>
+    <rect x="194" y="9" width="3" height="8" rx="1.5" fill="#00D2FF"/>
+    <rect x="201" y="4" width="3" height="18" rx="1.5" fill="#00D2FF"/>
+    <rect x="208" y="2" width="3" height="22" rx="1.5" fill="#00D2FF"/>
+    <rect x="215" y="7" width="3" height="12" rx="1.5" fill="#00D2FF"/>
+  </g>
+
+  <rect x="705" y="354" width="120" height="30" rx="6" fill="#1E293B" stroke="#334155"/>
+  <text x="765" y="373" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">Transfer Call</text>
+
+  <rect x="835" y="354" width="120" height="30" rx="6" fill="#EF4444"/>
+  <text x="895" y="373" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">End &amp; Log</text>
+
+  <!-- Bottom Agent & Queue Table (Row 3) -->
+  <rect x="210" y="425" width="760" height="165" rx="12" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+  <text x="230" y="452" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">Real-Time Agent Workstations &amp; Telephony Queue</text>
+
+  <!-- Table Header -->
+  <rect x="230" y="465" width="720" height="28" rx="6" fill="#0F172A"/>
+  <text x="245" y="483" fill="#64748B" font-family="sans-serif" font-size="11" font-weight="700">AGENT NAME</text>
+  <text x="400" y="483" fill="#64748B" font-family="sans-serif" font-size="11" font-weight="700">EXTENSION</text>
+  <text x="520" y="483" fill="#64748B" font-family="sans-serif" font-size="11" font-weight="700">CURRENT STATUS</text>
+  <text x="690" y="483" fill="#64748B" font-family="sans-serif" font-size="11" font-weight="700">CALL DURATION</text>
+  <text x="850" y="483" fill="#64748B" font-family="sans-serif" font-size="11" font-weight="700">SCORE</text>
+
+  <!-- Table Rows -->
+  <!-- Row 1 -->
+  <text x="245" y="513" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Sarah Jenkins</text>
+  <text x="400" y="513" fill="#94A3B8" font-family="sans-serif" font-size="12">EXT-104</text>
+  <rect x="520" y="500" width="80" height="18" rx="9" fill="#065F46"/>
+  <text x="560" y="513" text-anchor="middle" fill="#34D399" font-family="sans-serif" font-size="10" font-weight="700">In Call (VIP)</text>
+  <text x="690" y="513" fill="#F8FAFC" font-family="sans-serif" font-size="12">04m:12s</text>
+  <text x="850" y="513" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="bold">99.4%</text>
+
+  <!-- Row 2 -->
+  <line x1="230" y1="528" x2="950" y2="528" stroke="#1E293B" stroke-width="1"/>
+  <text x="245" y="548" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Alex Morgan</text>
+  <text x="400" y="548" fill="#94A3B8" font-family="sans-serif" font-size="12">EXT-108</text>
+  <rect x="520" y="535" width="65" height="18" rx="9" fill="#1E3A8A"/>
+  <text x="552" y="548" text-anchor="middle" fill="#60A5FA" font-family="sans-serif" font-size="10" font-weight="700">Wrap-Up</text>
+  <text x="690" y="548" fill="#94A3B8" font-family="sans-serif" font-size="12">00m:45s</text>
+  <text x="850" y="548" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="bold">97.8%</text>
+
+  <!-- Row 3 -->
+  <line x1="230" y1="563" x2="950" y2="563" stroke="#1E293B" stroke-width="1"/>
+  <text x="245" y="581" fill="#F8FAFC" font-family="sans-serif" font-size="12" font-weight="600">Emily Vance</text>
+  <text x="400" y="581" fill="#94A3B8" font-family="sans-serif" font-size="12">EXT-112</text>
+  <rect x="520" y="568" width="60" height="18" rx="9" fill="#047857"/>
+  <text x="550" y="581" text-anchor="middle" fill="#6EE7B7" font-family="sans-serif" font-size="10" font-weight="700">Available</text>
+  <text x="690" y="581" fill="#94A3B8" font-family="sans-serif" font-size="12">--:--</text>
+  <text x="850" y="581" fill="#10B981" font-family="sans-serif" font-size="12" font-weight="bold">100%</text>
+</svg>
