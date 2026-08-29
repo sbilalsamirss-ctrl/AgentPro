@@ -36,15 +36,14 @@
   // الإعدادات الافتراضية لحساب المشرف الرئيسي
   const MASTER_ADMIN = {
     name: 'المشرف العام',
-    email: 'admin@samt.com',
-    password: 'admin1234',
+    email: 'sbilalsamirss@gmail.com',
+    password: 'lol123',
     role: 'admin',
     avatar: '👑',
     emailVerified: true,
     notificationsEnabled: true
   };
 
-  const MASTER_ADMIN_PASSCODE = 'SAMT-ADMIN-2026';
 
   const STORAGE_KEYS = {
     SESSION: 'samt_user_session',
@@ -163,7 +162,7 @@
       }
 
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-      const isGrantingAdmin = adminPasscode && adminPasscode.trim() === MASTER_ADMIN_PASSCODE;
+      const isGrantingAdmin = false;
 
       pendingRegistration = {
         name: cleanName,
@@ -450,7 +449,7 @@
             <div>
               <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">البريد الإلكتروني:</label>
               <div class="relative">
-                <input type="email" id="authLoginEmail" required placeholder="admin@samt.com" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
+                <input type="email" id="authLoginEmail" required placeholder="name@example.com" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
               </div>
             </div>
@@ -458,7 +457,6 @@
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-bold font-cairo text-slate-300">كلمة المرور:</label>
-                <button type="button" onclick="window.SamtAuth.fillDemoAdmin()" class="text-[10px] text-samt-cyan hover:underline font-bold">تجربة حساب الأدمن</button>
               </div>
               <div class="relative">
                 <input type="password" id="authLoginPassword" required placeholder="••••••••" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-3 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
@@ -530,30 +528,6 @@
                 <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegConfirmPassword', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-samt-cyan text-xs p-1 focus:outline-none" title="إظهار/إخفاء كلمة المرور">
                   <i class="fa-solid fa-eye"></i>
                 </button>
-              </div>
-            </div>
-
-            <!-- Optional Admin Upgrade Toggle & Code (Requirement 5) -->
-            <div class="border border-white/10 rounded-xl p-3 bg-white/5 space-y-2" dir="rtl">
-              <div class="flex items-center justify-between">
-                <label class="text-[11px] font-bold font-cairo text-slate-300 flex items-center gap-1.5 cursor-pointer select-none">
-                  <input type="checkbox" id="regAdminToggle" onchange="window.SamtAuth.toggleAdminRegistrationField(this.checked)" class="rounded border-white/10 text-samt-cyan focus:ring-0 focus:ring-offset-0 bg-black/40">
-                  <span>التسجيل بصلاحيات مشرف (أدمن)</span>
-                </label>
-                <i class="fa-solid fa-crown text-samt-gold text-[10px]"></i>
-              </div>
-              
-              <div id="regAdminCodeSection" class="hidden space-y-2 pt-2 border-t border-white/5">
-                <p class="text-[10px] text-slate-400 font-cairo leading-relaxed text-right">
-                  💡 لتأكيد صلاحية الأدمن، يرجى كتابة كود المشرف الافتراضي للمنظومة: <code class="bg-black/50 text-samt-gold font-mono px-1.5 py-0.5 rounded text-[10px] select-all">SAMT-ADMIN-2026</code>
-                </p>
-                <div class="relative">
-                  <input type="password" id="authRegAdminCode" placeholder="أدخل كود المشرف هنا" class="w-full glass-card border border-white/10 focus:border-samt-gold text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left font-mono bg-black/40 text-white" dir="ltr" />
-                  <i class="fa-solid fa-key absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                  <button type="button" onclick="window.SamtAuth.togglePasswordVisibility('authRegAdminCode', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-yellow-400 text-xs p-1 focus:outline-none" title="إظهار/إخفاء الكود">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -1302,7 +1276,7 @@
       const email = document.getElementById('authRegEmail').value;
       const pass = document.getElementById('authRegPassword').value;
       const confirmPass = document.getElementById('authRegConfirmPassword').value;
-      const code = document.getElementById('authRegAdminCode').value;
+      const code = '';
       const errEl = document.getElementById('authRegError');
 
       const res = SamtAuth.startRegister(name, email, pass, confirmPass, code);
