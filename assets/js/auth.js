@@ -13,6 +13,18 @@
 (function () {
   'use strict';
 
+  // Apply saved theme immediately to prevent FOUC (Flash of Dark Mode)
+  (function() {
+    try {
+      const savedTheme = localStorage.getItem('samt_theme') || 'dark';
+      if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {}
+  })();
+
   // ط¥ط¹ط¯ط§ط¯ط§طھ ط®ط¯ظ…ط© ط§ظ„ط¨ط±ظٹط¯ ط§ظ„ط¥ظ„ظƒطھط±ظˆظ†ظٹ ط§ظ„ط­ظ‚ظٹظ‚ظٹ (EmailJS)
   const EMAIL_SERVICE_CONFIG = {
     SERVICE_ID: 'service_samt',
