@@ -261,12 +261,11 @@
         <i class="fa-solid fa-lock"></i>
       </div>
       <div>
-        <h2 class="text-xl font-bold font-cairo">تسجيل دخول المشرف</h2>
-        <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة لإدارة الكورسات، البرامج، والمشتركين.</p>
+        <h2 class="text-xl font-bold font-cairo">منطقة محظورة — لوحة تحكم المشرف</h2>
+        <p class="text-xs text-slate-400 mt-1">هذه الصفحة مخصّصة لمشرف المنظومة فقط. يرجى تسجيل الدخول بحساب المشرف للمتابعة.</p>
       </div>
-      <input type="password" id="pinInput" placeholder="الرمز السري الافتراضي: 1234" class="w-full glass-card border border-white/20 focus:border-samt-cyan text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
       <button id="loginBtn" class="btn-samt-glow w-full py-3 rounded-xl text-sm font-bold">
-        دخول لوحة التحكم
+        <i class="fa-solid fa-right-to-bracket ml-1"></i> تسجيل الدخول بحساب المشرف
       </button>
     </div>
   </div>
@@ -519,7 +518,6 @@
 
       const loginShield = document.getElementById('loginShield');
       const adminPanel = document.getElementById('adminPanel');
-      const pinInput = document.getElementById('pinInput');
       const loginBtn = document.getElementById('loginBtn');
       const tableBody = document.getElementById('coursesTableBody');
       const subTableBody = document.getElementById('subscribersTableBody');
@@ -538,16 +536,12 @@
         unlockAdmin();
       }
 
+      // لا يوجد رمز سري أو باب خلفي — الدخول فقط عبر تسجيل دخول حساب المشرف المعتمد
       loginBtn.addEventListener('click', () => {
-        const val = pinInput.value.trim();
-        if (val === '1234' || val === 'admin' || val === 'admin1234') {
-          // تسجيل دخول المشرف في الجلسة العامة
-          if (window.SamtAuth) {
-            window.SamtAuth.login('admin@samt.com', 'SAMT-SECURE-ADMIN-2026');
-          }
+        if (window.SamtAuth && window.SamtAuth.isAdmin()) {
           unlockAdmin();
-        } else {
-          alert('الرمز السري غير صحيح! الرمز الافتراضي: 1234 أو admin1234');
+        } else if (window.SamtAuth) {
+          window.SamtAuth.openAuthModal('login');
         }
       });
 
@@ -591,7 +585,7 @@
         const user = window.SamtAuth?.getCurrentUser();
         if (user) {
           document.getElementById('settingAdminName').value = user.name || 'المشرف العام';
-          document.getElementById('settingAdminEmail').value = user.email || 'admin@samt.com';
+          document.getElementById('settingAdminEmail').value = user.email || '';
         }
       }
 
