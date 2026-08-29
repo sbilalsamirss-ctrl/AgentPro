@@ -58,7 +58,7 @@
                   box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
                   opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; }
+    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; position: relative; }
 
     html.dark body { background-color: #070A12; color: #FFFFFF; }
     html.dark .glass-card {
@@ -94,7 +94,7 @@
        ✨ Celestial Animated Background Layers
        ========================================================================== */
     .celestial-canvas {
-      position: fixed; inset: 0; z-index: 0;
+      position: absolute; inset: 0; z-index: 0;
       pointer-events: none;
       transition: opacity 0.8s ease;
     }
@@ -459,8 +459,8 @@
     </div>
   </div>
 
-  <footer class="bg-black/50 border-t border-white/10 py-6 text-center text-xs text-slate-500 relative z-10">
-    &copy; 2026 <strong>منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
+  <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
+    &copy; 2026 <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
   </footer>
 
   <!-- Central Data & Auth Scripts -->

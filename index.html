@@ -69,6 +69,7 @@
       font-family: 'Readex Pro', 'Cairo', sans-serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      position: relative;
     }
 
     /* 🌌 Dark Mode: Deep Celestial Space */
@@ -130,7 +131,7 @@
        ✨ Celestial Animated Background Layers
        ========================================================================== */
     .celestial-canvas {
-      position: fixed; inset: 0; z-index: 0;
+      position: absolute; inset: 0; z-index: 0;
       pointer-events: none;
       transition: opacity 0.8s ease;
     }
@@ -279,10 +280,6 @@
       transform: rotate(360deg) scale(1.1);
     }
 
-    /* Force dark footer text colors in all modes */
-    footer, footer a { color: #94A3B8 !important; }
-    footer a:hover { color: #00F5D4 !important; }
-    footer strong { color: #FFFFFF !important; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -326,9 +323,8 @@
       <!-- Middle: Navigation Links -->
       <nav class="hidden md:flex items-center gap-8">
         <a href="#apps" class="text-sm font-bold hover:text-samt-cyan transition-colors">البرامج والتطبيقات</a>
-        <a href="./courses.html" class="text-sm font-bold hover:text-samt-cyan transition-colors flex items-center gap-1.5">
+        <a href="./courses.html" class="text-sm font-bold hover:text-samt-cyan transition-colors">
           <span>أكاديمية سمت</span>
-          <span class="px-2 py-0.5 text-[10px] font-bold bg-samt-purple/20 text-samt-cyan rounded-full border border-samt-cyan/30">جديد</span>
         </a>
         <a href="./downloads.html" class="text-sm font-bold hover:text-samt-cyan transition-colors">مركز التنزيلات</a>
       </nav>
@@ -411,7 +407,7 @@
         </a>
         <a href="./courses.html" class="glass-card w-full sm:w-auto px-8 py-3.5 rounded-full text-base font-bold hover:text-samt-cyan transition-all flex items-center justify-center gap-3">
           <i class="fa-solid fa-graduation-cap text-samt-cyan"></i>
-          <span>أكاديمية الكورسات (Udemy Style)</span>
+          <span>أكاديمية الكورسات</span>
         </a>
       </div>
 
@@ -561,13 +557,13 @@
   <!-- ==========================================================================
        6. Footer
        ========================================================================== -->
-  <footer class="bg-black/60 border-t border-white/10 pt-12 pb-8 text-right relative z-10">
+  <footer class="bg-slate-50 dark:bg-black/60 border-t border-slate-200 dark:border-white/10 pt-12 pb-8 text-right relative z-10">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-white/10 pt-6">
-        <div>&copy; <span id="currentYear">2026</span> <strong>منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-white/10 pt-6">
+        <div>&copy; <span id="currentYear">2026</span> <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
         <div class="flex items-center gap-4">
-          <a href="./courses.html" class="hover:text-samt-cyan">أكاديمية الكورسات</a>
-          <a href="./downloads.html" class="hover:text-samt-cyan">مركز التحميل</a>
+          <a href="./courses.html" class="text-slate-600 dark:text-slate-400 hover:text-samt-cyan transition-colors">أكاديمية الكورسات</a>
+          <a href="./downloads.html" class="text-slate-600 dark:text-slate-400 hover:text-samt-cyan transition-colors">مركز التحميل</a>
         </div>
       </div>
     </div>
