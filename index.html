@@ -278,6 +278,11 @@
     .theme-icon-rotate {
       transform: rotate(360deg) scale(1.1);
     }
+
+    /* Force dark footer text colors in all modes */
+    footer, footer a { color: #94A3B8 !important; }
+    footer a:hover { color: #00F5D4 !important; }
+    footer strong { color: #FFFFFF !important; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -325,7 +330,6 @@
           <span>أكاديمية سمت</span>
           <span class="px-2 py-0.5 text-[10px] font-bold bg-samt-purple/20 text-samt-cyan rounded-full border border-samt-cyan/30">جديد</span>
         </a>
-        <a href="#features" class="text-sm font-bold hover:text-samt-cyan transition-colors">المميزات</a>
         <a href="./downloads.html" class="text-sm font-bold hover:text-samt-cyan transition-colors">مركز التنزيلات</a>
       </nav>
 
@@ -352,7 +356,6 @@
       <div class="samt-auth-slot pb-3 border-b border-white/10"></div>
       <a href="#apps" class="block font-bold py-1.5">البرامج والتطبيقات</a>
       <a href="./courses.html" class="block text-samt-cyan font-bold py-1.5">أكاديمية سمت للكورسات</a>
-      <a href="#features" class="block font-bold py-1.5">المميزات والسرعة</a>
       <a href="./downloads.html" class="block font-bold py-1.5">مركز التحميل</a>
     </div>
   </header>
