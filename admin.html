@@ -367,24 +367,21 @@
         <form id="adminSettingsForm" onsubmit="handleSaveSettings(event)" class="space-y-4">
           <div>
             <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">اسم المشرف:</label>
-            <input type="text" id="settingAdminName" required class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none" />
+            <input type="text" id="settingAdminName" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none bg-white/5 text-slate-400" />
           </div>
 
           <div>
             <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">البريد الإلكتروني للأدمن:</label>
-            <input type="email" id="settingAdminEmail" required class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left" dir="ltr" />
+            <input type="email" id="settingAdminEmail" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none text-left bg-white/5 text-slate-400" dir="ltr" />
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">كلمة المرور الجديدة:</label>
-            <input type="password" id="settingAdminPass" required class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left" dir="ltr" />
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">كلمة المرور:</label>
+            <input type="password" id="settingAdminPass" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none text-left bg-white/5 text-slate-400" dir="ltr" />
           </div>
 
-          <div class="pt-4 border-t border-white/10 flex items-center justify-end">
-            <button type="submit" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
-              <i class="fa-solid fa-floppy-disk"></i>
-              <span>حفظ الإعدادات الجديدة</span>
-            </button>
+          <div class="pt-4 border-t border-white/10 text-xs text-slate-400 leading-relaxed font-cairo">
+            ⚠️ حساب المشرف مدمج بالنظام ومحمي كودياً لأسباب أمنية لمنع أي محاولات اختراق أو تعديل للصلاحيات.
           </div>
         </form>
       </div>
@@ -546,7 +543,7 @@
         if (val === '1234' || val === 'admin' || val === 'admin1234') {
           // تسجيل دخول المشرف في الجلسة العامة
           if (window.SamtAuth) {
-            window.SamtAuth.login('admin@samt.com', 'admin1234');
+            window.SamtAuth.login('admin@samt.com', 'SAMT-SECURE-ADMIN-2026');
           }
           unlockAdmin();
         } else {
