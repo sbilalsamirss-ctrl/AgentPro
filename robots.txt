@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sbilalsamirss-ctrl.github.io/AgentPro/sitemap.xml

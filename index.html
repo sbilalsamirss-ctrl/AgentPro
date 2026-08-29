@@ -6,6 +6,16 @@
   <title>سمت SAMT | منظومة البرمجيات الحديثة وأكاديمية الكورسات المتطورة</title>
   <meta name="description" content="منظومة سمت SAMT - المنصة الشاملة لتطبيقات الويب، برامج الإنتاجية، وأكاديمية الكورسات والتدريب العملي بتصميم فلكي فائق الفخامة." />
 
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%2300F5D4' stroke-width='4'/><circle cx='50' cy='50' r='6' fill='%2300BBF9'/><line x1='50' y1='6' x2='50' y2='94' stroke='%2300F5D4' stroke-width='3'/><line x1='6' y1='50' x2='94' y2='50' stroke='%2300F5D4' stroke-width='3'/></svg>" type="image/svg+xml">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="سمت SAMT | منظومة البرمجيات الحديثة وأكاديمية الكورسات" />
+  <meta property="og:description" content="المنصة الشاملة لتطبيقات الويب، برامج الإنتاجية، وأكاديمية الكورسات والتدريب العملي بتصميم فلكي فائق الفخامة." />
+  <meta property="og:url" content="https://sbilalsamirss-ctrl.github.io/AgentPro/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- Google Fonts: Readex Pro & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,20 +71,9 @@
       scroll-behavior: smooth;
     }
 
-    /* 🌌 Dark Mode: Deep Celestial Space with Stars & Glowing Nebulae */
+    /* 🌌 Dark Mode: Deep Celestial Space */
     html.dark body {
       background-color: #070A12;
-      background-image: 
-        radial-gradient(circle at 50% 12%, rgba(0, 187, 249, 0.16), transparent 48%),
-        radial-gradient(circle at 88% 28%, rgba(121, 40, 202, 0.14), transparent 42%),
-        radial-gradient(circle at 12% 65%, rgba(0, 245, 212, 0.12), transparent 38%),
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 90px 80px, rgba(0, 245, 212, 0.8), rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 150px 140px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 240px 190px, rgba(0, 187, 249, 0.7), rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 320px 70px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 420px 280px, rgba(0, 245, 212, 0.6), rgba(0,0,0,0));
-      background-size: 100% 100%, 100% 100%, 100% 100%, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px;
       color: #FFFFFF;
     }
     html.dark .glass-nav {
@@ -96,11 +95,10 @@
     html.dark .subtle-bg {
       background-color: #0A0F20;
     }
-    html.dark .astrolabe-layer {
-      opacity: 0.12;
-    }
+    html.dark .astrolabe-layer { opacity: 0.14; }
+    html.dark .celestial-canvas { opacity: 1; }
 
-    /* ☀️ Light Mode: Crisp, Clean Frosted Glass */
+    /* ☀️ Light Mode */
     html:not(.dark) body {
       background-color: #F8FAFC;
       background-image: 
@@ -115,26 +113,121 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     }
     html:not(.dark) .glass-card {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      color: #0F172A;
+      background: #FFFFFF; border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); color: #0F172A;
     }
     html:not(.dark) .glass-card:hover {
       border-color: #00BBF9;
       box-shadow: 0 12px 35px rgba(0, 187, 249, 0.15);
     }
-    html:not(.dark) .subtle-bg {
-      background-color: #F1F5F9;
+    html:not(.dark) .subtle-bg { background-color: #F1F5F9; }
+    html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
+    html:not(.dark) .astrolabe-layer { opacity: 0.035; }
+    html:not(.dark) .celestial-canvas { opacity: 0; }
+
+    /* ==========================================================================
+       ✨ Celestial Animated Background Layers
+       ========================================================================== */
+    .celestial-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
     }
-    html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 {
-      color: #475569 !important;
+
+    /* ⭐ Twinkling Stars Layer */
+    .stars-layer {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1.5px 1.5px at 25% 42%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 47% 8%, rgba(0,245,212,0.8), transparent),
+        radial-gradient(2px 2px at 62% 55%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 78% 22%, rgba(0,187,249,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(2px 2px at 55% 88%, rgba(0,245,212,0.6), transparent),
+        radial-gradient(1px 1px at 92% 38%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 5% 60%, rgba(0,187,249,0.5), transparent),
+        radial-gradient(1px 1px at 72% 92%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 18% 88%, rgba(255,255,255,0.7), transparent);
+      animation: twinkleStars 4s ease-in-out infinite alternate;
     }
-    html:not(.dark) .text-white {
-      color: #0F172A !important;
+    .stars-layer-2 {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 30%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 40% 18%, rgba(0,245,212,0.6), transparent),
+        radial-gradient(1px 1px at 58% 72%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2px 2px at 80% 45%, rgba(0,187,249,0.5), transparent),
+        radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 68% 12%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 95% 82%, rgba(0,245,212,0.7), transparent),
+        radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 8% 95%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 85% 58%, rgba(255,255,255,0.5), transparent);
+      animation: twinkleStars2 5.5s ease-in-out infinite alternate;
     }
-    html:not(.dark) .astrolabe-layer {
-      opacity: 0.035;
+
+    @keyframes twinkleStars {
+      0%   { opacity: 0.5; }
+      30%  { opacity: 0.8; }
+      60%  { opacity: 0.45; }
+      100% { opacity: 0.75; }
+    }
+    @keyframes twinkleStars2 {
+      0%   { opacity: 0.7; }
+      40%  { opacity: 0.35; }
+      70%  { opacity: 0.65; }
+      100% { opacity: 0.4; }
+    }
+
+    /* 🌫️ Drifting Nebulae Layer (Very Slow) */
+    .nebula-layer {
+      position: absolute; inset: -20%; width: 140%; height: 140%;
+    }
+    .nebula-1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      top: -5%; right: -8%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 187, 249, 0.14) 0%, transparent 70%);
+      filter: blur(80px);
+      animation: driftNebula1 35s ease-in-out infinite alternate;
+    }
+    .nebula-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      bottom: 5%; left: -5%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(121, 40, 202, 0.12) 0%, transparent 70%);
+      filter: blur(70px);
+      animation: driftNebula2 42s ease-in-out infinite alternate;
+    }
+    .nebula-3 {
+      position: absolute;
+      width: 450px; height: 450px;
+      top: 40%; left: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 245, 212, 0.1) 0%, transparent 70%);
+      filter: blur(90px);
+      animation: driftNebula3 50s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftNebula1 {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(-40px, 30px) scale(1.08); }
+      100% { transform: translate(20px, -20px) scale(0.95); }
+    }
+    @keyframes driftNebula2 {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(35px, -25px) scale(1.05); }
+      100% { transform: translate(-15px, 15px) scale(0.97); }
+    }
+    @keyframes driftNebula3 {
+      0%   { transform: translate(0, 0) scale(1); opacity: 0.8; }
+      50%  { transform: translate(-30px, -20px) scale(1.1); opacity: 1; }
+      100% { transform: translate(25px, 30px) scale(0.9); opacity: 0.7; }
     }
 
     /* Buttons */
@@ -156,7 +249,7 @@
       to { transform: rotate(360deg); }
     }
     .animate-astrolabe {
-      animation: spinAstrolabe 140s linear infinite;
+      animation: spinAstrolabe 80s linear infinite;
     }
 
     @keyframes floatSlow {
@@ -182,13 +275,23 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* Theme Toggle Icon Transition */
     .theme-icon-rotate {
       transform: rotate(360deg) scale(1.1);
     }
   </style>
 </head>
 <body class="min-h-screen">
+
+  <!-- 🌌 Celestial Animated Background (Stars + Nebulae) -->
+  <div class="celestial-canvas" aria-hidden="true">
+    <div class="stars-layer"></div>
+    <div class="stars-layer-2"></div>
+    <div class="nebula-layer">
+      <div class="nebula-1"></div>
+      <div class="nebula-2"></div>
+      <div class="nebula-3"></div>
+    </div>
+  </div>
 
   <!-- ==========================================================================
        1. Floating Glass Navbar
@@ -370,11 +473,92 @@
   </section>
 
 
+  <!-- ==========================================================================
+       5. FAQ Section (الأسئلة الشائعة)
+       ========================================================================== -->
+  <section id="faq" class="py-16 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 text-right">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-extrabold text-samt-cyan uppercase tracking-wider px-3 py-1 rounded-full glass-card">
+          الأسئلة الشائعة
+        </span>
+        <h2 class="text-3xl font-black mt-3 mb-3 font-cairo">
+          إجابات عن <span class="text-gradient">أبرز استفساراتك</span>
+        </h2>
+        <p class="text-slate-400 text-sm">
+          كل ما تود معرفته عن تطبيقات منظومة سمت ومسارات أكاديمية التدريب.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Q1 -->
+        <div class="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all duration-300">
+          <button class="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-sm sm:text-base outline-none" onclick="toggleFaq(this)">
+            <span class="font-cairo">ما هي منظومة سمت SAMT؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <p class="px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed">
+              سمت هي منظومة متكاملة لبرمجيات الويب والإنتاجية فائقة السرعة وخفيفة الوزن، صُممت بمفهوم الخفة وانعدام الجاذبية (Zero Lag). بالإضافة إلى أكاديمية سمت التعليمية التي توفر مسارات ودورات تفاعلية لتعلم البرمجيات.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all duration-300">
+          <button class="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-sm sm:text-base outline-none" onclick="toggleFaq(this)">
+            <span class="font-cairo">هل البرامج وتطبيقات سمت آمنة للتثبيت؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <p class="px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed">
+              نعم، 100%. جميع ملفات التثبيت يتم فحصها بشكل صارم وتوقيعها بشهادات معتمدة، ويتم رفعها مباشرة عبر مستودعات GitHub الرسمية التابعة للمشروع لضمان الشفافية والأمان الكامل.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all duration-300">
+          <button class="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-sm sm:text-base outline-none" onclick="toggleFaq(this)">
+            <span class="font-cairo">كيف يتم تتبع وحفظ نسبة تقدمي في الكورسات؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <p class="px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed">
+              تعتمد المنصة على نظام تخزين محلي بالكامل (LocalStorage) لتتبع وإحراز الدروس المكتملة في متصفحك. هذا يضمن حماية خصوصيتك وعدم تتبع بياناتك، مع الحفاظ على مستوى إنجازك حتى بدون تسجيل الدخول.
+            </p>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all duration-300">
+          <button class="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-sm sm:text-base outline-none" onclick="toggleFaq(this)">
+            <span class="font-cairo">هل توجد رسوم لاستخدام تطبيقات أو أكاديمية سمت؟</span>
+            <i class="fa-solid fa-chevron-down text-samt-cyan text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <p class="px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed">
+              أكاديمية سمت وتطبيقاتها الأساسية مجانية بالكامل للجمهور العربي والمهتمين. نسعى لنشر الفائدة وتوفير بيئة تعليمية وإنتاجية متطورة وسهلة الوصول للجميع.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-6 left-6 w-11 h-11 rounded-full glass-card border border-white/15 hover:border-samt-cyan text-slate-400 hover:text-samt-cyan flex items-center justify-center shadow-2xl transition-all duration-300 opacity-0 pointer-events-none translate-y-4 z-40" onclick="scrollToTop()" aria-label="عودة للأعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
 
   <!-- ==========================================================================
        6. Footer
        ========================================================================== -->
-  <footer class="bg-black/60 border-t border-white/10 pt-12 pb-8 text-right">
+  <footer class="bg-black/60 border-t border-white/10 pt-12 pb-8 text-right relative z-10">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-white/10 pt-6">
         <div>&copy; <span id="currentYear">2026</span> <strong>منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
@@ -591,6 +775,52 @@
       document.getElementById('videoModal').classList.add('hidden');
       document.getElementById('videoModal').classList.remove('flex');
       document.getElementById('modalIframe').src = '';
+    }
+
+    // FAQ Accordion Toggle
+    function toggleFaq(button) {
+      const card = button.parentElement;
+      const answer = button.nextElementSibling;
+      const icon = button.querySelector('i');
+      
+      // Close all other FAQs
+      document.querySelectorAll('#faq .faq-answer').forEach(ans => {
+        if (ans !== answer) {
+          ans.style.maxHeight = null;
+          ans.parentElement.classList.remove('border-samt-cyan/40');
+          ans.previousElementSibling.querySelector('i').classList.remove('rotate-180');
+        }
+      });
+
+      // Toggle current FAQ
+      if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
+        card.classList.remove('border-samt-cyan/40');
+        icon.classList.remove('rotate-180');
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        card.classList.add('border-samt-cyan/40');
+        icon.classList.add('rotate-180');
+      }
+    }
+
+    // Scroll Handlers (Back to Top)
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      } else {
+        backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Mobile Menu
