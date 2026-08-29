@@ -113,7 +113,7 @@
 
     isAdmin: function () {
       const user = this.getCurrentUser();
-      return user !== null && user.role === 'admin' && user.email.toLowerCase() === 'admin@samt.com';
+      return user !== null && user.role === 'admin';
     },
 
     login: function (email, password) {
