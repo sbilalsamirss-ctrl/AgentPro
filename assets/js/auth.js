@@ -114,7 +114,7 @@
 
     isAdmin: function () {
       const user = this.getCurrentUser();
-      return user !== null && user.role === 'admin';
+      return user !== null && user.role === 'admin' && user.email.toLowerCase() === 'admin@samt.com';
     },
 
     login: function (email, password) {
@@ -478,17 +478,17 @@
           </form>
 
           <!-- 2. REGISTER FORM -->
-          <form id="samtRegisterForm" onsubmit="window.SamtAuth.handleRegisterSubmit(event)" class="space-y-3.5 hidden">
+          <form id="samtRegisterForm" onsubmit="window.SamtAuth.handleRegisterSubmit(event)" class="space-y-3.5 hidden" dir="rtl">
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">الاسم الكامل:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300 text-right">الاسم الكامل:</label>
               <div class="relative">
-                <input type="text" id="authRegName" required placeholder="مثال: بلال سمير" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white" />
+                <input type="text" id="authRegName" required placeholder="مثال: بلال سمير" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white text-right" />
                 <i class="fa-solid fa-user absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">البريد الإلكتروني:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300 text-right">البريد الإلكتروني:</label>
               <div class="relative">
                 <input type="email" id="authRegEmail" required placeholder="name@gmail.com" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -496,7 +496,7 @@
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">كلمة المرور:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300 text-right">كلمة المرور:</label>
               <div class="relative">
                 <input type="password" id="authRegPassword" required oninput="window.SamtAuth.checkRegPasswordStrength(this.value)" placeholder="6 أحرف فأكثر" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -517,13 +517,13 @@
               </div>
 
               <!-- Password recommendation notice (Requirement 7) -->
-              <p class="text-[9px] text-slate-400 mt-1.5 leading-relaxed font-cairo">
+              <p class="text-[9px] text-slate-400 mt-1.5 leading-relaxed font-cairo text-right">
                 ℹ️ يُنصح بأن تتكون كلمة المرور من 8 خانات على الأقل تحتوي على حروف (كبيرة وصغيرة) وأرقام ورموز خاصة.
               </p>
             </div>
 
             <div>
-              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300">أعد كتابة كلمة المرور:</label>
+              <label class="block text-xs font-bold mb-1 font-cairo text-slate-300 text-right">أعد كتابة كلمة المرور:</label>
               <div class="relative">
                 <input type="password" id="authRegConfirmPassword" required placeholder="تأكيد كلمة المرور" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-10 outline-none text-left bg-black/40 text-white" dir="ltr" />
                 <i class="fa-solid fa-shield-check absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
@@ -534,7 +534,7 @@
             </div>
 
             <!-- Optional Admin Upgrade Toggle & Code (Requirement 5) -->
-            <div class="border border-white/10 rounded-xl p-3 bg-white/5 space-y-2">
+            <div class="border border-white/10 rounded-xl p-3 bg-white/5 space-y-2" dir="rtl">
               <div class="flex items-center justify-between">
                 <label class="text-[11px] font-bold font-cairo text-slate-300 flex items-center gap-1.5 cursor-pointer select-none">
                   <input type="checkbox" id="regAdminToggle" onchange="window.SamtAuth.toggleAdminRegistrationField(this.checked)" class="rounded border-white/10 text-samt-cyan focus:ring-0 focus:ring-offset-0 bg-black/40">
@@ -544,7 +544,7 @@
               </div>
               
               <div id="regAdminCodeSection" class="hidden space-y-2 pt-2 border-t border-white/5">
-                <p class="text-[10px] text-slate-400 font-cairo leading-relaxed">
+                <p class="text-[10px] text-slate-400 font-cairo leading-relaxed text-right">
                   💡 لتأكيد صلاحية الأدمن، يرجى كتابة كود المشرف الافتراضي للمنظومة: <code class="bg-black/50 text-samt-gold font-mono px-1.5 py-0.5 rounded text-[10px] select-all">SAMT-ADMIN-2026</code>
                 </p>
                 <div class="relative">
@@ -557,7 +557,7 @@
               </div>
             </div>
 
-            <div id="authRegError" class="hidden p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs"></div>
+            <div id="authRegError" class="hidden p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-right"></div>
 
             <button type="submit" class="btn-samt-glow w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg">
               <i class="fa-solid fa-paper-plane"></i>
