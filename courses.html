@@ -216,6 +216,21 @@
 
   </style>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+
+  <style id="samt-responsive-fix">
+    html, body { overflow-x: hidden; }
+    .celestial-canvas { overflow: hidden !important; }
+    @media (max-width: 640px) {
+      header .max-w-7xl { padding-left:.7rem !important; padding-right:.7rem !important; }
+      header a .w-10.h-10 { width:2rem !important; height:2rem !important; }
+      header a span.text-2xl { font-size:1.1rem !important; }
+      header a span.text-xl { font-size:.8rem !important; letter-spacing:.05em !important; }
+      header a.group { gap:.45rem !important; }
+      header .max-w-7xl > div.flex.items-center.gap-3 { gap:.35rem !important; }
+      .samt-auth-slot button { padding:.35rem .6rem !important; font-size:.68rem !important; }
+      header button.md\:hidden { padding:.25rem !important; }
+    }
+  </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
