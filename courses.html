@@ -215,6 +215,10 @@
     }
 
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
 
   <style id="samt-responsive-fix">
@@ -399,7 +403,7 @@
               <h3 class="text-base font-bold mb-1 font-cairo text-white">لا توجد كورسات منشورة حالياً</h3>
               <p class="text-xs text-slate-400">سيتم إدراج الكورسات والدروس التدريبية فور إضافتها من قبل المشرف.</p>
               ${isAdmin ? `
-                <button onclick="window.location.href='./course-builder.html'" class="btn-samt-glow mt-4 px-6 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
+                <button onclick="window.SamtAuth.openNewCourseInline()" class="btn-samt-glow mt-4 px-6 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
                   <i class="fa-solid fa-plus"></i>
                   <span>إضافة أول كورس الآن</span>
                 </button>
@@ -428,7 +432,7 @@
           // Inline Admin Action Buttons
           const adminControls = isAdmin ? `
             <div class="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-gold/40 shadow-lg">
-              <button onclick="event.preventDefault(); event.stopPropagation(); window.location.href='./course-builder.html?edit=${c.id}'" title="تعديل هذا الكورس" class="w-7 h-7 rounded-lg bg-samt-gold/20 hover:bg-samt-gold/40 text-samt-gold flex items-center justify-center text-xs transition-colors">
+              <button onclick="event.preventDefault(); event.stopPropagation(); window.SamtAuth.editCourseInline('${c.id}')" title="تعديل هذا الكورس" class="w-7 h-7 rounded-lg bg-samt-gold/20 hover:bg-samt-gold/40 text-samt-gold flex items-center justify-center text-xs transition-colors">
                 <i class="fa-solid fa-pen"></i>
               </button>
               <button onclick="event.preventDefault(); event.stopPropagation(); deleteCourseInline('${c.id}')" title="حذف هذا الكورس" class="w-7 h-7 rounded-lg bg-rose-500/20 hover:bg-rose-500/40 text-rose-400 flex items-center justify-center text-xs transition-colors">
@@ -489,6 +493,7 @@
           const idx = courses.findIndex(c => c.id === id);
           if (idx !== -1) courses.splice(idx, 1);
           localStorage.setItem('samt_admin_courses', JSON.stringify(courses));
+          try { if (window.SamtFB && window.SamtFB.available && window.SamtFB.isAdmin()) window.SamtFB.syncCoursesToCloud(courses); } catch(e){}
           render();
         }
       };

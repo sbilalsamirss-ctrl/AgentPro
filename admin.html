@@ -220,6 +220,10 @@
     }
 
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
 
   <style id="samt-responsive-fix">
@@ -619,11 +623,13 @@
       };
 
       window.openNewCourseModal = () => {
+        if (window.SamtAuth) { window.SamtAuth.openNewCourseInline(); return; }
         window.location.href = './course-builder.html';
       };
       window.closeCourseModal = () => {};
 
       window.editCourse = (id) => {
+        if (window.SamtAuth) { window.SamtAuth.editCourseInline(id); return; }
         window.location.href = './course-builder.html?edit=' + id;
       };
 
@@ -631,6 +637,7 @@
         if (confirm('تأكيد حذف الكورس؟')) {
           activeCourses = activeCourses.filter(c => c.id !== id);
           localStorage.setItem('samt_admin_courses', JSON.stringify(activeCourses));
+          try { if (window.SamtFB && window.SamtFB.available && window.SamtFB.isAdmin()) window.SamtFB.syncCoursesToCloud(activeCourses); } catch(e){}
           renderCoursesTable();
         }
       };

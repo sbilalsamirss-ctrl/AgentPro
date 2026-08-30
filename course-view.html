@@ -122,6 +122,10 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(0, 245, 212, 0.2); border-radius: 3px; }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
 
   <style id="samt-responsive-fix">
@@ -292,7 +296,15 @@
       const courseId = urlParams.get('id') || 'course-01';
       const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
       const course = courses.find(c => c.id === courseId) || courses[0];
-      if (!course) { window.location.href = './courses.html'; return; }
+      if (!course) {
+        var hasCourses = (localStorage.getItem('samt_admin_courses') || '[]') !== '[]';
+        if (window.SamtFB && window.SamtFB.available && !hasCourses) {
+          window.addEventListener('samt-courses-updated', function () { location.reload(); }, { once: true });
+          setTimeout(function () { window.location.href = './courses.html'; }, 5000);
+          return;
+        }
+        window.location.href = './courses.html'; return;
+      }
 
       // Build sections/lessons from course data
       let sections = [];
