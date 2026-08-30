@@ -382,6 +382,7 @@
     },
 
     logout: function () {
+      try { if (window.SamtFB && window.SamtFB.available) window.SamtFB.signOut(); } catch (e) {}
       localStorage.removeItem(STORAGE_KEYS.SESSION);
       window.location.reload();
     },
@@ -981,6 +982,12 @@
     if (window.AgentProData) {
       window.AgentProData.courses = courses;
     }
+    try {
+      if (window.SamtFB && window.SamtFB.available && window.SamtFB.isAdmin()) {
+        return window.SamtFB.syncCoursesToCloud(courses).catch(function (e) { console.warn('[SAMT] cloud sync failed', e && e.message); });
+      }
+    } catch (e) {}
+    return Promise.resolve();
   }
 
   // الواجهة البرمجية العامة window.SamtAuth
@@ -1253,11 +1260,27 @@
       document.getElementById('authLoginPassword').value = MASTER_ADMIN.password;
     },
 
-    handleLoginSubmit: function (e) {
+    handleLoginSubmit: async function (e) {
       e.preventDefault();
       const email = document.getElementById('authLoginEmail').value;
       const pass = document.getElementById('authLoginPassword').value;
       const errEl = document.getElementById('authLoginError');
+      const cleanEmail = (email || '').trim().toLowerCase();
+
+      if (window.SamtFB && window.SamtFB.available && cleanEmail === window.SamtFB.ADMIN_EMAIL.toLowerCase()) {
+        try {
+          await window.SamtFB.adminSignIn(email, pass);
+          const sessionData = { name: 'المشرف العام', email: window.SamtFB.ADMIN_EMAIL, role: 'admin', avatar: '👑', emailVerified: true, notificationsEnabled: true, loginTime: new Date().toISOString() };
+          localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(sessionData));
+          this.closeAuthModal();
+          SamtAuth.toast('مرحباً بك يا المشرف العام (مشرف) 👑', 'success');
+          setTimeout(() => window.location.reload(), 400);
+        } catch (err) {
+          errEl.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+          errEl.classList.remove('hidden');
+        }
+        return;
+      }
 
       const res = SamtAuth.login(email, pass);
       if (res.success) {
@@ -1417,18 +1440,21 @@
         SamtAuth.toast('تمت إضافة الكورس الجديد بنجاح!', 'success');
       }
 
-      saveCoursesList(courses);
-      this.closeInlineCourseModal();
-      setTimeout(() => window.location.reload(), 400);
+      const self = this;
+      Promise.resolve(saveCoursesList(courses)).then(function () {
+        self.closeInlineCourseModal();
+        setTimeout(function () { window.location.reload(); }, 300);
+      });
     },
 
     deleteCourseInline: function (id) {
       if (!confirm('هل أنت متأكد من حذف هذا الكورس نهائياً؟')) return;
       let courses = getCoursesList();
       courses = courses.filter(c => c.id !== id);
-      saveCoursesList(courses);
-      SamtAuth.toast('تم حذف الكورس بنجاح.', 'info');
-      setTimeout(() => window.location.reload(), 400);
+      Promise.resolve(saveCoursesList(courses)).then(function () {
+        SamtAuth.toast('تم حذف الكورس بنجاح.', 'info');
+        setTimeout(function () { window.location.reload(); }, 300);
+      });
     },
 
     exportDataFile: function () {
@@ -1471,6 +1497,22 @@
     injectUserSettingsModal();
     injectCourseModal();
     updateNavbars();
+
+    if (window.SamtFB && window.SamtFB.available) {
+      window.SamtFB.onAuthChange(function (user) {
+        const isAdm = user && (user.email || '').toLowerCase() === window.SamtFB.ADMIN_EMAIL.toLowerCase();
+        const sess = SamtAuth.getCurrentUser();
+        if (isAdm) {
+          if (!sess || sess.role !== 'admin') {
+            localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify({ name: 'المشرف العام', email: window.SamtFB.ADMIN_EMAIL, role: 'admin', avatar: '👑', emailVerified: true, notificationsEnabled: true, loginTime: new Date().toISOString() }));
+            updateNavbars();
+          }
+        } else if (sess && sess.role === 'admin') {
+          localStorage.removeItem(STORAGE_KEYS.SESSION);
+          updateNavbars();
+        }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
