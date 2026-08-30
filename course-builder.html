@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إنشاء كورس جديد | أكاديمية سمت SAMT</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%2300F5D4' stroke-width='4'/><circle cx='50' cy='50' r='6' fill='%2300BBF9'/><line x1='50' y1='6' x2='50' y2='94' stroke='%2300F5D4' stroke-width='3'/><line x1='6' y1='50' x2='94' y2='50' stroke='%2300F5D4' stroke-width='3'/></svg>" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            samt: {
+              space: '#070A12', navy: '#0B132B', card: '#0E172E',
+              cyan: '#00F5D4', blue: '#00BBF9', purple: '#7928CA', gold: '#FFB703',
+              border: 'rgba(0, 245, 212, 0.18)'
+            }
+          },
+          fontFamily: {
+            readex: ['"Readex Pro"', 'Cairo', 'sans-serif'],
+            cairo: ['Cairo', '"Readex Pro"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after {
+      transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; position: relative; }
+
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card {
+      background: rgba(14, 23, 46, 0.78); backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 245, 212, 0.16); color: #FFFFFF;
+    }
+    html.dark .glass-card:hover {
+      border-color: rgba(0, 245, 212, 0.45);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.2);
+    }
+    html.dark .celestial-canvas { opacity: 1; }
+
+    html:not(.dark) body {
+      background-color: #F8FAFC;
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(0, 187, 249, 0.08), transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(121, 40, 202, 0.05), transparent 40%);
+      color: #0F172A;
+    }
+    html:not(.dark) .glass-card {
+      background: #FFFFFF; border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); color: #0F172A;
+    }
+    html:not(.dark) .glass-card:hover {
+      border-color: #00BBF9;
+      box-shadow: 0 12px 35px rgba(0, 187, 249, 0.15);
+    }
+    html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-white { color: #0F172A !important; }
+    html:not(.dark) .celestial-canvas { opacity: 0; }
+
+    .celestial-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    .stars-layer {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1.5px 1.5px at 25% 42%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 47% 8%, rgba(0,245,212,0.8), transparent),
+        radial-gradient(2px 2px at 62% 55%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 78% 22%, rgba(0,187,249,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent);
+      animation: twinkleStars 4s ease-in-out infinite alternate;
+    }
+    @keyframes twinkleStars {
+      0%   { opacity: 0.5; }
+      50%  { opacity: 0.8; }
+      100% { opacity: 0.6; }
+    }
+
+    .nebula-layer { position: absolute; inset: -20%; width: 140%; height: 140%; }
+    .nebula-1 {
+      position: absolute; width: 600px; height: 600px; top: -5%; right: -8%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 187, 249, 0.14) 0%, transparent 70%);
+      filter: blur(80px);
+      animation: driftNebula1 35s ease-in-out infinite alternate;
+    }
+    .nebula-2 {
+      position: absolute; width: 500px; height: 500px; bottom: 5%; left: -5%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(121, 40, 202, 0.12) 0%, transparent 70%);
+      filter: blur(70px);
+      animation: driftNebula2 42s ease-in-out infinite alternate;
+    }
+    @keyframes driftNebula1 {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(20px, -20px) scale(0.95); }
+    }
+    @keyframes driftNebula2 {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-15px, 15px) scale(0.97); }
+    }
+
+    .btn-samt-glow {
+      background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%);
+      color: #070A12 !important; font-weight: 800;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+    }
+    .btn-samt-glow:hover { box-shadow: 0 0 30px rgba(0, 245, 212, 0.6); }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #00BBF9 0%, #00F5D4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* Stepper */
+    .step-item { position: relative; }
+    .step-item .step-circle {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(14, 23, 46, 0.8);
+      color: #64748B;
+      cursor: pointer;
+    }
+    .step-item.active .step-circle {
+      border-color: #00F5D4; color: #00F5D4;
+      box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+    }
+    .step-item.completed .step-circle {
+      border-color: #10B981; background: #10B981; color: #000;
+    }
+    .step-connector {
+      flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 8px;
+      align-self: center;
+    }
+    .step-connector.completed { background: #10B981; }
+
+    /* Section card in curriculum */
+    .section-card { border: 1px solid rgba(0, 245, 212, 0.12); }
+    .section-card:hover { border-color: rgba(0, 245, 212, 0.3); }
+    .lecture-item { border: 1px solid rgba(255,255,255,0.08); }
+    .lecture-item:hover { border-color: rgba(0, 187, 249, 0.3); }
+
+    /* Dynamic list items */
+    .dynamic-item { animation: fadeInItem 0.3s ease; }
+    @keyframes fadeInItem {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Thumbnail preview */
+    .thumb-preview {
+      background: linear-gradient(135deg, #0B152E, #16254A);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 245, 212, 0.2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 212, 0.4); }
+
+    footer, footer a { color: #94A3B8 !important; }
+    footer a:hover { color: #00F5D4 !important; }
+    footer strong { color: #FFFFFF !important; }
+
+    .theme-toggle-icon::before {
+      display: inline-block; font-style: normal; font-variant: normal;
+      text-rendering: auto; -webkit-font-smoothing: antialiased;
+    }
+    html.dark .theme-toggle-icon::before { content: "\f185" !important; }
+    html.dark .theme-toggle-icon { color: #FFB703 !important; }
+    html:not(.dark) .theme-toggle-icon::before { content: "\f186" !important; }
+    html:not(.dark) .theme-toggle-icon { color: #00BBF9 !important; }
+  </style>
+  <script src="./assets/js/auth.js" charset="utf-8"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- 🌌 Celestial Background -->
+  <div class="celestial-canvas" aria-hidden="true">
+    <div class="stars-layer"></div>
+    <div class="nebula-layer">
+      <div class="nebula-1"></div>
+      <div class="nebula-2"></div>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="./admin.html" class="text-xs font-bold hover:text-samt-cyan flex items-center gap-2">
+          <i class="fa-solid fa-arrow-right"></i>
+          <span>العودة للوحة التحكم</span>
+        </a>
+        <span class="text-slate-500">|</span>
+        <h1 id="pageTitle" class="text-sm font-bold font-cairo truncate max-w-sm">إنشاء كورس جديد</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="w-9 h-9 rounded-full glass-card flex items-center justify-center text-sm">
+          <i id="themeIcon" class="fa-solid theme-toggle-icon text-base"></i>
+        </button>
+        <div class="samt-auth-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-12 max-w-5xl mx-auto px-4 w-full relative z-10 flex-grow">
+
+    <!-- ===== STEPPER ===== -->
+    <div class="flex items-center justify-center mb-10 px-4">
+      <div class="step-item active" data-step="1" onclick="goToStep(1)">
+        <div class="step-circle">1</div>
+        <div class="text-[10px] font-bold text-center mt-1.5 font-cairo text-slate-400 whitespace-nowrap">الصفحة التعريفية</div>
+      </div>
+      <div class="step-connector" data-connector="1"></div>
+      <div class="step-item" data-step="2" onclick="goToStep(2)">
+        <div class="step-circle">2</div>
+        <div class="text-[10px] font-bold text-center mt-1.5 font-cairo text-slate-400 whitespace-nowrap">الأهداف والمتطلبات</div>
+      </div>
+      <div class="step-connector" data-connector="2"></div>
+      <div class="step-item" data-step="3" onclick="goToStep(3)">
+        <div class="step-circle">3</div>
+        <div class="text-[10px] font-bold text-center mt-1.5 font-cairo text-slate-400 whitespace-nowrap">المنهج والدروس</div>
+      </div>
+      <div class="step-connector" data-connector="3"></div>
+      <div class="step-item" data-step="4" onclick="goToStep(4)">
+        <div class="step-circle">4</div>
+        <div class="text-[10px] font-bold text-center mt-1.5 font-cairo text-slate-400 whitespace-nowrap">الرسائل والنشر</div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 1: Landing Page ===== -->
+    <div id="step1" class="step-content">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 text-right">
+        <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+          <div class="w-10 h-10 rounded-xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan flex items-center justify-center">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold font-cairo">الصفحة التعريفية للكورس</h2>
+            <p class="text-xs text-slate-400">المعلومات الأساسية التي يراها الطالب في كتالوج الدورات</p>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">عنوان الكورس الرئيسي <span class="text-rose-400">*</span></label>
+          <input type="text" id="cTitle" required maxlength="80" placeholder="مثال: احتراف الأمن السيبراني من الصفر للاحتراف" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none" />
+          <div class="text-[10px] text-slate-500 mt-1 text-left" dir="ltr"><span id="cTitleCount">0</span>/80</div>
+        </div>
+
+        <!-- Subtitle -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">العنوان الفرعي</label>
+          <input type="text" id="cSubtitle" maxlength="120" placeholder="سطر يلخص الفائدة من الدورة..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none" />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">الوصف التفصيلي <span class="text-rose-400">*</span></label>
+          <textarea id="cDescription" rows="5" placeholder="اكتب وصفاً شاملاً للدورة يشرح المحتوى والفائدة (200 حرف على الأقل)..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none leading-relaxed"></textarea>
+          <div class="text-[10px] text-slate-500 mt-1 text-left" dir="ltr"><span id="cDescCount">0</span> حرف</div>
+        </div>
+
+        <!-- Category + Level + Language -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">التصنيف <span class="text-rose-400">*</span></label>
+            <select id="cCategory" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none">
+              <option value="basics">دليل المبتدئين</option>
+              <option value="productivity">الإنتاجية والتنظيم</option>
+              <option value="analytics">التحليلات ومؤشرات الأداء</option>
+              <option value="database">قواعد البيانات والسيرفرات</option>
+              <option value="security">الأمن السيبراني</option>
+              <option value="design">التصميم والجرافيك</option>
+              <option value="programming">البرمجة وتطوير الويب</option>
+              <option value="other">أخرى</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">مستوى الصعوبة</label>
+            <select id="cLevel" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none">
+              <option value="مبتدئ">مبتدئ (Beginner)</option>
+              <option value="متوسط">متوسط (Intermediate)</option>
+              <option value="متقدم">متقدم (Expert)</option>
+              <option value="شامل">شامل (All Levels)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">لغة الكورس</label>
+            <select id="cLanguage" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none">
+              <option value="العربية">العربية</option>
+              <option value="الإنجليزية">الإنجليزية</option>
+              <option value="مختلط">مختلط (عربي + إنجليزي)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Subcategory -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">التصنيف الفرعي (اختياري)</label>
+          <input type="text" id="cSubcategory" placeholder="مثال: اختبار الاختراق، تحليل البيانات..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none" />
+        </div>
+
+        <!-- Promo Video -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">رابط الفيديو الترويجي (YouTube Trailer) <span class="text-rose-400">*</span></label>
+          <input type="url" id="cPromoVideo" required placeholder="https://www.youtube.com/watch?v=XXXXX" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none text-left" dir="ltr" />
+          <div id="promoThumbPreview" class="mt-3 hidden">
+            <div class="thumb-preview rounded-xl overflow-hidden w-full max-w-sm aspect-video relative">
+              <img id="promoThumbImg" src="" alt="معاينة الغلاف" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-3 right-3 text-xs font-bold text-white bg-black/60 px-2 py-1 rounded-lg backdrop-blur-sm">
+                <i class="fa-solid fa-image ml-1"></i> غلاف الكورس (تلقائي)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructor -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">اسم المُدرِّب</label>
+            <input type="text" id="cInstructorName" placeholder="مثال: أحمد محمد" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">نبذة عن المُدرِّب</label>
+            <input type="text" id="cInstructorBio" placeholder="مثال: خبير أمن سيبراني بخبرة +5 سنوات" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none" />
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex items-center justify-between pt-6 border-t border-white/10">
+          <a href="./admin.html" class="text-xs font-bold text-slate-400 hover:text-white">إلغاء والعودة</a>
+          <button onclick="goToStep(2)" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <span>التالي: الأهداف والمتطلبات</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 2: Intended Learners ===== -->
+    <div id="step2" class="step-content hidden">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 text-right">
+        <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+          <div class="w-10 h-10 rounded-xl bg-samt-gold/10 border border-samt-gold/30 text-samt-gold flex items-center justify-center">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold font-cairo">الأهداف والمتطلبات</h2>
+            <p class="text-xs text-slate-400">حدد ما سيكتسبه الطالب والمتطلبات اللازمة للبدء</p>
+          </div>
+        </div>
+
+        <!-- What will students learn -->
+        <div>
+          <label class="block text-xs font-bold mb-2 font-cairo text-slate-300">
+            <i class="fa-solid fa-lightbulb text-samt-gold ml-1"></i>
+            ماذا سيتعلم الطالب؟ (4 أهداف على الأقل)
+          </label>
+          <div id="objectivesList" class="space-y-2"></div>
+          <button onclick="addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...')" class="mt-2 text-xs font-bold text-samt-cyan hover:text-white flex items-center gap-1.5">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة هدف جديد</span>
+          </button>
+        </div>
+
+        <!-- Requirements -->
+        <div>
+          <label class="block text-xs font-bold mb-2 font-cairo text-slate-300">
+            <i class="fa-solid fa-list-check text-samt-blue ml-1"></i>
+            المتطلبات السابقة (Prerequisites)
+          </label>
+          <div id="requirementsList" class="space-y-2"></div>
+          <button onclick="addDynamicItem('requirementsList', 'مثال: حاسوب شخصي، معرفة بأساسيات الإنترنت...')" class="mt-2 text-xs font-bold text-samt-cyan hover:text-white flex items-center gap-1.5">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة متطلب جديد</span>
+          </button>
+        </div>
+
+        <!-- Target Audience -->
+        <div>
+          <label class="block text-xs font-bold mb-2 font-cairo text-slate-300">
+            <i class="fa-solid fa-users text-samt-purple ml-1"></i>
+            الفئة المستهدفة (لمن هذه الدورة؟)
+          </label>
+          <div id="audienceList" class="space-y-2"></div>
+          <button onclick="addDynamicItem('audienceList', 'مثال: المبتدئون في البرمجة، طلاب الجامعات...')" class="mt-2 text-xs font-bold text-samt-cyan hover:text-white flex items-center gap-1.5">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة فئة مستهدفة</span>
+          </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex items-center justify-between pt-6 border-t border-white/10">
+          <button onclick="goToStep(1)" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>السابق</span>
+          </button>
+          <button onclick="goToStep(3)" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <span>التالي: المنهج والدروس</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 3: Curriculum Builder ===== -->
+    <div id="step3" class="step-content hidden">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 text-right">
+        <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+            <i class="fa-solid fa-list-ol"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold font-cairo">صانع المنهج والدروس</h2>
+            <p class="text-xs text-slate-400">أنشئ الأقسام وأضف الدروس تحت كل قسم بروابط فيديوهات YouTube</p>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="flex items-center gap-4 flex-wrap text-xs">
+          <div class="glass-card px-3 py-1.5 rounded-lg border border-white/10 font-bold">
+            <i class="fa-solid fa-layer-group text-samt-cyan ml-1"></i>
+            الأقسام: <span id="sectionsCount" class="text-samt-cyan font-mono">0</span>
+          </div>
+          <div class="glass-card px-3 py-1.5 rounded-lg border border-white/10 font-bold">
+            <i class="fa-solid fa-play-circle text-samt-blue ml-1"></i>
+            الدروس: <span id="lecturesCount" class="text-samt-blue font-mono">0</span>
+          </div>
+          <div class="glass-card px-3 py-1.5 rounded-lg border border-white/10 font-bold">
+            <i class="fa-regular fa-clock text-samt-gold ml-1"></i>
+            المدة الكلية: <span id="totalDuration" class="text-samt-gold font-mono">00:00</span>
+          </div>
+        </div>
+
+        <!-- Sections Container -->
+        <div id="sectionsContainer" class="space-y-4"></div>
+
+        <!-- Add Section Button -->
+        <button onclick="addSection()" class="w-full py-3.5 rounded-xl border-2 border-dashed border-samt-cyan/30 hover:border-samt-cyan/60 text-samt-cyan text-xs font-bold flex items-center justify-center gap-2 hover:bg-samt-cyan/5">
+          <i class="fa-solid fa-plus"></i>
+          <span>إضافة قسم جديد (Section)</span>
+        </button>
+
+        <!-- Navigation -->
+        <div class="flex items-center justify-between pt-6 border-t border-white/10">
+          <button onclick="goToStep(2)" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>السابق</span>
+          </button>
+          <button onclick="goToStep(4)" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <span>التالي: الرسائل والنشر</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 4: Messages & Publish ===== -->
+    <div id="step4" class="step-content hidden">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 text-right">
+        <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+          <div class="w-10 h-10 rounded-xl bg-samt-purple/10 border border-samt-purple/30 text-samt-purple flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold font-cairo">الرسائل والنشر</h2>
+            <p class="text-xs text-slate-400">رسائل الترحيب والتهنئة ثم حفظ ونشر الكورس</p>
+          </div>
+        </div>
+
+        <!-- Welcome Message -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">
+            <i class="fa-solid fa-hand-wave text-samt-gold ml-1"></i>
+            رسالة الترحيب (تظهر عند الاشتراك)
+          </label>
+          <textarea id="cWelcomeMsg" rows="3" placeholder="مرحباً بك في الدورة! نتمنى لك رحلة تعليمية ممتعة..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none leading-relaxed"></textarea>
+        </div>
+
+        <!-- Congrats Message -->
+        <div>
+          <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">
+            <i class="fa-solid fa-trophy text-samt-gold ml-1"></i>
+            رسالة التهنئة (تظهر عند إتمام 100%)
+          </label>
+          <textarea id="cCongratsMsg" rows="3" placeholder="تهانينا! لقد أتممت الدورة بنجاح 🎉 نفخر بإنجازك..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-sm rounded-xl p-3 outline-none leading-relaxed"></textarea>
+        </div>
+
+        <!-- Course Summary Preview -->
+        <div class="glass-card rounded-xl p-5 border border-samt-cyan/20 space-y-3">
+          <h3 class="text-sm font-bold font-cairo text-samt-cyan flex items-center gap-2">
+            <i class="fa-solid fa-clipboard-check"></i>
+            ملخص الكورس قبل النشر
+          </h3>
+          <div id="publishSummary" class="text-xs text-slate-400 space-y-1.5 leading-relaxed"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex items-center justify-between pt-6 border-t border-white/10">
+          <button onclick="goToStep(3)" class="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>السابق</span>
+          </button>
+          <div class="flex items-center gap-3">
+            <button onclick="saveDraft()" class="px-5 py-2.5 rounded-xl glass-card border border-white/15 hover:border-samt-cyan text-xs font-bold text-slate-300 hover:text-white flex items-center gap-2">
+              <i class="fa-regular fa-floppy-disk"></i>
+              <span>حفظ كمسودة</span>
+            </button>
+            <button onclick="publishCourse()" class="btn-samt-glow px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+              <i class="fa-solid fa-rocket"></i>
+              <span>نشر الكورس الآن</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
+    &copy; 2026 <strong class="text-slate-800 dark:text-white">أكاديمية سمت SAMT</strong>. صفحة إنشاء الكورسات.
+  </footer>
+
+  <script src="./assets/js/courses-data.js" charset="utf-8"></script>
+
+  <script>
+    // ===== Theme =====
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme, animate = false) {
+      if (animate && themeIcon) {
+        themeIcon.style.transform = 'rotate(360deg) scale(1.1)';
+        setTimeout(() => themeIcon.style.transform = '', 500);
+      }
+      if (theme === 'light') htmlEl.classList.remove('dark');
+      else htmlEl.classList.add('dark');
+      localStorage.setItem('samt_theme', theme);
+    }
+    applyTheme(localStorage.getItem('samt_theme') || 'dark', false);
+    themeToggle.addEventListener('click', () => {
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark', true);
+    });
+
+    // ===== State =====
+    let currentStep = 1;
+    let editCourseId = null;
+    let courseData = {
+      sections: [],
+      objectives: [],
+      requirements: [],
+      targetAudience: []
+    };
+
+    // Check if editing
+    const urlParams = new URLSearchParams(window.location.search);
+    editCourseId = urlParams.get('edit');
+
+    // ===== Auth Guard =====
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.SamtAuth || !window.SamtAuth.isAdmin()) {
+        alert('يجب تسجيل الدخول كمشرف للوصول لهذه الصفحة.');
+        window.location.href = './admin.html';
+        return;
+      }
+
+      // Initialize with default items
+      if (!editCourseId) {
+        addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...');
+        addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...');
+        addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...');
+        addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...');
+        addDynamicItem('requirementsList', 'مثال: حاسوب شخصي، معرفة بأساسيات الإنترنت...');
+        addDynamicItem('audienceList', 'مثال: المبتدئون في البرمجة، طلاب الجامعات...');
+      }
+
+      // Load course for editing
+      if (editCourseId) {
+        loadCourseForEdit(editCourseId);
+      }
+    });
+
+    // ===== Stepper Navigation =====
+    function goToStep(step) {
+      // Save current step data
+      collectStepData();
+
+      currentStep = step;
+
+      // Hide all steps
+      document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('step' + step).classList.remove('hidden');
+
+      // Update stepper visuals
+      document.querySelectorAll('.step-item').forEach(item => {
+        const s = parseInt(item.dataset.step);
+        item.classList.remove('active', 'completed');
+        if (s === step) item.classList.add('active');
+        else if (s < step) item.classList.add('completed');
+      });
+      document.querySelectorAll('.step-connector').forEach(conn => {
+        const c = parseInt(conn.dataset.connector);
+        conn.classList.toggle('completed', c < step);
+      });
+
+      // Update page title
+      const titles = { 1: 'الصفحة التعريفية', 2: 'الأهداف والمتطلبات', 3: 'المنهج والدروس', 4: 'الرسائل والنشر' };
+      document.getElementById('pageTitle').textContent = (editCourseId ? 'تعديل الكورس' : 'إنشاء كورس جديد') + ' — ' + titles[step];
+
+      // Generate summary on step 4
+      if (step === 4) generatePublishSummary();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Dynamic List (Objectives, Requirements, Audience) =====
+    function addDynamicItem(listId, placeholder, value = '') {
+      const list = document.getElementById(listId);
+      const item = document.createElement('div');
+      item.className = 'dynamic-item flex items-center gap-2';
+      item.innerHTML = `
+        <input type="text" value="${escapeHtml(value)}" placeholder="${placeholder}" class="flex-grow glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-2.5 outline-none" />
+        <button onclick="this.parentElement.remove()" class="w-8 h-8 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs flex-shrink-0">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      `;
+      list.appendChild(item);
+    }
+
+    function getDynamicListValues(listId) {
+      const items = document.querySelectorAll('#' + listId + ' .dynamic-item input');
+      return Array.from(items).map(i => i.value.trim()).filter(v => v.length > 0);
+    }
+
+    // ===== Curriculum Builder =====
+    let sectionCounter = 0;
+
+    function addSection(title = '', objective = '', lectures = []) {
+      sectionCounter++;
+      const secId = 'sec-' + Date.now() + '-' + sectionCounter;
+      const container = document.getElementById('sectionsContainer');
+      
+      const secEl = document.createElement('div');
+      secEl.className = 'section-card glass-card rounded-2xl overflow-hidden';
+      secEl.id = secId;
+      secEl.dataset.sectionId = secId;
+
+      secEl.innerHTML = `
+        <!-- Section Header -->
+        <div class="bg-black/30 px-5 py-3.5 flex items-center justify-between gap-3 border-b border-white/10">
+          <div class="flex items-center gap-3 flex-grow">
+            <i class="fa-solid fa-layer-group text-samt-cyan text-sm"></i>
+            <input type="text" value="${escapeHtml(title)}" placeholder="عنوان القسم (مثال: الوحدة 1: الأساسيات)" class="section-title flex-grow bg-transparent text-sm font-bold font-cairo outline-none placeholder-slate-500" />
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button onclick="toggleSectionCollapse('${secId}')" title="طي/فتح" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-chevron-up section-toggle-icon"></i>
+            </button>
+            <button onclick="deleteSection('${secId}')" title="حذف القسم" class="w-7 h-7 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Objective -->
+        <div class="px-5 py-2 border-b border-white/5">
+          <input type="text" value="${escapeHtml(objective)}" placeholder="هدف هذا القسم (اختياري)..." class="section-objective w-full bg-transparent text-[11px] text-slate-400 outline-none placeholder-slate-600" />
+        </div>
+
+        <!-- Lectures Container -->
+        <div class="section-lectures p-4 space-y-3">
+          ${lectures.length === 0 ? '<div class="text-center text-xs text-slate-500 py-4">لا توجد دروس بعد. أضف أول درس!</div>' : ''}
+        </div>
+
+        <!-- Add Lecture Button -->
+        <div class="px-4 pb-4">
+          <button onclick="addLecture('${secId}')" class="w-full py-2.5 rounded-xl border border-dashed border-samt-blue/30 hover:border-samt-blue/60 text-samt-blue text-xs font-bold flex items-center justify-center gap-2 hover:bg-samt-blue/5">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة درس (Lecture)</span>
+          </button>
+        </div>
+      `;
+
+      container.appendChild(secEl);
+
+      // Add existing lectures
+      lectures.forEach(lec => addLecture(secId, lec));
+
+      updateCurriculumStats();
+    }
+
+    function deleteSection(secId) {
+      if (confirm('هل أنت متأكد من حذف هذا القسم وجميع دروسه؟')) {
+        document.getElementById(secId).remove();
+        updateCurriculumStats();
+      }
+    }
+
+    function toggleSectionCollapse(secId) {
+      const sec = document.getElementById(secId);
+      const lecturesContainer = sec.querySelector('.section-lectures');
+      const addBtn = sec.querySelector('.section-lectures + div');
+      const icon = sec.querySelector('.section-toggle-icon');
+      
+      const isCollapsed = lecturesContainer.classList.contains('hidden');
+      lecturesContainer.classList.toggle('hidden');
+      addBtn.classList.toggle('hidden');
+      icon.classList.toggle('fa-chevron-up', isCollapsed);
+      icon.classList.toggle('fa-chevron-down', !isCollapsed);
+    }
+
+    function addLecture(secId, data = null) {
+      const sec = document.getElementById(secId);
+      const lecturesContainer = sec.querySelector('.section-lectures');
+      
+      // Remove empty message
+      const emptyMsg = lecturesContainer.querySelector('.text-center');
+      if (emptyMsg) emptyMsg.remove();
+
+      const lecId = 'lec-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+      
+      const lecEl = document.createElement('div');
+      lecEl.className = 'lecture-item glass-card rounded-xl p-4 space-y-3 dynamic-item';
+      lecEl.id = lecId;
+      lecEl.dataset.lectureId = lecId;
+
+      lecEl.innerHTML = `
+        <!-- Lecture Header -->
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2 flex-grow">
+            <i class="fa-solid fa-play-circle text-samt-blue text-sm"></i>
+            <input type="text" value="${escapeHtml(data?.title || '')}" placeholder="عنوان الدرس (مثال: 1.1 المقدمة والترحيب)" class="lecture-title flex-grow bg-transparent text-xs font-bold outline-none placeholder-slate-500" />
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer" title="معاينة مجانية">
+              <input type="checkbox" ${data?.freePreview ? 'checked' : ''} class="lecture-free-preview w-3.5 h-3.5 rounded accent-samt-cyan" />
+              <span>مجاني</span>
+            </label>
+            <button onclick="toggleLectureDetails('${lecId}')" title="تفاصيل" class="w-6 h-6 rounded-md bg-white/5 hover:bg-white/10 text-slate-400 flex items-center justify-center text-[10px]">
+              <i class="fa-solid fa-chevron-down lecture-detail-icon"></i>
+            </button>
+            <button onclick="deleteLecture('${lecId}')" title="حذف" class="w-6 h-6 rounded-md bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 flex items-center justify-center text-[10px]">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Lecture Details (collapsible) -->
+        <div class="lecture-details space-y-2.5 ${data ? '' : ''}">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-bold mb-1 text-slate-400">رابط فيديو YouTube:</label>
+              <input type="url" value="${escapeHtml(data?.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="lecture-video w-full glass-card border border-white/10 text-[11px] rounded-lg p-2 outline-none text-left focus:border-samt-cyan" dir="ltr" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold mb-1 text-slate-400">المدة:</label>
+              <input type="text" value="${escapeHtml(data?.duration || '')}" placeholder="08:45" class="lecture-duration w-full glass-card border border-white/10 text-[11px] rounded-lg p-2 outline-none text-left focus:border-samt-cyan font-mono" dir="ltr" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold mb-1 text-slate-400">وصف وملاحظات الدرس:</label>
+            <textarea rows="2" placeholder="ملاحظات تظهر تحت الفيديو..." class="lecture-desc w-full glass-card border border-white/10 text-[11px] rounded-lg p-2 outline-none focus:border-samt-cyan leading-relaxed">${escapeHtml(data?.description || '')}</textarea>
+          </div>
+          <!-- Resources -->
+          <div>
+            <label class="block text-[10px] font-bold mb-1 text-slate-400">
+              <i class="fa-solid fa-paperclip ml-1"></i> المرفقات والملفات:
+            </label>
+            <div class="lecture-resources space-y-1.5"></div>
+            <button onclick="addResource('${lecId}')" class="mt-1.5 text-[10px] font-bold text-samt-cyan hover:text-white flex items-center gap-1">
+              <i class="fa-solid fa-plus"></i>
+              <span>إضافة مرفق</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      lecturesContainer.appendChild(lecEl);
+
+      // Add existing resources
+      if (data?.resources) {
+        data.resources.forEach(r => addResource(lecId, r));
+      }
+
+      updateCurriculumStats();
+    }
+
+    function deleteLecture(lecId) {
+      document.getElementById(lecId).remove();
+      updateCurriculumStats();
+    }
+
+    function toggleLectureDetails(lecId) {
+      const lec = document.getElementById(lecId);
+      const details = lec.querySelector('.lecture-details');
+      const icon = lec.querySelector('.lecture-detail-icon');
+      
+      details.classList.toggle('hidden');
+      icon.classList.toggle('fa-chevron-down');
+      icon.classList.toggle('fa-chevron-up');
+    }
+
+    function addResource(lecId, data = null) {
+      const lec = document.getElementById(lecId);
+      const container = lec.querySelector('.lecture-resources');
+      
+      const resEl = document.createElement('div');
+      resEl.className = 'flex items-center gap-2 dynamic-item';
+      resEl.innerHTML = `
+        <input type="text" value="${escapeHtml(data?.name || '')}" placeholder="اسم المرفق" class="resource-name w-1/3 glass-card border border-white/10 text-[10px] rounded-lg p-1.5 outline-none focus:border-samt-cyan" />
+        <input type="url" value="${escapeHtml(data?.url || '')}" placeholder="https://رابط-الملف..." class="resource-url flex-grow glass-card border border-white/10 text-[10px] rounded-lg p-1.5 outline-none text-left focus:border-samt-cyan" dir="ltr" />
+        <button onclick="this.parentElement.remove()" class="w-6 h-6 rounded-md bg-rose-500/10 text-rose-400 flex items-center justify-center text-[10px] flex-shrink-0">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+      container.appendChild(resEl);
+    }
+
+    function updateCurriculumStats() {
+      const sections = document.querySelectorAll('#sectionsContainer .section-card');
+      const lectures = document.querySelectorAll('#sectionsContainer .lecture-item');
+      
+      document.getElementById('sectionsCount').textContent = sections.length;
+      document.getElementById('lecturesCount').textContent = lectures.length;
+      
+      // Calculate total duration
+      let totalMinutes = 0;
+      lectures.forEach(lec => {
+        const dur = lec.querySelector('.lecture-duration')?.value || '';
+        const parts = dur.split(':');
+        if (parts.length === 2) {
+          totalMinutes += parseInt(parts[0] || 0) * 60 + parseInt(parts[1] || 0);
+        } else if (parts.length === 1 && parts[0]) {
+          totalMinutes += parseInt(parts[0] || 0) * 60;
+        }
+      });
+      const hours = Math.floor(totalMinutes / 3600);
+      const mins = Math.floor((totalMinutes % 3600) / 60);
+      const secs = totalMinutes % 60;
+      document.getElementById('totalDuration').textContent = 
+        hours > 0 ? `${hours}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}` : `${mins}:${String(secs).padStart(2,'0')}`;
+    }
+
+    // ===== Data Collection =====
+    function collectStepData() {
+      // Always collect all data
+      courseData.title = document.getElementById('cTitle').value.trim();
+      courseData.subtitle = document.getElementById('cSubtitle').value.trim();
+      courseData.description = document.getElementById('cDescription').value.trim();
+      courseData.category = document.getElementById('cCategory').value;
+      courseData.level = document.getElementById('cLevel').value;
+      courseData.language = document.getElementById('cLanguage').value;
+      courseData.subcategory = document.getElementById('cSubcategory').value.trim();
+      courseData.promoVideoUrl = document.getElementById('cPromoVideo').value.trim();
+      courseData.instructorName = document.getElementById('cInstructorName').value.trim();
+      courseData.instructorBio = document.getElementById('cInstructorBio').value.trim();
+
+      courseData.objectives = getDynamicListValues('objectivesList');
+      courseData.requirements = getDynamicListValues('requirementsList');
+      courseData.targetAudience = getDynamicListValues('audienceList');
+
+      courseData.welcomeMessage = document.getElementById('cWelcomeMsg').value.trim();
+      courseData.congratsMessage = document.getElementById('cCongratsMsg').value.trim();
+
+      // Collect sections & lectures
+      courseData.sections = [];
+      document.querySelectorAll('#sectionsContainer .section-card').forEach(secEl => {
+        const section = {
+          id: secEl.dataset.sectionId,
+          title: secEl.querySelector('.section-title').value.trim(),
+          objective: secEl.querySelector('.section-objective').value.trim(),
+          lectures: []
+        };
+
+        secEl.querySelectorAll('.lecture-item').forEach(lecEl => {
+          const resources = [];
+          lecEl.querySelectorAll('.lecture-resources > div').forEach(resEl => {
+            const name = resEl.querySelector('.resource-name')?.value.trim();
+            const url = resEl.querySelector('.resource-url')?.value.trim();
+            if (name && url) resources.push({ name, url });
+          });
+
+          section.lectures.push({
+            id: lecEl.dataset.lectureId,
+            title: lecEl.querySelector('.lecture-title').value.trim(),
+            videoUrl: normalizeYoutubeUrl(lecEl.querySelector('.lecture-video').value.trim()),
+            duration: lecEl.querySelector('.lecture-duration').value.trim(),
+            description: lecEl.querySelector('.lecture-desc').value.trim(),
+            freePreview: lecEl.querySelector('.lecture-free-preview').checked,
+            resources: resources
+          });
+        });
+
+        courseData.sections.push(section);
+      });
+    }
+
+    // ===== YouTube URL Helpers =====
+    function normalizeYoutubeUrl(url) {
+      if (!url) return '';
+      let videoId = '';
+      if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1]?.split('&')[0];
+      else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      else if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
+      return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : url;
+    }
+
+    function extractYoutubeThumbnail(url) {
+      if (!url) return '';
+      let videoId = '';
+      if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
+      else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1]?.split('&')[0];
+      else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+    }
+
+    // Promo video thumbnail preview
+    document.getElementById('cPromoVideo').addEventListener('input', function() {
+      const thumb = extractYoutubeThumbnail(this.value);
+      const preview = document.getElementById('promoThumbPreview');
+      const img = document.getElementById('promoThumbImg');
+      if (thumb) {
+        img.src = thumb;
+        preview.classList.remove('hidden');
+      } else {
+        preview.classList.add('hidden');
+      }
+    });
+
+    // Character counters
+    document.getElementById('cTitle').addEventListener('input', function() {
+      document.getElementById('cTitleCount').textContent = this.value.length;
+    });
+    document.getElementById('cDescription').addEventListener('input', function() {
+      document.getElementById('cDescCount').textContent = this.value.length;
+    });
+
+    // ===== Publish Summary =====
+    function generatePublishSummary() {
+      collectStepData();
+      const d = courseData;
+      const catNames = {
+        basics: 'دليل المبتدئين', productivity: 'الإنتاجية والتنظيم',
+        analytics: 'التحليلات ومؤشرات الأداء', database: 'قواعد البيانات والسيرفرات',
+        security: 'الأمن السيبراني', design: 'التصميم والجرافيك',
+        programming: 'البرمجة وتطوير الويب', other: 'أخرى'
+      };
+
+      let totalLectures = 0;
+      d.sections.forEach(s => totalLectures += s.lectures.length);
+
+      const summary = document.getElementById('publishSummary');
+      summary.innerHTML = `
+        <div class="flex items-center gap-2"><i class="fa-solid fa-heading text-samt-cyan w-4"></i><span><strong>العنوان:</strong> ${d.title || '<span class="text-rose-400">لم يُحدد</span>'}</span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-tag text-samt-cyan w-4"></i><span><strong>التصنيف:</strong> ${catNames[d.category] || d.category} | ${d.level} | ${d.language}</span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-user text-samt-cyan w-4"></i><span><strong>المُدرِّب:</strong> ${d.instructorName || 'لم يُحدد'}</span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-bullseye text-samt-gold w-4"></i><span><strong>الأهداف:</strong> ${d.objectives.length} هدف</span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-layer-group text-emerald-400 w-4"></i><span><strong>المنهج:</strong> ${d.sections.length} قسم — ${totalLectures} درس</span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-video text-samt-blue w-4"></i><span><strong>فيديو ترويجي:</strong> ${d.promoVideoUrl ? '✅ موجود' : '<span class="text-rose-400">❌ غير موجود</span>'}</span></div>
+        ${!d.title ? '<div class="text-rose-400 font-bold mt-2">⚠️ يجب ملء عنوان الكورس قبل النشر</div>' : ''}
+        ${d.sections.length === 0 ? '<div class="text-rose-400 font-bold">⚠️ يجب إضافة قسم واحد على الأقل مع درس</div>' : ''}
+      `;
+    }
+
+    // ===== Save & Publish =====
+    function buildCourseObject() {
+      collectStepData();
+      const d = courseData;
+      const catNames = {
+        basics: 'دليل المبتدئين', productivity: 'الإنتاجية والتنظيم',
+        analytics: 'التحليلات ومؤشرات الأداء', database: 'قواعد البيانات والسيرفرات',
+        security: 'الأمن السيبراني', design: 'التصميم والجرافيك',
+        programming: 'البرمجة وتطوير الويب', other: 'أخرى'
+      };
+
+      // Calculate total duration
+      let totalSeconds = 0;
+      d.sections.forEach(s => {
+        s.lectures.forEach(l => {
+          const parts = l.duration.split(':');
+          if (parts.length === 2) totalSeconds += parseInt(parts[0]||0) * 60 + parseInt(parts[1]||0);
+        });
+      });
+      const dH = Math.floor(totalSeconds / 3600);
+      const dM = Math.floor((totalSeconds % 3600) / 60);
+      const duration = dH > 0 ? `${dH}:${String(dM).padStart(2,'0')} ساعة` : `${dM} دقيقة`;
+
+      // Build flat lessons array for backward compatibility with course-view
+      const allLessons = [];
+      d.sections.forEach(s => {
+        s.lectures.forEach(l => {
+          allLessons.push({
+            id: l.id,
+            title: l.title,
+            videoUrl: l.videoUrl,
+            duration: l.duration,
+            desc: l.description,
+            freePreview: l.freePreview,
+            resources: l.resources,
+            sectionTitle: s.title
+          });
+        });
+      });
+
+      return {
+        id: editCourseId || ('course-' + Date.now()),
+        title: d.title,
+        subtitle: d.subtitle,
+        description: d.description,
+        category: d.category,
+        categoryName: catNames[d.category] || d.category,
+        subcategory: d.subcategory,
+        level: d.level,
+        language: d.language,
+        videoUrl: d.promoVideoUrl ? normalizeYoutubeUrl(d.promoVideoUrl) : (allLessons[0]?.videoUrl || ''),
+        promoVideoUrl: normalizeYoutubeUrl(d.promoVideoUrl),
+        instructorName: d.instructorName,
+        instructorBio: d.instructorBio,
+        objectives: d.objectives,
+        requirements: d.requirements,
+        targetAudience: d.targetAudience,
+        sections: d.sections,
+        lessons: allLessons,
+        duration: duration,
+        welcomeMessage: d.welcomeMessage,
+        congratsMessage: d.congratsMessage,
+        createdAt: editCourseId ? (courseData._createdAt || new Date().toISOString()) : new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function saveDraft() {
+      const course = buildCourseObject();
+      course._draft = true;
+      saveCourseToStorage(course);
+      showToast('تم حفظ المسودة بنجاح! 📝');
+    }
+
+    function publishCourse() {
+      collectStepData();
+      // Validate
+      if (!courseData.title) {
+        showToast('يرجى ملء عنوان الكورس أولاً!', 'error');
+        goToStep(1);
+        return;
+      }
+      if (courseData.sections.length === 0) {
+        showToast('يرجى إضافة قسم واحد على الأقل مع دروس!', 'error');
+        goToStep(3);
+        return;
+      }
+
+      const course = buildCourseObject();
+      course._draft = false;
+      saveCourseToStorage(course);
+      showToast('تم نشر الكورس بنجاح! 🚀🎉');
+      
+      setTimeout(() => {
+        window.location.href = './courses.html';
+      }, 1500);
+    }
+
+    function saveCourseToStorage(course) {
+      let courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
+      
+      if (editCourseId) {
+        const idx = courses.findIndex(c => c.id === editCourseId);
+        if (idx !== -1) {
+          courses[idx] = course;
+        } else {
+          courses.unshift(course);
+        }
+      } else {
+        // Check if already exists (draft)
+        const idx = courses.findIndex(c => c.id === course.id);
+        if (idx !== -1) {
+          courses[idx] = course;
+        } else {
+          courses.unshift(course);
+        }
+      }
+
+      localStorage.setItem('samt_admin_courses', JSON.stringify(courses));
+    }
+
+    // ===== Load Course for Editing =====
+    function loadCourseForEdit(id) {
+      const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
+      const course = courses.find(c => c.id === id);
+      if (!course) {
+        showToast('الكورس غير موجود!', 'error');
+        window.location.href = './admin.html';
+        return;
+      }
+
+      document.getElementById('pageTitle').textContent = 'تعديل الكورس — ' + course.title;
+
+      // Step 1 fields
+      document.getElementById('cTitle').value = course.title || '';
+      document.getElementById('cTitleCount').textContent = (course.title || '').length;
+      document.getElementById('cSubtitle').value = course.subtitle || '';
+      document.getElementById('cDescription').value = course.description || '';
+      document.getElementById('cDescCount').textContent = (course.description || '').length;
+      document.getElementById('cCategory').value = course.category || 'basics';
+      document.getElementById('cLevel').value = course.level || 'مبتدئ';
+      document.getElementById('cLanguage').value = course.language || 'العربية';
+      document.getElementById('cSubcategory').value = course.subcategory || '';
+      
+      // Restore promo video with original URL format for editing
+      const promoUrl = course.promoVideoUrl || course.videoUrl || '';
+      document.getElementById('cPromoVideo').value = promoUrl;
+      // Trigger thumbnail preview
+      const thumb = extractYoutubeThumbnail(promoUrl);
+      if (thumb) {
+        document.getElementById('promoThumbImg').src = thumb;
+        document.getElementById('promoThumbPreview').classList.remove('hidden');
+      }
+
+      document.getElementById('cInstructorName').value = course.instructorName || '';
+      document.getElementById('cInstructorBio').value = course.instructorBio || '';
+
+      // Step 2 fields
+      (course.objectives || []).forEach(v => addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...', v));
+      if (!course.objectives || course.objectives.length === 0) {
+        for (let i = 0; i < 4; i++) addDynamicItem('objectivesList', 'أضف هدفاً تعليمياً جديداً...');
+      }
+      (course.requirements || []).forEach(v => addDynamicItem('requirementsList', 'مثال: حاسوب شخصي...', v));
+      if (!course.requirements || course.requirements.length === 0) {
+        addDynamicItem('requirementsList', 'مثال: حاسوب شخصي، معرفة بأساسيات الإنترنت...');
+      }
+      (course.targetAudience || []).forEach(v => addDynamicItem('audienceList', 'مثال: المبتدئون في البرمجة...', v));
+      if (!course.targetAudience || course.targetAudience.length === 0) {
+        addDynamicItem('audienceList', 'مثال: المبتدئون في البرمجة، طلاب الجامعات...');
+      }
+
+      // Step 3: Sections & Lectures
+      if (course.sections && course.sections.length > 0) {
+        course.sections.forEach(sec => addSection(sec.title, sec.objective, sec.lectures));
+      }
+
+      // Step 4
+      document.getElementById('cWelcomeMsg').value = course.welcomeMessage || '';
+      document.getElementById('cCongratsMsg').value = course.congratsMessage || '';
+
+      courseData._createdAt = course.createdAt;
+    }
+
+    // ===== Utility =====
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function showToast(message, type = 'success') {
+      if (window.SamtAuth && window.SamtAuth.toast) {
+        window.SamtAuth.toast(message, type);
+      } else {
+        alert(message);
+      }
+    }
+  </script>
+</body>
+</html>

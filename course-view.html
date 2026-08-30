@@ -8,11 +8,8 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%2300F5D4' stroke-width='4'/><circle cx='50' cy='50' r='6' fill='%2300BBF9'/><line x1='50' y1='6' x2='50' y2='94' stroke='%2300F5D4' stroke-width='3'/><line x1='6' y1='50' x2='94' y2='50' stroke='%2300F5D4' stroke-width='3'/></svg>" type="image/svg+xml">
 
-  <!-- Open Graph / Social -->
   <meta property="og:title" content="مشغل الكورس والدروس | أكاديمية سمت SAMT" />
   <meta property="og:description" content="واجهة الدراسة التفاعلية لأكاديمية سمت." />
-  <meta property="og:url" content="https://sbilalsamirss-ctrl.github.io/AgentPro/course-view.html" />
-  <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,16 +70,11 @@
       border-color: rgba(0, 245, 212, 0.4) !important;
     }
 
-    /* ==========================================================================
-       ✨ Celestial Animated Background Layers
-       ========================================================================== */
     .celestial-canvas {
-      position: absolute; inset: 0; z-index: 0;
+      position: fixed; inset: 0; z-index: 0;
       pointer-events: none;
       transition: opacity 0.8s ease;
     }
-
-    /* ⭐ Twinkling Stars Layer */
     .stars-layer {
       position: absolute; inset: 0;
       background-image:
@@ -91,123 +83,53 @@
         radial-gradient(1px 1px at 47% 8%, rgba(0,245,212,0.8), transparent),
         radial-gradient(2px 2px at 62% 55%, rgba(255,255,255,0.6), transparent),
         radial-gradient(1px 1px at 78% 22%, rgba(0,187,249,0.7), transparent),
-        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(2px 2px at 55% 88%, rgba(0,245,212,0.6), transparent);
+        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent);
       animation: twinkleStars 4s ease-in-out infinite alternate;
     }
-    .stars-layer-2 {
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 15% 30%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1.5px 1.5px at 40% 18%, rgba(0,245,212,0.6), transparent),
-        radial-gradient(1px 1px at 58% 72%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(2px 2px at 80% 45%, rgba(0,187,249,0.5), transparent),
-        radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1.5px 1.5px at 68% 12%, rgba(255,255,255,0.6), transparent);
-      animation: twinkleStars2 5.5s ease-in-out infinite alternate;
-    }
-
     @keyframes twinkleStars {
-      0%   { opacity: 0.5; }
-      30%  { opacity: 0.8; }
-      60%  { opacity: 0.45; }
-      100% { opacity: 0.75; }
-    }
-    @keyframes twinkleStars2 {
-      0%   { opacity: 0.7; }
-      40%  { opacity: 0.35; }
-      70%  { opacity: 0.65; }
-      100% { opacity: 0.4; }
+      0% { opacity: 0.5; } 50% { opacity: 0.8; } 100% { opacity: 0.6; }
     }
 
-    /* 🌫️ Drifting Nebulae Layer */
-    .nebula-layer {
-      position: absolute; inset: -20%; width: 140%; height: 140%;
-    }
+    .nebula-layer { position: absolute; inset: -20%; width: 140%; height: 140%; }
     .nebula-1 {
-      position: absolute;
-      width: 600px; height: 600px;
-      top: -5%; right: -8%;
+      position: absolute; width: 600px; height: 600px; top: -5%; right: -8%;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(0, 187, 249, 0.14) 0%, transparent 70%);
       filter: blur(80px);
-      animation: driftNebula1 35s ease-in-out infinite alternate;
-    }
-    .nebula-2 {
-      position: absolute;
-      width: 500px; height: 500px;
-      bottom: 5%; left: -5%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(121, 40, 202, 0.12) 0%, transparent 70%);
-      filter: blur(70px);
-      animation: driftNebula2 42s ease-in-out infinite alternate;
-    }
-    .nebula-3 {
-      position: absolute;
-      width: 450px; height: 450px;
-      top: 40%; left: 30%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 245, 212, 0.1) 0%, transparent 70%);
-      filter: blur(90px);
-      animation: driftNebula3 50s ease-in-out infinite alternate;
     }
 
-    @keyframes driftNebula1 {
-      0%   { transform: translate(0, 0) scale(1); }
-      50%  { transform: translate(-40px, 30px) scale(1.08); }
-      100% { transform: translate(20px, -20px) scale(0.95); }
-    }
-    @keyframes driftNebula2 {
-      0%   { transform: translate(0, 0) scale(1); }
-      50%  { transform: translate(35px, -25px) scale(1.05); }
-      100% { transform: translate(-15px, 15px) scale(0.97); }
-    }
-    @keyframes driftNebula3 {
-      0%   { transform: translate(0, 0) scale(1); opacity: 0.8; }
-      50%  { transform: translate(-30px, -20px) scale(1.1); opacity: 1; }
-      100% { transform: translate(25px, 30px) scale(0.9); opacity: 0.7; }
-    }
-
-    .theme-icon-rotate {
-      transform: rotate(360deg) scale(1.1);
-    }
-  
-    /* 🌓 CSS-Driven Theme Toggle Icon (Prevents Flashing) */
     .theme-toggle-icon::before {
-      display: inline-block;
-      font-style: normal;
-      font-variant: normal;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
+      display: inline-block; font-style: normal; font-variant: normal;
+      text-rendering: auto; -webkit-font-smoothing: antialiased;
     }
-    html.dark .theme-toggle-icon::before {
-      content: "\f185" !important; /* Sun icon */
-    }
-    html.dark .theme-toggle-icon {
-      color: #FFB703 !important; /* gold */
-    }
-    html:not(.dark) .theme-toggle-icon::before {
-      content: "\f186" !important; /* Moon icon */
-    }
-    html:not(.dark) .theme-toggle-icon {
-      color: #00BBF9 !important; /* cyan/blue */
+    html.dark .theme-toggle-icon::before { content: "\f185" !important; }
+    html.dark .theme-toggle-icon { color: #FFB703 !important; }
+    html:not(.dark) .theme-toggle-icon::before { content: "\f186" !important; }
+    html:not(.dark) .theme-toggle-icon { color: #00BBF9 !important; }
+
+    /* Accordion */
+    .section-accordion { border: 1px solid rgba(0, 245, 212, 0.1); }
+    .section-header { cursor: pointer; }
+    .section-header:hover { background: rgba(0, 245, 212, 0.05); }
+
+    /* Tab buttons */
+    .info-tab.active-tab {
+      border-color: #00F5D4 !important;
+      color: #00F5D4 !important;
     }
 
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 245, 212, 0.2); border-radius: 3px; }
   </style>
   <script src="./assets/js/auth.js" charset="utf-8"></script>
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- 🌌 Celestial Animated Background (Stars + Nebulae) -->
+  <!-- 🌌 Background -->
   <div class="celestial-canvas" aria-hidden="true">
     <div class="stars-layer"></div>
-    <div class="stars-layer-2"></div>
-    <div class="nebula-layer">
-      <div class="nebula-1"></div>
-      <div class="nebula-2"></div>
-      <div class="nebula-3"></div>
-    </div>
+    <div class="nebula-layer"><div class="nebula-1"></div></div>
   </div>
 
   <!-- Top Classroom Bar -->
@@ -247,34 +169,75 @@
         <iframe id="mainPlayer" class="w-full h-full border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
 
-      <div class="glass-card rounded-2xl p-6 text-right space-y-4">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-          <div>
-            <span id="lessonCategory" class="text-xs font-extrabold text-samt-cyan uppercase">الدرس 1</span>
-            <h2 id="lessonTitle" class="text-xl font-bold mt-1 font-cairo">عنوان الدرس</h2>
-          </div>
-          <button id="toggleCompleteBtn" class="px-4 py-2 rounded-xl glass-card border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold flex items-center gap-2 transition-all">
-            <i class="fa-regular fa-circle-check"></i>
-            <span>تحديد الدرس كمكتمل</span>
+      <!-- Info Tabs -->
+      <div class="glass-card rounded-2xl overflow-hidden text-right">
+        <div class="flex items-center gap-1 px-4 pt-3 border-b border-white/10 overflow-x-auto">
+          <button onclick="switchInfoTab('lesson')" class="info-tab active-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-play-circle ml-1"></i> الدرس الحالي
+          </button>
+          <button onclick="switchInfoTab('overview')" class="info-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-slate-400 whitespace-nowrap">
+            <i class="fa-solid fa-info-circle ml-1"></i> نظرة عامة
+          </button>
+          <button onclick="switchInfoTab('resources')" class="info-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-slate-400 whitespace-nowrap">
+            <i class="fa-solid fa-paperclip ml-1"></i> المرفقات
           </button>
         </div>
-        <p id="lessonDesc" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
-        <!-- Attachments & Files -->
-        <div id="attachmentsBox" class="pt-4 border-t border-white/10 hidden">
-          <div class="text-xs font-bold text-samt-gold mb-2.5 flex items-center gap-2"><i class="fa-solid fa-paperclip"></i><span>المرفقات:</span></div>
-          <div id="attachmentsList" class="flex flex-wrap gap-2"></div>
+
+        <!-- Tab: Current Lesson -->
+        <div id="tabLesson" class="info-tab-content p-5 space-y-3">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <span id="lessonCategory" class="text-xs font-extrabold text-samt-cyan uppercase">الدرس 1</span>
+              <h2 id="lessonTitle" class="text-lg font-bold mt-1 font-cairo">عنوان الدرس</h2>
+            </div>
+            <button id="toggleCompleteBtn" class="px-4 py-2 rounded-xl glass-card border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold flex items-center gap-2 transition-all flex-shrink-0">
+              <i class="fa-regular fa-circle-check"></i>
+              <span>تحديد كمكتمل</span>
+            </button>
+          </div>
+          <p id="lessonDesc" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div id="tabOverview" class="info-tab-content p-5 space-y-4 hidden">
+          <div>
+            <h3 class="text-sm font-bold font-cairo mb-2 text-samt-cyan"><i class="fa-solid fa-bullseye ml-1"></i> ماذا ستتعلم</h3>
+            <ul id="overviewObjectives" class="space-y-1.5 text-xs text-slate-300"></ul>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold font-cairo mb-2 text-samt-blue"><i class="fa-solid fa-list-check ml-1"></i> المتطلبات</h3>
+            <ul id="overviewRequirements" class="space-y-1.5 text-xs text-slate-300"></ul>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold font-cairo mb-2 text-samt-purple"><i class="fa-solid fa-users ml-1"></i> الفئة المستهدفة</h3>
+            <ul id="overviewAudience" class="space-y-1.5 text-xs text-slate-300"></ul>
+          </div>
+          <div id="instructorBox" class="hidden pt-3 border-t border-white/10">
+            <h3 class="text-sm font-bold font-cairo mb-2 text-samt-gold"><i class="fa-solid fa-user-tie ml-1"></i> المُدرِّب</h3>
+            <div class="text-xs text-slate-300">
+              <strong id="instructorName" class="text-white"></strong>
+              <p id="instructorBio" class="mt-1 text-slate-400"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Resources -->
+        <div id="tabResources" class="info-tab-content p-5 hidden">
+          <div id="resourcesList" class="space-y-2">
+            <p class="text-xs text-slate-500">لا توجد مرفقات لهذا الدرس.</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Sidebar: Lessons List -->
+    <!-- Sidebar: Sections & Lessons (Accordion) -->
     <div class="w-full lg:w-96 flex-shrink-0">
-      <div class="glass-card rounded-2xl p-5 sticky top-24 space-y-4 text-right">
+      <div class="glass-card rounded-2xl p-4 sticky top-24 space-y-3 text-right">
         <div class="flex items-center justify-between border-b border-white/10 pb-3">
-          <h3 class="text-sm font-bold font-cairo">محتوى الدورة والدروس</h3>
-          <span id="lessonsCount" class="text-xs text-slate-400 font-mono font-bold">3 دروس</span>
+          <h3 class="text-sm font-bold font-cairo">محتوى الدورة</h3>
+          <span id="lessonsCount" class="text-xs text-slate-400 font-mono font-bold">0 دروس</span>
         </div>
-        <div id="lessonsList" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1"></div>
+        <div id="sidebarContent" class="space-y-2 max-h-[600px] overflow-y-auto pr-1"></div>
       </div>
     </div>
   </div>
@@ -286,26 +249,27 @@
     const htmlEl = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
-        function applyTheme(theme, animate = false) {
-      if (animate && themeIcon) {
-        themeIcon.classList.add('theme-icon-rotate');
-        setTimeout(() => themeIcon.classList.remove('theme-icon-rotate'), 500);
-      }
-
-      if (theme === 'light') {
-        htmlEl.classList.remove('dark');
-      } else {
-        htmlEl.classList.add('dark');
-      }
+    function applyTheme(theme) {
+      if (theme === 'light') htmlEl.classList.remove('dark');
+      else htmlEl.classList.add('dark');
       localStorage.setItem('samt_theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('samt_theme') || 'dark';
-    applyTheme(savedTheme, false);
-
+    applyTheme(localStorage.getItem('samt_theme') || 'dark');
     themeToggle.addEventListener('click', () => {
-      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark', true);
+      applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
     });
+
+    // Info Tabs
+    function switchInfoTab(tab) {
+      document.querySelectorAll('.info-tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.info-tab').forEach(el => {
+        el.classList.remove('active-tab');
+        el.classList.add('text-slate-400');
+      });
+      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+      event.target.closest('.info-tab').classList.add('active-tab');
+      event.target.closest('.info-tab').classList.remove('text-slate-400');
+    }
 
     // Classroom Engine
     document.addEventListener('DOMContentLoaded', () => {
@@ -315,11 +279,34 @@
       const course = courses.find(c => c.id === courseId) || courses[0];
       if (!course) { window.location.href = './courses.html'; return; }
 
-      const lessons = course.lessons || [
-        { id: 'l1', title: course.title + ' (الجزء الأول)', duration: '04:15', videoUrl: course.videoUrl, desc: course.description },
-        { id: 'l2', title: 'التطبيق العملي والإعدادات المتقدمة', duration: '05:30', videoUrl: course.videoUrl, desc: 'تطبيق عملي خطوة بخطوة.' },
-        { id: 'l3', title: 'حل المشكلات وأفضل الممارسات', duration: '03:45', videoUrl: course.videoUrl, desc: 'نصائح لزيادة الكفاءة والإنتاجية.' }
-      ];
+      // Build sections/lessons from course data
+      let sections = [];
+      let allLessons = [];
+
+      if (course.sections && course.sections.length > 0) {
+        // New format: sections with lectures
+        sections = course.sections;
+        sections.forEach(sec => {
+          (sec.lectures || []).forEach(lec => {
+            allLessons.push({
+              ...lec,
+              sectionTitle: sec.title,
+              sectionId: sec.id
+            });
+          });
+        });
+      } else if (course.lessons && course.lessons.length > 0) {
+        // Flat lessons (backward compat)
+        allLessons = course.lessons;
+        sections = [{ id: 'sec-default', title: course.title, lectures: course.lessons }];
+      } else {
+        // Fallback: single video
+        allLessons = [{
+          id: 'l1', title: course.title, duration: course.duration || '00:00',
+          videoUrl: course.videoUrl, desc: course.description, freePreview: true
+        }];
+        sections = [{ id: 'sec-default', title: course.title, lectures: allLessons }];
+      }
 
       let currentLessonIndex = 0;
       let completedLessons = JSON.parse(localStorage.getItem('samt_completed_' + course.id) || '[]');
@@ -329,63 +316,183 @@
       const lessonTitle = document.getElementById('lessonTitle');
       const lessonDesc = document.getElementById('lessonDesc');
       const lessonCategory = document.getElementById('lessonCategory');
-      const lessonsList = document.getElementById('lessonsList');
       const lessonsCount = document.getElementById('lessonsCount');
       const progressPercent = document.getElementById('progressPercent');
       const progressBar = document.getElementById('progressBar');
       const toggleCompleteBtn = document.getElementById('toggleCompleteBtn');
-      const attachmentsBox = document.getElementById('attachmentsBox');
-      const attachmentsList = document.getElementById('attachmentsList');
+      const sidebarContent = document.getElementById('sidebarContent');
 
       topTitle.textContent = course.title;
-      lessonsCount.textContent = lessons.length + ' دروس';
+      lessonsCount.textContent = allLessons.length + ' درس';
+
+      // Populate Overview tab
+      const objList = document.getElementById('overviewObjectives');
+      const reqList = document.getElementById('overviewRequirements');
+      const audList = document.getElementById('overviewAudience');
+
+      if (course.objectives && course.objectives.length > 0) {
+        objList.innerHTML = course.objectives.map(o => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5 text-[10px]"></i><span>${o}</span></li>`).join('');
+      } else {
+        objList.innerHTML = '<li class="text-slate-500">لم يتم تحديد أهداف بعد.</li>';
+      }
+      if (course.requirements && course.requirements.length > 0) {
+        reqList.innerHTML = course.requirements.map(r => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-blue mt-1.5 text-[5px]"></i><span>${r}</span></li>`).join('');
+      } else {
+        reqList.innerHTML = '<li class="text-slate-500">لا توجد متطلبات محددة.</li>';
+      }
+      if (course.targetAudience && course.targetAudience.length > 0) {
+        audList.innerHTML = course.targetAudience.map(a => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-purple mt-1.5 text-[5px]"></i><span>${a}</span></li>`).join('');
+      } else {
+        audList.innerHTML = '<li class="text-slate-500">لم يتم تحديد الفئة المستهدفة.</li>';
+      }
+
+      // Instructor
+      if (course.instructorName) {
+        document.getElementById('instructorBox').classList.remove('hidden');
+        document.getElementById('instructorName').textContent = course.instructorName;
+        document.getElementById('instructorBio').textContent = course.instructorBio || '';
+      }
 
       function updateProgress() {
-        const percent = Math.round((completedLessons.length / lessons.length) * 100);
+        const percent = allLessons.length > 0 ? Math.round((completedLessons.length / allLessons.length) * 100) : 0;
         progressPercent.textContent = percent + '%';
         progressBar.style.width = percent + '%';
         localStorage.setItem('samt_completed_' + course.id, JSON.stringify(completedLessons));
+
+        // Show congrats message
+        if (percent === 100 && course.congratsMessage) {
+          if (!sessionStorage.getItem('congrats_shown_' + course.id)) {
+            sessionStorage.setItem('congrats_shown_' + course.id, 'true');
+            setTimeout(() => {
+              if (window.SamtAuth && window.SamtAuth.toast) {
+                window.SamtAuth.toast(course.congratsMessage, 'success');
+              } else {
+                alert(course.congratsMessage);
+              }
+            }, 500);
+          }
+        }
       }
 
-      function renderLessons() {
-        lessonsList.innerHTML = lessons.map((l, idx) => {
-          const isDone = completedLessons.includes(l.id);
-          const isActive = idx === currentLessonIndex;
-          return '<div class="lesson-item p-3.5 rounded-xl border border-white/10 glass-card cursor-pointer flex items-center justify-between gap-3 ' + (isActive ? 'active' : '') + '" onclick="selectLesson(' + idx + ')">' +
-            '<div class="flex items-center gap-3"><span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ' + (isDone ? 'bg-emerald-500 text-black' : 'bg-white/10 text-slate-400') + '">' + (isDone ? '<i class="fa-solid fa-check"></i>' : (idx + 1)) + '</span><div><h4 class="text-xs sm:text-sm font-bold font-cairo">' + l.title + '</h4><span class="text-[10px] text-slate-400 font-mono">' + l.duration + '</span></div></div>' +
-            '<i class="fa-solid ' + (isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-400 text-xs') + '"></i></div>';
+      // Render Sidebar with Accordion Sections
+      function renderSidebar() {
+        let globalIdx = 0;
+        sidebarContent.innerHTML = sections.map((sec, secIdx) => {
+          const sectionLessons = sec.lectures || [];
+          const completedInSection = sectionLessons.filter(l => completedLessons.includes(l.id)).length;
+          const isExpanded = sectionLessons.some((l, i) => {
+            const gIdx = sections.slice(0, secIdx).reduce((sum, s) => sum + (s.lectures || []).length, 0) + i;
+            return gIdx === currentLessonIndex;
+          });
+
+          const lessonsHtml = sectionLessons.map((l, lIdx) => {
+            const gIdx = sections.slice(0, secIdx).reduce((sum, s) => sum + (s.lectures || []).length, 0) + lIdx;
+            const isDone = completedLessons.includes(l.id);
+            const isActive = gIdx === currentLessonIndex;
+
+            return `
+              <div class="lesson-item p-3 rounded-xl border border-white/5 glass-card cursor-pointer flex items-center justify-between gap-2 ${isActive ? 'active' : ''}" onclick="selectLesson(${gIdx})">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${isDone ? 'bg-emerald-500 text-black' : 'bg-white/10 text-slate-400'}">
+                    ${isDone ? '<i class="fa-solid fa-check"></i>' : (gIdx + 1)}
+                  </span>
+                  <div>
+                    <h4 class="text-[11px] sm:text-xs font-bold font-cairo leading-snug">${l.title || 'بدون عنوان'}</h4>
+                    <span class="text-[9px] text-slate-500 font-mono">${l.duration || ''}</span>
+                    ${l.freePreview ? '<span class="text-[9px] text-samt-gold font-bold mr-2">👁️ مجاني</span>' : ''}
+                  </div>
+                </div>
+                <i class="fa-solid ${isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-500'} text-xs flex-shrink-0"></i>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="section-accordion rounded-xl overflow-hidden glass-card">
+              <div class="section-header px-3.5 py-2.5 flex items-center justify-between gap-2 bg-black/20" onclick="toggleSection(this)">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-layer-group text-samt-cyan text-[10px]"></i>
+                  <span class="text-[11px] font-bold font-cairo truncate">${sec.title || 'قسم ' + (secIdx + 1)}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[9px] text-slate-500 font-mono">${completedInSection}/${sectionLessons.length}</span>
+                  <i class="fa-solid fa-chevron-${isExpanded ? 'up' : 'down'} text-[10px] text-slate-400"></i>
+                </div>
+              </div>
+              <div class="section-lectures space-y-1.5 p-2 ${isExpanded ? '' : 'hidden'}">
+                ${lessonsHtml}
+              </div>
+            </div>
+          `;
         }).join('');
       }
 
+      window.toggleSection = function(headerEl) {
+        const accordion = headerEl.closest('.section-accordion');
+        const lectures = accordion.querySelector('.section-lectures');
+        const icon = headerEl.querySelector('.fa-chevron-up, .fa-chevron-down');
+        
+        lectures.classList.toggle('hidden');
+        if (icon) {
+          icon.classList.toggle('fa-chevron-up');
+          icon.classList.toggle('fa-chevron-down');
+        }
+      };
+
       window.selectLesson = function(index) {
         currentLessonIndex = index;
-        const cl = lessons[index];
-        player.src = cl.videoUrl;
-        lessonTitle.textContent = cl.title;
-        lessonDesc.textContent = cl.desc || course.description;
-        lessonCategory.textContent = 'الدرس ' + (index + 1) + ' من ' + lessons.length;
+        const cl = allLessons[index];
+        if (!cl) return;
+
+        player.src = cl.videoUrl || '';
+        lessonTitle.textContent = cl.title || '';
+        lessonDesc.textContent = cl.desc || cl.description || course.description || '';
+        lessonCategory.textContent = (cl.sectionTitle ? cl.sectionTitle + ' — ' : '') + 'الدرس ' + (index + 1) + ' من ' + allLessons.length;
 
         const isDone = completedLessons.includes(cl.id);
         toggleCompleteBtn.innerHTML = isDone
           ? '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم الإكمال (اضغط للإلغاء)</span>'
-          : '<i class="fa-regular fa-circle-check"></i><span>تحديد الدرس كمكتمل</span>';
+          : '<i class="fa-regular fa-circle-check"></i><span>تحديد كمكتمل</span>';
         toggleCompleteBtn.classList.toggle('bg-emerald-500/20', isDone);
 
-        if (course.attachments && course.attachments.length > 0) {
-          attachmentsBox.classList.remove('hidden');
-          attachmentsList.innerHTML = course.attachments.map(a => '<a href="' + a.url + '" class="px-3 py-1.5 rounded-lg glass-card text-xs font-bold hover:text-samt-cyan flex items-center gap-2"><i class="fa-solid fa-download text-samt-cyan text-xs"></i><span>' + a.name + '</span></a>').join('');
-        } else { attachmentsBox.classList.add('hidden'); }
+        // Resources tab
+        const resList = document.getElementById('resourcesList');
+        const resources = cl.resources || [];
+        if (resources.length > 0) {
+          resList.innerHTML = resources.map(r => `
+            <a href="${r.url}" target="_blank" class="flex items-center gap-3 p-3 rounded-xl glass-card border border-white/10 hover:border-samt-cyan text-xs font-bold">
+              <i class="fa-solid fa-download text-samt-cyan"></i>
+              <span>${r.name}</span>
+              <i class="fa-solid fa-external-link text-slate-500 mr-auto text-[10px]"></i>
+            </a>
+          `).join('');
+        } else {
+          resList.innerHTML = '<p class="text-xs text-slate-500 py-4 text-center">لا توجد مرفقات لهذا الدرس.</p>';
+        }
 
-        renderLessons();
+        // Switch to lesson tab
+        switchInfoTab('lesson');
+
+        renderSidebar();
         updateProgress();
       };
 
       toggleCompleteBtn.addEventListener('click', () => {
-        const cl = lessons[currentLessonIndex];
+        const cl = allLessons[currentLessonIndex];
         if (completedLessons.includes(cl.id)) completedLessons = completedLessons.filter(id => id !== cl.id);
         else completedLessons.push(cl.id);
         selectLesson(currentLessonIndex);
       });
+
+      // Show welcome message on first visit
+      if (course.welcomeMessage && !sessionStorage.getItem('welcome_shown_' + course.id)) {
+        sessionStorage.setItem('welcome_shown_' + course.id, 'true');
+        setTimeout(() => {
+          if (window.SamtAuth && window.SamtAuth.toast) {
+            window.SamtAuth.toast(course.welcomeMessage, 'success');
+          }
+        }, 1000);
+      }
 
       selectLesson(0);
     });
