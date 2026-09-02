@@ -1345,37 +1345,11 @@
     },
 
     openNewCourseInline: function () {
-      injectCourseModal();
-      document.getElementById('inlineCourseId').value = '';
-      document.getElementById('inlineModalTitle').textContent = 'إضافة كورس جديد';
-      document.getElementById('inlineFormTitle').value = '';
-      document.getElementById('inlineFormDuration').value = '10:00';
-      document.getElementById('inlineFormVideoUrl').value = '';
-      document.getElementById('inlineFormDesc').value = '';
-      
-      const modal = document.getElementById('samtInlineCourseModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      window.location.href = './course-builder.html';
     },
 
     editCourseInline: function (id) {
-      injectCourseModal();
-      const list = getCoursesList();
-      const course = list.find(c => c.id === id);
-      if (!course) return;
-
-      document.getElementById('inlineCourseId').value = course.id;
-      document.getElementById('inlineModalTitle').textContent = `تعديل: ${course.title}`;
-      document.getElementById('inlineFormTitle').value = course.title;
-      document.getElementById('inlineFormCategory').value = course.category || 'basics';
-      document.getElementById('inlineFormLevel').value = course.level || 'مبتدئ';
-      document.getElementById('inlineFormDuration').value = course.duration || '';
-      document.getElementById('inlineFormVideoUrl').value = course.videoUrl || '';
-      document.getElementById('inlineFormDesc').value = course.description || '';
-
-      const modal = document.getElementById('samtInlineCourseModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      window.location.href = './course-builder.html?edit=' + id;
     },
 
     closeInlineCourseModal: function () {
