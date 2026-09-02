@@ -623,13 +623,11 @@
       };
 
       window.openNewCourseModal = () => {
-        if (window.SamtAuth) { window.SamtAuth.openNewCourseInline(); return; }
         window.location.href = './course-builder.html';
       };
       window.closeCourseModal = () => {};
 
       window.editCourse = (id) => {
-        if (window.SamtAuth) { window.SamtAuth.editCourseInline(id); return; }
         window.location.href = './course-builder.html?edit=' + id;
       };
 

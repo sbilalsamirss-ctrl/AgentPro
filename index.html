@@ -758,7 +758,7 @@
       }
 
       container.innerHTML = courses.slice(0, 3).map(course => {
-        const thumb = extractYoutubeThumbnail(course.videoUrl);
+        const thumb = course.thumbnail || extractYoutubeThumbnail(course.promoVideoUrl || course.videoUrl);
         const adminControls = isAdmin ? `
           <div class="absolute top-3 left-3 flex items-center gap-1 z-20">
             <button onclick="event.stopPropagation(); window.SamtAuth.editCourseInline('${course.id}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-samt-gold text-samt-gold hover:text-black border border-samt-gold/40 text-[10px] font-bold shadow-md transition-all">
