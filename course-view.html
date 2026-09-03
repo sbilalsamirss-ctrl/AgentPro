@@ -185,7 +185,7 @@
     <!-- Video Player & Details -->
     <div class="flex-grow flex flex-col space-y-4">
       <div class="relative aspect-video rounded-2xl overflow-hidden glass-card shadow-2xl bg-black border border-white/15">
-        <iframe id="mainPlayer" class="w-full h-full border-none" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div id="mainPlayer" class="w-full h-full"></div>
       </div>
 
       <!-- Info Tabs -->
@@ -208,6 +208,7 @@
             <div>
               <span id="lessonCategory" class="text-xs font-extrabold text-samt-cyan uppercase">الدرس 1</span>
               <h2 id="lessonTitle" class="text-lg font-bold mt-1 font-cairo">عنوان الدرس</h2>
+              <div id="lessonDuration" class="text-xs text-slate-400 mt-1 font-mono flex items-center gap-1"></div>
             </div>
             <button id="toggleCompleteBtn" class="px-4 py-2 rounded-xl glass-card border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold flex items-center gap-2 transition-all flex-shrink-0">
               <i class="fa-regular fa-circle-check"></i>
@@ -261,6 +262,7 @@
     </div>
   </div>
 
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="./assets/js/courses-data.js?v=20260830a" charset="utf-8"></script>
 
   <script>
@@ -285,9 +287,18 @@
         el.classList.remove('active-tab');
         el.classList.add('text-slate-400');
       });
-      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
-      event.target.closest('.info-tab').classList.add('active-tab');
-      event.target.closest('.info-tab').classList.remove('text-slate-400');
+      const pane = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (pane) pane.classList.remove('hidden');
+      const ev = window.event;
+      const btn = (ev && ev.target && ev.target.closest) ? ev.target.closest('.info-tab') : null;
+      if (btn) {
+        btn.classList.add('active-tab');
+        btn.classList.remove('text-slate-400');
+      } else {
+        const map = { lesson: 0, overview: 1, resources: 2 };
+        const t = document.querySelectorAll('.info-tab')[map[tab]];
+        if (t) { t.classList.add('active-tab'); t.classList.remove('text-slate-400'); }
+      }
     }
 
     // Classroom Engine
@@ -330,6 +341,7 @@
         // Fallback: single video
         allLessons = [{
           id: 'l1', title: course.title, duration: course.duration || '00:00',
+          durationSeconds: course.durationSeconds || 0,
           videoUrl: course.videoUrl, desc: course.description, freePreview: true
         }];
         sections = [{ id: 'sec-default', title: course.title, lectures: allLessons }];
@@ -380,8 +392,147 @@
         document.getElementById('instructorBio').textContent = course.instructorBio || '';
       }
 
+      // ---- Auto video duration + watch-based progress (YouTube) ----
+      function extractVideoId(url) {
+        if (!url) return '';
+        url = String(url);
+        let m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+        if (m) return m[1];
+        m = url.match(/[?&]v=([A-Za-z0-9_-]{11})/);
+        if (m) return m[1];
+        m = url.match(/([A-Za-z0-9_-]{11})/);
+        return m ? m[1] : '';
+      }
+      function fmtClock(sec) {
+        sec = Math.round(sec || 0);
+        const h = Math.floor(sec / 3600), mm = Math.floor((sec % 3600) / 60), ss = sec % 60;
+        const pad = n => String(n).padStart(2, '0');
+        return h > 0 ? (h + ':' + pad(mm) + ':' + pad(ss)) : (mm + ':' + pad(ss));
+      }
+      function fmtArabicDuration(sec) {
+        sec = Math.round(sec || 0);
+        if (sec <= 0) return '';
+        const h = Math.floor(sec / 3600), mm = Math.round((sec % 3600) / 60);
+        const parts = [];
+        if (h > 0) parts.push(h === 1 ? 'ساعة' : (h === 2 ? 'ساعتان' : (h <= 10 ? h + ' ساعات' : h + ' ساعة')));
+        if (mm > 0) parts.push(mm === 1 ? 'دقيقة' : (mm === 2 ? 'دقيقتان' : (mm <= 10 ? mm + ' دقائق' : mm + ' دقيقة')));
+        if (!parts.length) return sec + ' ثانية';
+        return parts.join(' و ');
+      }
+
+      let watchData = {};
+      try { watchData = JSON.parse(localStorage.getItem('samt_watch_' + course.id) || '{}'); } catch (e) { watchData = {}; }
+      let ytPlayer = null;
+      let watchTimer = null;
+
+      const ytReady = new Promise(resolve => {
+        if (window.YT && window.YT.Player) return resolve();
+        const prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function () {
+          if (typeof prev === 'function') { try { prev(); } catch (e) {} }
+          resolve();
+        };
+      });
+
+      function saveWatch() {
+        try { localStorage.setItem('samt_watch_' + course.id, JSON.stringify(watchData)); } catch (e) {}
+      }
+
+      function computeWatchProgress() {
+        let totW = 0, totD = 0;
+        allLessons.forEach(l => {
+          const wd = watchData[l.id];
+          if (wd && wd.d > 0) { totW += Math.min(wd.w || 0, wd.d); totD += wd.d; }
+        });
+        if (totD > 0) return Math.min(100, Math.round((totW / totD) * 100));
+        return allLessons.length ? Math.round((completedLessons.length / allLessons.length) * 100) : 0;
+      }
+
+      function updateCompleteBtn(cl) {
+        const isDone = completedLessons.includes(cl.id);
+        toggleCompleteBtn.innerHTML = isDone
+          ? '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم الإكمال (اضغط للإلغاء)</span>'
+          : '<i class="fa-regular fa-circle-check"></i><span>تحديد كمكتمل</span>';
+        toggleCompleteBtn.classList.toggle('bg-emerald-500/20', isDone);
+      }
+
+      function showLessonDuration(sec) {
+        const ld = document.getElementById('lessonDuration');
+        if (!ld) return;
+        if (sec > 0) {
+          ld.innerHTML = '<i class="fa-regular fa-clock text-samt-cyan"></i><span>مدة الفيديو: ' + fmtArabicDuration(sec) + ' (' + fmtClock(sec) + ')</span>';
+        } else {
+          ld.innerHTML = '';
+        }
+      }
+
+      function trackTick() {
+        if (!ytPlayer || !ytPlayer.getDuration) return;
+        const cl = allLessons[currentLessonIndex];
+        if (!cl) return;
+        const dur = ytPlayer.getDuration() || 0;
+        const cur = ytPlayer.getCurrentTime ? (ytPlayer.getCurrentTime() || 0) : 0;
+        if (dur > 0) {
+          const wd = watchData[cl.id] || { w: 0, d: 0 };
+          wd.d = dur;
+          wd.w = Math.max(wd.w || 0, cur);
+          watchData[cl.id] = wd;
+          saveWatch();
+          cl.durationSeconds = dur;
+          cl.duration = fmtClock(dur);
+          showLessonDuration(dur);
+          if (wd.w / dur >= 0.9 && !completedLessons.includes(cl.id)) {
+            completedLessons.push(cl.id);
+            updateCompleteBtn(cl);
+            renderSidebar();
+          }
+          updateProgress();
+        }
+      }
+
+      function loadPlayer(videoUrl) {
+        const vid = extractVideoId(videoUrl);
+        const host = document.getElementById('mainPlayer');
+        if (!vid) {
+          if (host && host.tagName !== 'IFRAME') {
+            const f = document.createElement('iframe');
+            f.id = 'mainPlayer';
+            f.className = 'w-full h-full border-none';
+            f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            f.setAttribute('allowfullscreen', '');
+            f.src = videoUrl || '';
+            host.replaceWith(f);
+          } else if (host) {
+            host.src = videoUrl || '';
+          }
+          return;
+        }
+        ytReady.then(() => {
+          if (ytPlayer && ytPlayer.loadVideoById) {
+            ytPlayer.loadVideoById(vid);
+          } else {
+            ytPlayer = new YT.Player('mainPlayer', {
+              width: '100%', height: '100%', videoId: vid,
+              playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+              events: {
+                onReady: function () { setTimeout(trackTick, 700); },
+                onStateChange: function (e) {
+                  if (e.data === YT.PlayerState.PLAYING) {
+                    if (watchTimer) clearInterval(watchTimer);
+                    watchTimer = setInterval(trackTick, 1000);
+                  } else {
+                    if (watchTimer) { clearInterval(watchTimer); watchTimer = null; }
+                    trackTick();
+                  }
+                }
+              }
+            });
+          }
+        });
+      }
+
       function updateProgress() {
-        const percent = allLessons.length > 0 ? Math.round((completedLessons.length / allLessons.length) * 100) : 0;
+        const percent = computeWatchProgress();
         progressPercent.textContent = percent + '%';
         progressBar.style.width = percent + '%';
         localStorage.setItem('samt_completed_' + course.id, JSON.stringify(completedLessons));
@@ -471,16 +622,15 @@
         const cl = allLessons[index];
         if (!cl) return;
 
-        player.src = cl.videoUrl || '';
+        loadPlayer(cl.videoUrl);
         lessonTitle.textContent = cl.title || '';
         lessonDesc.textContent = cl.desc || cl.description || course.description || '';
         lessonCategory.textContent = (cl.sectionTitle ? cl.sectionTitle + ' — ' : '') + 'الدرس ' + (index + 1) + ' من ' + allLessons.length;
 
-        const isDone = completedLessons.includes(cl.id);
-        toggleCompleteBtn.innerHTML = isDone
-          ? '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>تم الإكمال (اضغط للإلغاء)</span>'
-          : '<i class="fa-regular fa-circle-check"></i><span>تحديد كمكتمل</span>';
-        toggleCompleteBtn.classList.toggle('bg-emerald-500/20', isDone);
+        const knownDur = (watchData[cl.id] && watchData[cl.id].d) || cl.durationSeconds || course.durationSeconds || 0;
+        showLessonDuration(knownDur);
+
+        updateCompleteBtn(cl);
 
         // Resources tab
         const resList = document.getElementById('resourcesList');
