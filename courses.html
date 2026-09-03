@@ -438,7 +438,7 @@
           return `
             <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative transition-all">
               ${adminControls}
-              <div class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden">
+              <div onclick="window.location.href='./course-view.html?id=${c.id}'" class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden cursor-pointer">
                 ${thumb ? `<img src="${thumb}" alt="${c.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
