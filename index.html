@@ -308,6 +308,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/night-sky.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     html, body { overflow-x: hidden; }
@@ -689,6 +690,7 @@
       if (!url) return '';
       let videoId = '';
       if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
+      else if (url.includes('shorts/')) videoId = url.split('shorts/')[1]?.split('?')[0];
       else if (url.includes('v=')) videoId = url.split('v=')[1]?.split('&')[0];
       else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
       return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
