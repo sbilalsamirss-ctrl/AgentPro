@@ -61,8 +61,7 @@
     background:radial-gradient(circle,rgba(255,120,180,.16),transparent 70%);animation-duration:72s;animation-delay:-30s}
 
   /* ---- star fields ---- */
-  .samt-stars{top:50%;left:50%;width:150%;height:150%;
-    transform:translate(-50%,-50%);border-radius:50%}
+  .samt-stars{top:50%;left:50%;transform:translate(-50%,-50%)}
   .samt-stars i{position:absolute;top:0;left:0;border-radius:50%;background:transparent}
   .samt-s1{animation:samt-spin 900s linear infinite}
   .samt-s2{animation:samt-spin 1400s linear infinite reverse}
@@ -86,8 +85,9 @@
   `;
 
   // Build a box-shadow star field. Returns a CSS box-shadow string.
-  function field(count, w, h, band) {
+  function field(count, w, h, band, blur) {
     var out = [], i, x, y, o;
+    blur = blur || 0;
     for (i = 0; i < count; i++) {
       x = Math.random() * w;
       if (band) {
@@ -96,8 +96,8 @@
       } else {
         y = Math.random() * h;
       }
-      o = (0.30 + Math.random() * 0.70).toFixed(2);
-      out.push(x.toFixed(0) + 'px ' + y.toFixed(0) + 'px 0 rgba(255,255,255,' + o + ')');
+      o = (0.45 + Math.random() * 0.55).toFixed(2);
+      out.push(x.toFixed(0) + 'px ' + y.toFixed(0) + 'px ' + blur + 'px rgba(255,255,255,' + o + ')');
     }
     return out.join(',');
   }
@@ -111,10 +111,14 @@
     return el;
   }
 
-  function layer(cls, size, count, w, h, twinkle, band) {
+  // A square big enough that, at ANY rotation angle, it still covers the
+  // viewport - otherwise the spinning star field slowly drifts out of view.
+  function layer(cls, size, count, D, twinkle, blur) {
     var d = document.createElement('div');
     d.className = 'samt-stars ' + cls;
-    d.appendChild(dot(size, field(count, w, h, band), twinkle));
+    d.style.width = D + 'px';
+    d.style.height = D + 'px';
+    d.appendChild(dot(size, field(count, D, D, false, blur), twinkle));
     return d;
   }
 
@@ -129,8 +133,10 @@
     style.textContent = CSS;
     document.head.appendChild(style);
 
-    var W = Math.max(window.innerWidth, 360) * 1.6;
-    var H = Math.max(window.innerHeight, 480) * 1.6;
+    var vw = Math.max(window.innerWidth, 360);
+    var vh = Math.max(window.innerHeight, 480);
+    // diagonal * margin => the rotating layers always cover the screen
+    var D = Math.ceil(Math.sqrt(vw * vw + vh * vh) * 1.45);
 
     var sky = document.createElement('div');
     sky.className = 'samt-sky';
@@ -160,7 +166,10 @@
     mwStars.style.top = '0';
     mwStars.style.left = '0';
     mwStars.style.transform = 'none';
-    mwStars.appendChild(dot(1, field(420, W * 1.5, H * 0.5, true), 'samt-tw3'));
+    var mwW = Math.round(vw * 2.4), mwH = Math.round(vh * 0.56);
+    mwStars.style.width = mwW + 'px';
+    mwStars.style.height = mwH + 'px';
+    mwStars.appendChild(dot(1, field(560, mwW, mwH, true), 'samt-tw3'));
     mw.appendChild(mwStars);
 
     var dust = document.createElement('div');
@@ -169,9 +178,9 @@
     sky.appendChild(mw);
 
     // three parallax star fields
-    sky.appendChild(layer('samt-s1', 1, 160, W, H, 'samt-tw1', false));
-    sky.appendChild(layer('samt-s2', 1.6, 70, W, H, 'samt-tw2', false));
-    sky.appendChild(layer('samt-s3', 2.2, 26, W, H, 'samt-tw3', false));
+    sky.appendChild(layer('samt-s1', 1, 430, D, 'samt-tw1', 0));
+    sky.appendChild(layer('samt-s2', 1.6, 180, D, 'samt-tw2', 1));
+    sky.appendChild(layer('samt-s3', 2.2, 70, D, 'samt-tw3', 3));
 
     document.body.insertBefore(sky, document.body.firstChild);
   }
