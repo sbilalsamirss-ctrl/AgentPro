@@ -690,7 +690,7 @@
               </div>
 
               <div class="flex justify-end pt-2">
-                <button type="submit" class="px-6 py-3 rounded-xl border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 text-xs font-bold flex items-center gap-2">
+                <button type="submit" class="px-6 py-3 rounded-xl border border-samt-blue/30 text-samt-blue hover:bg-samt-blue/10 text-xs font-bold flex items-center gap-2">
                   <i class="fa-solid fa-key"></i>
                   <span>تحديث كلمة المرور</span>
                 </button>
@@ -942,11 +942,11 @@
 
     const bar = document.createElement('div');
     bar.id = 'samtAdminLiveBar';
-    bar.className = 'fixed top-20 left-0 right-0 z-40 bg-[#0B132B]/95 border-b border-yellow-500/30 px-4 py-2 text-xs flex items-center justify-between backdrop-blur-md shadow-lg';
+    bar.className = 'fixed top-20 left-0 right-0 z-40 bg-[#0B132B]/95 border-b border-samt-blue/30 px-4 py-2 text-xs flex items-center justify-between backdrop-blur-md shadow-lg';
     bar.innerHTML = `
       <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
-        <div class="flex items-center gap-2 text-yellow-400 font-bold">
-          <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+        <div class="flex items-center gap-2 text-samt-blue font-bold">
+          <span class="w-2 h-2 rounded-full bg-samt-blue animate-pulse"></span>
           <span>وضع المشرف نشط (Admin Mode)</span>
         </div>
 
@@ -955,7 +955,7 @@
             <i class="fa-solid fa-plus"></i>
             <span>إضافة كورس</span>
           </button>
-          <a href="./admin.html" class="px-3 py-1 rounded-lg glass-card text-yellow-400 hover:border-yellow-400 text-[11px] font-bold">
+          <a href="./admin.html" class="px-3 py-1 rounded-lg glass-card text-samt-blue hover:border-samt-blue text-[11px] font-bold">
             <i class="fa-solid fa-sliders ml-1"></i> لوحة الإدارة
           </a>
           <button type="button" onclick="window.SamtAuth.exportDataFile()" class="px-3 py-1 rounded-lg glass-card text-slate-300 hover:text-white text-[11px] font-bold">
