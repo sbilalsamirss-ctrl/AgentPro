@@ -127,7 +127,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
-  <script src="./assets/js/night-sky.js?v=2"></script>
+  <script src="./assets/js/night-sky.js?v=3"></script>
 
   <style id="samt-responsive-fix">
     html, body { overflow-x: hidden; }
@@ -578,7 +578,7 @@
                   <div>
                     <h4 class="text-[11px] sm:text-xs font-bold font-cairo leading-snug">${l.title || 'بدون عنوان'}</h4>
                     <span class="text-[9px] text-slate-500 font-mono">${l.duration || ''}</span>
-                    ${l.freePreview ? '<span class="text-[9px] text-samt-gold font-bold mr-2">👁️ مجاني</span>' : ''}
+                    ${l.freePreview ? '<span class="text-[9px] text-samt-blue font-bold mr-2"><i class="fa-solid fa-eye"></i> مجاني</span>' : ''}
                   </div>
                 </div>
                 <i class="fa-solid ${isActive ? 'fa-circle-play text-samt-cyan' : 'fa-play text-slate-500'} text-xs flex-shrink-0"></i>

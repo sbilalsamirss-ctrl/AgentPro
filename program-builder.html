@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إضافة / تعديل برنامج | سمت SAMT</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%2300F5D4' stroke-width='4'/><circle cx='50' cy='50' r='6' fill='%2300BBF9'/><line x1='50' y1='6' x2='50' y2='94' stroke='%2300F5D4' stroke-width='3'/><line x1='6' y1='50' x2='94' y2='50' stroke='%2300F5D4' stroke-width='3'/></svg>" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {
+        colors: { samt: { space: '#070A12', navy: '#0B132B', card: '#0E172E', cyan: '#00F5D4', blue: '#00BBF9', purple: '#7928CA', gold: '#00BBF9' } },
+        fontFamily: { readex: ['"Readex Pro"', 'Cairo', 'sans-serif'], cairo: ['Cairo', '"Readex Pro"', 'sans-serif'] }
+      } }
+    }
+  </script>
+  <style>
+    body { font-family: 'Readex Pro', 'Cairo', sans-serif; overflow-x: hidden; }
+    html.dark body { background-color: #070A12; color: #FFFFFF; }
+    html.dark .glass-card { background: rgba(14,23,46,0.78); backdrop-filter: blur(16px); border: 1px solid rgba(0,245,212,0.16); color:#FFFFFF; }
+    html:not(.dark) body { background-color:#F8FAFC; color:#0B132B; }
+    html:not(.dark) .glass-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border:1px solid rgba(0,187,249,0.18); color:#0B132B; }
+    .btn-samt-glow { background: linear-gradient(135deg,#00F5D4 0%,#00BBF9 100%); color:#070A12 !important; font-weight:800; box-shadow:0 0 20px rgba(0,245,212,0.4); }
+    .text-gradient { background: linear-gradient(135deg,#00BBF9 0%,#00F5D4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .fld { width:100%; border-radius:0.75rem; padding:0.75rem; outline:none; font-size:0.85rem; }
+    html.dark .fld { background: rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.15); color:#fff; }
+    html:not(.dark) .fld { background:#fff; border:1px solid rgba(11,19,43,0.15); color:#0B132B; }
+    .fld:focus { border-color:#00F5D4; }
+    label.lbl { display:block; font-size:0.72rem; font-weight:700; margin-bottom:0.4rem; }
+    html.dark label.lbl { color:#cbd5e1; }
+    .seg { border:1px solid rgba(0,245,212,0.25); border-radius:0.75rem; overflow:hidden; display:flex; }
+    .seg button { flex:1; padding:0.6rem 0.4rem; font-size:0.75rem; font-weight:800; background:transparent; color:inherit; }
+    .seg button.on { background:linear-gradient(135deg,#00F5D4,#00BBF9); color:#070A12; }
+    .drop { border:2px dashed rgba(0,245,212,0.35); border-radius:0.9rem; padding:1.1rem; text-align:center; cursor:pointer; transition:border-color .2s, background .2s; }
+    .drop.hot { border-color:#00F5D4; background:rgba(0,245,212,0.07); }
+    .shot { position:relative; border-radius:0.6rem; overflow:hidden; border:1px solid rgba(255,255,255,0.15); }
+    .shot img { width:100%; height:100%; object-fit:cover; display:block; }
+    .shot button { position:absolute; top:3px; inset-inline-start:3px; width:22px; height:22px; border-radius:50%; background:rgba(0,0,0,.7); color:#fb7185; font-size:11px; }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="./assets/js/firebase-init.js?v=20260830b"></script>
+  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/night-sky.js?v=3"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
+    <div class="max-w-5xl mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="./downloads.html" class="flex items-center gap-3">
+        <div class="relative w-9 h-9">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-samt-cyan">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3" opacity="0.6"/>
+            <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="50" y1="6" x2="50" y2="94" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="6" y1="50" x2="94" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="6" fill="#00BBF9"/>
+          </svg>
+        </div>
+        <span class="text-2xl font-black font-cairo">سَـمْـت</span>
+        <span class="text-xl font-extrabold text-samt-cyan font-readex">SAMT</span>
+      </a>
+      <a href="./downloads.html" class="glass-card px-4 py-2 rounded-full text-xs font-bold hover:border-samt-cyan flex items-center gap-2">
+        <i class="fa-solid fa-arrow-right"></i><span>رجوع للبرامج</span>
+      </a>
+    </div>
+  </header>
+
+  <div id="guardScreen" class="flex-grow flex items-center justify-center p-6 pt-28">
+    <div class="glass-card rounded-2xl p-8 max-w-md w-full text-center">
+      <div class="w-14 h-14 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mx-auto mb-3">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+      </div>
+      <p id="guardMsg" class="text-sm text-slate-400 font-cairo">جارٍ التحقق من صلاحية المشرف...</p>
+    </div>
+  </div>
+
+  <main id="builderMain" class="flex-grow max-w-5xl mx-auto w-full px-4 pt-28 pb-16 hidden">
+    <div class="mb-6">
+      <h1 id="pageTitle" class="text-2xl sm:text-3xl font-black font-cairo">إضافة <span class="text-gradient">برنامج جديد</span></h1>
+      <p class="text-slate-400 text-sm mt-1">اختر نوع البرنامج أولاً، وسيتغيّر باقي النموذج حسب اختيارك.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- ==== form ==== -->
+      <div class="lg:col-span-2 space-y-5">
+
+        <div class="glass-card rounded-2xl p-5">
+          <label class="lbl">نوع البرنامج</label>
+          <div class="seg" id="typeSeg">
+            <button type="button" data-type="play" class="on"><i class="fa-brands fa-google-play ml-1"></i> جوجل بلاي</button>
+            <button type="button" data-type="direct"><i class="fa-solid fa-download ml-1"></i> تحميل مباشر</button>
+            <button type="button" data-type="web"><i class="fa-solid fa-globe ml-1"></i> تطبيق ويب</button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5 space-y-4">
+          <div>
+            <label class="lbl" for="fName">اسم البرنامج</label>
+            <input id="fName" class="fld" placeholder="مثال: AgentPro للكول سنتر" />
+          </div>
+          <div>
+            <label class="lbl" for="fDesc">وصف مختصر</label>
+            <textarea id="fDesc" rows="3" class="fld" placeholder="سطرين يشرحوا البرنامج بيعمل إيه"></textarea>
+          </div>
+
+          <div>
+            <label class="lbl" for="fUrl"><span id="urlLabel">رابط البرنامج على جوجل بلاي</span></label>
+            <input id="fUrl" class="fld" dir="ltr" placeholder="https://play.google.com/store/apps/details?id=com.example.app" />
+            <p id="urlHint" class="text-[11px] text-slate-500 mt-1.5"></p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="lbl" for="fVersion">الإصدار (اختياري)</label>
+              <input id="fVersion" class="fld" dir="ltr" placeholder="v2.4.2" />
+            </div>
+            <div id="sizeWrap">
+              <label class="lbl" for="fSize">حجم الملف (اختياري)</label>
+              <input id="fSize" class="fld" dir="ltr" placeholder="68 MB" />
+            </div>
+          </div>
+
+          <div>
+            <label class="lbl" for="fPlat">المنصات / المتطلبات (كل سطر بند)</label>
+            <textarea id="fPlat" rows="3" class="fld" placeholder="Windows 10 / 11&#10;4 GB RAM"></textarea>
+          </div>
+        </div>
+
+        <!-- images -->
+        <div class="glass-card rounded-2xl p-5 space-y-4">
+          <div>
+            <label class="lbl">أيقونة البرنامج</label>
+            <div class="flex items-center gap-3">
+              <div id="iconPrev" class="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 border border-white/15 bg-black/30 flex items-center justify-center text-slate-600">
+                <i class="fa-regular fa-image"></i>
+              </div>
+              <div class="flex-grow">
+                <div id="iconDrop" class="drop text-xs">
+                  <i class="fa-solid fa-arrow-up-from-bracket text-samt-cyan"></i>
+                  <div class="mt-1">اسحب الصورة هنا أو اضغط للاختيار — وكمان تقدر تعمل <b>Ctrl+V</b></div>
+                </div>
+                <input id="iconFile" type="file" accept="image/*" class="hidden" />
+              </div>
+            </div>
+            <input id="fIconUrl" class="fld mt-3" dir="ltr" placeholder="أو الصق رابط صورة مباشرة (مفيد لبرامج جوجل بلاي)" />
+          </div>
+
+          <div>
+            <label class="lbl">لقطات الشاشة (حتى 4 — بتتبدّل لوحدها في الكارت)</label>
+            <div id="shotDrop" class="drop text-xs">
+              <i class="fa-solid fa-images text-samt-cyan"></i>
+              <div class="mt-1">اسحب الصور هنا أو اضغط للاختيار</div>
+            </div>
+            <input id="shotFile" type="file" accept="image/*" multiple class="hidden" />
+            <input id="fShotUrl" class="fld mt-3" dir="ltr" placeholder="أو الصق رابط صورة واضغط Enter لإضافتها" />
+            <div id="shotList" class="grid grid-cols-4 gap-2 mt-3"></div>
+            <p id="sizeNote" class="text-[11px] text-slate-500 mt-2"></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="saveBtn" type="button" class="btn-samt-glow px-6 py-3 rounded-xl text-sm flex items-center gap-2">
+            <i class="fa-solid fa-cloud-arrow-up"></i><span>حفظ ونشر</span>
+          </button>
+          <button id="deleteBtn" type="button" class="hidden px-5 py-3 rounded-xl glass-card border border-rose-500/40 text-rose-400 text-xs font-bold">
+            <i class="fa-solid fa-trash-can ml-1"></i> حذف
+          </button>
+          <span id="saveMsg" class="text-xs text-slate-400"></span>
+        </div>
+      </div>
+
+      <!-- ==== live preview ==== -->
+      <div class="lg:col-span-1">
+        <div class="sticky top-28">
+          <p class="text-xs font-bold text-slate-400 mb-2">معاينة الكارت</p>
+          <div id="preview" class="glass-card rounded-2xl overflow-hidden"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var MAX_SHOTS = 4;
+      var state = { id: '', type: 'play', icon: '', shots: [] };
+      var editId = new URLSearchParams(location.search).get('edit') || '';
+
+      var $ = function (id) { return document.getElementById(id); };
+
+      /* ---------- image helpers ---------- */
+      // Downscale + re-encode in the browser so a screenshot costs tens of KB
+      // instead of megabytes. WebP when the browser supports it, else JPEG.
+      function compress(file, maxW, quality) {
+        return new Promise(function (resolve, reject) {
+          if (!file || !/^image\//.test(file.type)) return reject(new Error('not-image'));
+          var fr = new FileReader();
+          fr.onerror = function () { reject(new Error('read-failed')); };
+          fr.onload = function () {
+            var img = new Image();
+            img.onerror = function () { reject(new Error('decode-failed')); };
+            img.onload = function () {
+              var scale = Math.min(1, maxW / (img.width || maxW));
+              var w = Math.max(1, Math.round(img.width * scale));
+              var h = Math.max(1, Math.round(img.height * scale));
+              var c = document.createElement('canvas');
+              c.width = w; c.height = h;
+              c.getContext('2d').drawImage(img, 0, 0, w, h);
+              var out = '';
+              try { out = c.toDataURL('image/webp', quality); } catch (e) {}
+              if (out.indexOf('data:image/webp') !== 0) out = c.toDataURL('image/jpeg', quality);
+              resolve(out);
+            };
+            img.src = fr.result;
+          };
+          fr.readAsDataURL(file);
+        });
+      }
+
+      function bytesOf(dataUrl) {
+        if (!dataUrl || dataUrl.indexOf('data:') !== 0) return 0;
+        return Math.round((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75);
+      }
+      function human(b) {
+        return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.round(b / 1024) + ' KB';
+      }
+
+      /* ---------- google play ---------- */
+      function playPackage(url) {
+        var m = String(url || '').match(/[?&]id=([A-Za-z0-9._]+)/);
+        return m ? m[1] : '';
+      }
+
+      /* ---------- type switching ---------- */
+      function setType(t) {
+        state.type = t;
+        [].forEach.call($('typeSeg').children, function (b) {
+          b.classList.toggle('on', b.getAttribute('data-type') === t);
+        });
+        $('urlLabel').textContent = t === 'play' ? 'رابط البرنامج على جوجل بلاي'
+                                  : t === 'web' ? 'رابط التطبيق' : 'رابط التحميل المباشر';
+        $('fUrl').placeholder = t === 'play' ? 'https://play.google.com/store/apps/details?id=com.example.app'
+                              : t === 'web' ? 'https://app.example.com'
+                              : 'https://example.com/setup.exe';
+        $('sizeWrap').style.display = t === 'direct' ? '' : 'none';
+        checkUrl();
+        render();
+      }
+
+      function checkUrl() {
+        var v = $('fUrl').value.trim();
+        var hint = $('urlHint');
+        hint.className = 'text-[11px] mt-1.5';
+        if (!v) { hint.textContent = ''; return; }
+        if (state.type === 'play') {
+          var pkg = playPackage(v);
+          if (pkg) {
+            hint.textContent = 'تم التعرّف على التطبيق: ' + pkg;
+            hint.classList.add('text-emerald-400');
+          } else {
+            hint.textContent = 'الرابط مش شكل رابط جوجل بلاي — لازم يحتوي على ‎?id=‎';
+            hint.classList.add('text-amber-400');
+          }
+        } else if (!/^https?:\/\//i.test(v)) {
+          hint.textContent = 'الرابط لازم يبدأ بـ http:// أو https://';
+          hint.classList.add('text-amber-400');
+        } else {
+          hint.textContent = '';
+        }
+      }
+
+      /* ---------- preview ---------- */
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      function fallbackTile(name) {
+        var ch = (String(name || '؟').trim()[0] || '؟');
+        return '<div class="w-full h-full flex items-center justify-center text-3xl font-black text-samt-space"'
+             + ' style="background:linear-gradient(135deg,#00F5D4,#00BBF9)">' + esc(ch) + '</div>';
+      }
+
+      function render() {
+        var name = $('fName').value.trim() || 'اسم البرنامج';
+        var desc = $('fDesc').value.trim();
+        var ver = $('fVersion').value.trim();
+        var size = $('fSize').value.trim();
+        var icon = state.icon || $('fIconUrl').value.trim();
+        var shots = state.shots;
+        var btn = state.type === 'play'
+          ? '<i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span>'
+          : state.type === 'web'
+          ? '<i class="fa-solid fa-arrow-up-right-from-square"></i><span>فتح التطبيق</span>'
+          : '<i class="fa-solid fa-download"></i><span>تحميل البرنامج</span>';
+
+        $('preview').innerHTML =
+          (shots.length
+            ? '<div class="relative aspect-video bg-black/40 overflow-hidden">'
+              + '<img src="' + esc(shots[0]) + '" class="w-full h-full object-cover" alt="">'
+              + (shots.length > 1 ? '<span class="absolute bottom-2 inset-inline-start-2 text-[10px] px-2 py-0.5 rounded-full bg-black/70 text-samt-cyan">'
+                  + shots.length + ' لقطات تتبدّل</span>' : '')
+              + '</div>'
+            : '')
+          + '<div class="p-5">'
+          +   '<div class="flex items-start gap-3 mb-3">'
+          +     '<div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15">'
+          +       (icon ? '<img src="' + esc(icon) + '" class="w-full h-full object-cover" alt="">' : fallbackTile(name))
+          +     '</div>'
+          +     '<div class="min-w-0">'
+          +       '<h3 class="text-sm font-bold font-cairo truncate">' + esc(name) + '</h3>'
+          +       (ver || size
+                    ? '<div class="text-[10px] text-samt-cyan font-mono mt-0.5">' + esc([ver, size].filter(Boolean).join(' • ')) + '</div>'
+                    : '')
+          +     '</div>'
+          +   '</div>'
+          +   (desc ? '<p class="text-[11px] text-slate-400 leading-relaxed mb-4">' + esc(desc) + '</p>' : '')
+          +   '<div class="btn-samt-glow w-full py-2.5 rounded-xl text-xs flex items-center justify-center gap-2">' + btn + '</div>'
+          + '</div>';
+
+        var total = bytesOf(state.icon) + state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
+        $('sizeNote').textContent = total ? ('حجم الصور المرفوعة: ' + human(total) + ' من 1 MB المسموحة') : '';
+        $('sizeNote').className = 'text-[11px] mt-2 ' + (total > 850000 ? 'text-amber-400' : 'text-slate-500');
+      }
+
+      /* ---------- shots list ---------- */
+      function renderShots() {
+        $('shotList').innerHTML = state.shots.map(function (s, i) {
+          return '<div class="shot aspect-video"><img src="' + esc(s) + '" alt="">'
+               + '<button type="button" data-i="' + i + '"><i class="fa-solid fa-xmark"></i></button></div>';
+        }).join('');
+        [].forEach.call($('shotList').querySelectorAll('button'), function (b) {
+          b.addEventListener('click', function () {
+            state.shots.splice(parseInt(b.getAttribute('data-i'), 10), 1);
+            renderShots(); render();
+          });
+        });
+        render();
+      }
+
+      function addShot(dataUrl) {
+        if (state.shots.length >= MAX_SHOTS) { msg('الحد الأقصى ' + MAX_SHOTS + ' لقطات', 'amber'); return; }
+        state.shots.push(dataUrl);
+        renderShots();
+      }
+
+      function msg(t, tone) {
+        $('saveMsg').textContent = t || '';
+        $('saveMsg').className = 'text-xs ' + (tone === 'ok' ? 'text-emerald-400' : tone === 'bad' ? 'text-rose-400' : tone === 'amber' ? 'text-amber-400' : 'text-slate-400');
+      }
+
+      /* ---------- wiring ---------- */
+      [].forEach.call($('typeSeg').children, function (b) {
+        b.addEventListener('click', function () { setType(b.getAttribute('data-type')); });
+      });
+      ['fName', 'fDesc', 'fVersion', 'fSize', 'fPlat'].forEach(function (id) {
+        $(id).addEventListener('input', render);
+      });
+      $('fUrl').addEventListener('input', function () { checkUrl(); render(); });
+      $('fIconUrl').addEventListener('input', function () { state.icon = ''; render(); });
+
+      function hookDrop(dropEl, inputEl, handler) {
+        dropEl.addEventListener('click', function () { inputEl.click(); });
+        ['dragenter', 'dragover'].forEach(function (ev) {
+          dropEl.addEventListener(ev, function (e) { e.preventDefault(); dropEl.classList.add('hot'); });
+        });
+        ['dragleave', 'drop'].forEach(function (ev) {
+          dropEl.addEventListener(ev, function (e) { e.preventDefault(); dropEl.classList.remove('hot'); });
+        });
+        dropEl.addEventListener('drop', function (e) {
+          handler([].slice.call((e.dataTransfer && e.dataTransfer.files) || []));
+        });
+        inputEl.addEventListener('change', function () {
+          handler([].slice.call(inputEl.files || []));
+          inputEl.value = '';
+        });
+      }
+
+      function takeIcon(files) {
+        if (!files.length) return;
+        compress(files[0], 128, 0.85).then(function (d) {
+          state.icon = d; $('fIconUrl').value = '';
+          $('iconPrev').innerHTML = '<img src="' + esc(d) + '" class="w-full h-full object-cover" alt="">';
+          render();
+        }).catch(function () { msg('تعذّر قراءة الصورة', 'bad'); });
+      }
+      function takeShots(files) {
+        files.slice(0, MAX_SHOTS).forEach(function (f) {
+          compress(f, 640, 0.72).then(addShot).catch(function () { msg('تعذّر قراءة إحدى الصور', 'bad'); });
+        });
+      }
+
+      hookDrop($('iconDrop'), $('iconFile'), takeIcon);
+      hookDrop($('shotDrop'), $('shotFile'), takeShots);
+
+      $('fShotUrl').addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        var v = $('fShotUrl').value.trim();
+        if (v) { addShot(v); $('fShotUrl').value = ''; }
+      });
+
+      // paste an image straight from the clipboard
+      document.addEventListener('paste', function (e) {
+        var items = (e.clipboardData && e.clipboardData.items) || [];
+        var imgs = [].slice.call(items).filter(function (it) { return it.type && it.type.indexOf('image/') === 0; });
+        if (!imgs.length) return;
+        var f = imgs[0].getAsFile();
+        if (!f) return;
+        e.preventDefault();
+        if (document.activeElement === $('fShotUrl') || state.icon) takeShots([f]);
+        else takeIcon([f]);
+      });
+
+      /* ---------- load / save ---------- */
+      function readPrograms() {
+        try { return JSON.parse(localStorage.getItem('samt_admin_releases')) || []; } catch (e) { return []; }
+      }
+
+      function fill(pr, assets) {
+        state.id = pr.id || '';
+        state.icon = (pr.icon && pr.icon.indexOf('data:') === 0) ? pr.icon : '';
+        state.shots = (assets && assets.shots) || [];
+        $('fName').value = pr.name || '';
+        $('fDesc').value = pr.desc || '';
+        $('fUrl').value = pr.url || pr.downloadUrl || '';
+        $('fVersion').value = pr.version || '';
+        $('fSize').value = pr.fileSize || '';
+        $('fPlat').value = (pr.platforms || pr.requirements || []).join('\n');
+        if (!state.icon && pr.icon) $('fIconUrl').value = pr.icon;
+        if (state.icon) $('iconPrev').innerHTML = '<img src="' + esc(state.icon) + '" class="w-full h-full object-cover" alt="">';
+        setType(pr.type || 'play');
+        renderShots();
+        $('pageTitle').innerHTML = 'تعديل <span class="text-gradient">البرنامج</span>';
+        $('deleteBtn').classList.remove('hidden');
+      }
+
+      $('saveBtn').addEventListener('click', function () {
+        var name = $('fName').value.trim();
+        var url = $('fUrl').value.trim();
+        if (!name) { msg('لازم تكتب اسم البرنامج', 'bad'); return; }
+        if (!url) { msg('لازم تحط رابط البرنامج', 'bad'); return; }
+        if (state.type === 'play' && !playPackage(url)) { msg('رابط جوجل بلاي غير صحيح', 'bad'); return; }
+
+        var total = bytesOf(state.icon) + state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
+        if (total > 950000) { msg('حجم الصور كبير — امسح لقطة أو اتنين', 'bad'); return; }
+
+        var programs = readPrograms();
+        var id = state.id || ('app-' + Date.now());
+        var rec = {
+          id: id,
+          name: name,
+          desc: $('fDesc').value.trim(),
+          type: state.type,
+          url: url,
+          downloadUrl: url, // kept so older markup keeps working
+          pkg: state.type === 'play' ? playPackage(url) : '',
+          version: $('fVersion').value.trim(),
+          fileSize: state.type === 'direct' ? $('fSize').value.trim() : '',
+          platforms: $('fPlat').value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean),
+          icon: state.icon || $('fIconUrl').value.trim(),
+          shotCount: state.shots.length
+        };
+
+        var idx = programs.findIndex(function (p) { return p.id === id; });
+        if (idx >= 0) { rec.createdAt = programs[idx].createdAt; programs[idx] = rec; }
+        else programs.unshift(rec);
+
+        try { localStorage.setItem('samt_admin_releases', JSON.stringify(programs)); } catch (e) {}
+        msg('جارٍ الحفظ على السحابة...');
+
+        if (!(window.SamtFB && window.SamtFB.available)) {
+          msg('اتحفظ محلياً — فايربيز مش متاح', 'amber');
+          return;
+        }
+        window.SamtFB.syncProgramsToCloud(programs)
+          .then(function () { return window.SamtFB.saveProgramAssets(id, { shots: state.shots }); })
+          .then(function () {
+            msg('تم النشر بنجاح', 'ok');
+            setTimeout(function () { location.href = './downloads.html'; }, 700);
+          })
+          .catch(function (e) {
+            msg('فشل النشر: ' + (e && e.message ? e.message : 'خطأ غير معروف'), 'bad');
+          });
+      });
+
+      $('deleteBtn').addEventListener('click', function () {
+        if (!state.id) return;
+        if (!confirm('تأكيد حذف البرنامج؟')) return;
+        var programs = readPrograms().filter(function (p) { return p.id !== state.id; });
+        try { localStorage.setItem('samt_admin_releases', JSON.stringify(programs)); } catch (e) {}
+        if (window.SamtFB && window.SamtFB.available) {
+          window.SamtFB.syncProgramsToCloud(programs)
+            .then(function () { location.href = './downloads.html'; })
+            .catch(function (e) { msg('فشل الحذف: ' + (e && e.message), 'bad'); });
+        } else {
+          location.href = './downloads.html';
+        }
+      });
+
+      /* ---------- admin gate ---------- */
+      function unlock() {
+        $('guardScreen').classList.add('hidden');
+        $('builderMain').classList.remove('hidden');
+        setType('play');
+        if (editId) {
+          var pr = readPrograms().filter(function (p) { return p.id === editId; })[0];
+          if (pr) {
+            if (window.SamtFB && window.SamtFB.loadProgramAssets) {
+              window.SamtFB.loadProgramAssets(editId).then(function (a) { fill(pr, a); });
+            } else { fill(pr, null); }
+          }
+        }
+        render();
+      }
+
+      function deny() {
+        $('guardMsg').innerHTML = 'الصفحة دي للمشرف فقط. <a href="./downloads.html" class="text-samt-cyan font-bold">رجوع</a>';
+        $('guardScreen').querySelector('i').className = 'fa-solid fa-lock';
+      }
+
+      if (window.SamtFB && window.SamtFB.available) {
+        window.SamtFB.onAuthChange(function () {
+          if (window.SamtFB.isAdmin()) unlock(); else deny();
+        });
+      } else {
+        setTimeout(function () {
+          var s = null;
+          try { s = JSON.parse(localStorage.getItem('samt_user_session') || 'null'); } catch (e) {}
+          if (s && s.role === 'admin') unlock(); else deny();
+        }, 400);
+      }
+    })();
+  </script>
+</body>
+</html>

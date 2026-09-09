@@ -220,13 +220,32 @@
       color: #00BBF9 !important; /* cyan/blue */
     }
 
+    /* ---- program cards: hover lift + shine, screenshot cross-fade ---- */
+    .samt-app { position: relative; }
+    .samt-app .samt-shots img { transition: transform .6s ease, opacity .7s ease; }
+    .samt-app:hover .samt-shots img { transform: scale(1.06); }
+    .samt-shine {
+      background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.16) 50%, transparent 65%);
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+    .samt-app:hover .samt-shine {
+      opacity: 1;
+      transform: translateX(120%);
+      transition: transform .85s ease, opacity .2s ease;
+    }
+    .samt-app:hover { transform: translateY(-3px); }
+    .samt-app { transition: transform .3s ease, border-color .3s ease; }
+    @media (prefers-reduced-motion: reduce) {
+      .samt-app, .samt-app *, .samt-shine { transition: none !important; animation: none !important; }
+    }
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
-  <script src="./assets/js/night-sky.js?v=2"></script>
+  <script src="./assets/js/night-sky.js?v=3"></script>
 
   <style id="samt-responsive-fix">
     html, body { overflow-x: hidden; }
@@ -375,52 +394,172 @@
       applyTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark', true);
     });
 
-    // Dynamic Downloads Engine
+    // ==========================================================================
+    // Downloads engine — programs come from Firestore (shared with every visitor);
+    // screenshots live in their own documents and are fetched only when a card
+    // scrolls into view, and their animation pauses while off-screen.
+    // ==========================================================================
     document.addEventListener('DOMContentLoaded', () => {
       const grid = document.getElementById('downloadsGrid');
-      let releases = [];
-      try {
-        releases = JSON.parse(localStorage.getItem('samt_admin_releases')) || window.AgentProData?.releases || [];
-      } catch(e) {
-        releases = window.AgentProData?.releases || [];
+      const shotCache = {};
+
+      const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      function readPrograms() {
+        try {
+          return JSON.parse(localStorage.getItem('samt_admin_releases')) || window.AgentProData?.releases || [];
+        } catch (e) {
+          return window.AgentProData?.releases || [];
+        }
       }
 
-      if (!releases || releases.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full text-center py-16 glass-card rounded-2xl border border-white/10">
-            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 text-slate-500 text-3xl flex items-center justify-center mx-auto mb-4">
-              <i class="fa-solid fa-cube"></i>
-            </div>
-            <h3 class="text-base font-bold font-cairo text-white">لا توجد برامج وتطبيقات مرفوعة حالياً</h3>
-            <p class="text-xs text-slate-400 mt-1">سيتم إدراج روابط وتفاصيل التنزيل فور نشرها من قبل إدارة منظومة سمت.</p>
-          </div>
-        `;
-        return;
+      function isAdmin() {
+        try {
+          if (window.SamtFB && window.SamtFB.available) return window.SamtFB.isAdmin();
+          const s = JSON.parse(localStorage.getItem('samt_user_session') || 'null');
+          return !!(s && s.role === 'admin');
+        } catch (e) { return false; }
       }
 
-      grid.innerHTML = releases.map(app => `
-        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
+      function fallbackTile(name) {
+        const ch = (String(name || '؟').trim()[0] || '؟');
+        return `<div class="w-full h-full flex items-center justify-center text-2xl font-black text-samt-space"
+                     style="background:linear-gradient(135deg,#00F5D4,#00BBF9)">${esc(ch)}</div>`;
+      }
+
+      function actionButton(app) {
+        const type = app.type || (app.url || app.downloadUrl || '').includes('play.google.com') ? 'play' : 'direct';
+        const href = esc(app.url || app.downloadUrl || '#');
+        if (type === 'play') {
+          return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
+        }
+        if (type === 'web') {
+          return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i><span>فتح التطبيق</span></a>`;
+        }
+        return `<a href="${href}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-download"></i><span>تحميل البرنامج</span></a>`;
+      }
+
+      function cardHtml(app, admin) {
+        const meta = [app.version, app.fileSize].filter(Boolean).join(' • ');
+        const list = app.platforms || app.requirements || [];
+        return `
+        <div class="samt-app glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all" data-id="${esc(app.id || '')}">
+          ${admin ? `
+            <div class="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-cyan/40">
+              <button onclick="event.preventDefault();event.stopPropagation();window.location.href='./program-builder.html?edit=${esc(app.id)}'"
+                      title="تعديل" class="w-7 h-7 rounded-lg bg-samt-cyan/20 hover:bg-samt-cyan/40 text-samt-cyan flex items-center justify-center text-xs">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </div>` : ''}
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-3xl">${app.icon || '📦'}</span>
-              <span class="px-2.5 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[10px] font-extrabold border border-samt-cyan/30">
-                ${app.version || 'إصدار رسمي'} (${app.fileSize || 'مباشر'})
-              </span>
+            <div class="samt-shots relative aspect-video bg-black/40 overflow-hidden hidden">
+              <div class="samt-shine absolute inset-0 z-10 pointer-events-none"></div>
             </div>
-            <h3 class="text-lg font-bold mb-2 font-cairo">${app.name}</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">${app.desc || ''}</p>
-            ${app.platforms ? `
-              <ul class="space-y-1.5 text-xs text-slate-300 mb-6">
-                ${app.platforms.map(p => `<li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i>${p}</li>`).join('')}
-              </ul>
-            ` : ''}
+            <div class="p-6">
+              <div class="flex items-start gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15">
+                  ${app.icon ? `<img src="${esc(app.icon)}" alt="${esc(app.name)}" loading="lazy" class="w-full h-full object-cover">` : fallbackTile(app.name)}
+                </div>
+                <div class="min-w-0 flex-grow">
+                  <h3 class="text-base font-bold font-cairo leading-snug">${esc(app.name || '')}</h3>
+                  ${meta ? `<div class="text-[10px] text-samt-cyan font-mono mt-0.5">${esc(meta)}</div>` : ''}
+                </div>
+              </div>
+              <p class="text-slate-400 text-xs leading-relaxed mb-4">${esc(app.desc || '')}</p>
+              ${list.length ? `<ul class="space-y-1.5 text-xs text-slate-300 mb-5">
+                ${list.map((x) => `<li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i>${esc(x)}</li>`).join('')}
+              </ul>` : ''}
+              ${actionButton(app)}
+            </div>
           </div>
-          <a href="${app.downloadUrl || '#'}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-            <i class="fa-solid fa-download"></i>
-            <span>تحميل البرنامج</span>
-          </a>
-        </div>
-      `).join('');
+        </div>`;
+      }
+
+      // Cycle a card's screenshots, but only while the card is actually visible.
+      function startCycle(box, shots) {
+        if (!shots || !shots.length) return;
+        box.classList.remove('hidden');
+        box.innerHTML = shots.map((s, i) =>
+          `<img src="${esc(s)}" alt="" loading="lazy"
+                class="samt-shot absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                style="opacity:${i === 0 ? 1 : 0}">`
+        ).join('') + '<div class="samt-shine absolute inset-0 z-10 pointer-events-none"></div>';
+
+        if (shots.length < 2) return;
+        const imgs = box.querySelectorAll('.samt-shot');
+        let i = 0, timer = null;
+        const tick = () => {
+          imgs[i].style.opacity = '0';
+          i = (i + 1) % imgs.length;
+          imgs[i].style.opacity = '1';
+        };
+        const io = new IntersectionObserver((es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting && !timer) timer = setInterval(tick, 3000);
+            else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
+          });
+        }, { threshold: 0.15 });
+        io.observe(box);
+      }
+
+      function hydrateShots(card, app) {
+        const box = card.querySelector('.samt-shots');
+        if (!box || !app.shotCount) return;
+        const id = app.id;
+        const done = (a) => startCycle(box, (a && a.shots) || []);
+        if (shotCache[id]) return done(shotCache[id]);
+        if (!(window.SamtFB && window.SamtFB.loadProgramAssets)) return;
+        const io = new IntersectionObserver((es, obs) => {
+          if (!es.some((e) => e.isIntersecting)) return;
+          obs.disconnect();
+          window.SamtFB.loadProgramAssets(id).then((a) => { shotCache[id] = a || {}; done(a); });
+        }, { rootMargin: '200px' });
+        io.observe(card);
+      }
+
+      function render() {
+        const releases = readPrograms();
+        const admin = isAdmin();
+
+        if (!releases.length) {
+          grid.innerHTML = `
+            <div class="col-span-full text-center py-16 glass-card rounded-2xl border border-white/10">
+              <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 text-slate-500 text-3xl flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-cube"></i>
+              </div>
+              <h3 class="text-base font-bold font-cairo text-white">لا توجد برامج وتطبيقات مرفوعة حالياً</h3>
+              <p class="text-xs text-slate-400 mt-1">سيتم إدراج روابط وتفاصيل التنزيل فور نشرها من قبل إدارة منظومة سمت.</p>
+              ${admin ? `<button onclick="window.location.href='./program-builder.html'"
+                  class="btn-samt-glow mt-4 px-6 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
+                  <i class="fa-solid fa-plus"></i><span>إضافة أول برنامج</span></button>` : ''}
+            </div>`;
+          return;
+        }
+
+        grid.innerHTML = releases.map((a) => cardHtml(a, admin)).join('')
+          + (admin ? `
+            <button onclick="window.location.href='./program-builder.html'"
+                    class="glass-card rounded-2xl border-2 border-dashed border-samt-cyan/30 hover:border-samt-cyan text-samt-cyan
+                           flex flex-col items-center justify-center gap-2 py-16 text-xs font-bold transition-colors">
+              <i class="fa-solid fa-plus text-2xl"></i><span>إضافة برنامج جديد</span>
+            </button>` : '');
+
+        [].forEach.call(grid.querySelectorAll('.samt-app'), (card) => {
+          const app = releases.filter((r) => String(r.id) === card.getAttribute('data-id'))[0];
+          if (app) hydrateShots(card, app);
+        });
+      }
+
+      render();
+      window.addEventListener('samt-programs-updated', render);
+      if (window.SamtFB && window.SamtFB.available && window.SamtFB.onAuthChange) {
+        window.SamtFB.onAuthChange(render);
+      }
     });
   </script>
 
