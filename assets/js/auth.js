@@ -239,7 +239,7 @@
       return {
         success: true,
         user: sessionData,
-        message: isAdm ? 'تم تأكيد البريد وإنشاء حساب المشرف (Admin) بنجاح! 👑' : 'تم تأكيد البريد الإلكتروني وتفعيل الإشعارات بنجاح! 🎉'
+        message: isAdm ? 'تم تأكيد البريد وإنشاء حساب المشرف (Admin) بنجاح!' : 'تم تأكيد البريد الإلكتروني وتفعيل الإشعارات بنجاح! 🎉'
       };
     },
 
@@ -861,7 +861,7 @@
           <div class="relative inline-block text-right" style="position: relative;">
             <!-- زر الحساب (يفتح ويثبت القائمة بالضغط) -->
             <button type="button" onclick="window.SamtAuth.toggleDropdown(event, '${dropdownId}')" class="px-3.5 py-1.5 rounded-full glass-card border ${isAdm ? 'border-samt-gold/50 text-samt-gold' : 'border-samt-cyan/40 text-white'} text-xs font-bold flex items-center gap-2 shadow-md hover:border-samt-cyan transition-all select-none cursor-pointer">
-              <span class="w-6 h-6 rounded-full flex items-center justify-center bg-black/50 text-xs">${user.avatar || (isAdm ? '👑' : '👤')}</span>
+              <span class="w-6 h-6 rounded-full flex items-center justify-center bg-black/50 text-[11px]"><i class="fa-solid ${isAdm ? 'fa-crown' : 'fa-user'}"></i></span>
               <span class="truncate max-w-[100px] sm:max-w-[140px]">${user.name}</span>
               <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i>
             </button>
@@ -877,7 +877,7 @@
                 </div>
                 <div class="text-[10px] text-slate-400 truncate mt-0.5" dir="ltr">${user.email}</div>
                 <div class="mt-1.5 inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold ${isAdm ? 'bg-samt-gold/20 text-samt-gold border border-samt-gold/40' : 'bg-samt-cyan/20 text-samt-cyan border border-samt-cyan/40'}">
-                  ${isAdm ? '👑 مشرف المنظومة (Admin)' : '👤 حساب مستخدم موثق'}
+                  ${isAdm ? '<i class="fa-solid fa-crown ml-1"></i> مشرف المنظومة (Admin)' : '<i class="fa-solid fa-user ml-1"></i> حساب مستخدم موثق'}
                 </div>
               </div>
 
@@ -1157,13 +1157,13 @@
         if (bar) bar.className = 'h-full w-1/4 bg-rose-500 transition-all duration-300';
       } else if (score <= 2) {
         if (txt) {
-          txt.textContent = 'ضعيف ⚠️';
+          txt.textContent = 'ضعيف';
           txt.className = 'text-rose-400';
         }
         if (bar) bar.className = 'h-full w-1/3 bg-rose-500 transition-all duration-300';
       } else if (score <= 4) {
         if (txt) {
-          txt.textContent = 'متوسط ⚠️';
+          txt.textContent = 'متوسط';
           txt.className = 'text-amber-400';
         }
         if (bar) bar.className = 'h-full w-2/3 bg-amber-500 transition-all duration-300';
@@ -1271,7 +1271,7 @@
           const sessionData = { name: 'المشرف العام', email: window.SamtFB.ADMIN_EMAIL, role: 'admin', avatar: '👑', emailVerified: true, notificationsEnabled: true, loginTime: new Date().toISOString() };
           localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(sessionData));
           this.closeAuthModal();
-          SamtAuth.toast('مرحباً بك يا المشرف العام (مشرف) 👑', 'success');
+          SamtAuth.toast('مرحباً بك يا المشرف العام (مشرف)', 'success');
           setTimeout(() => window.location.reload(), 400);
         } catch (err) {
           errEl.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';

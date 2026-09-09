@@ -22,6 +22,10 @@
 
   .samt-sky div{position:absolute}
 
+  /* the page applies a global transition (incl. box-shadow + opacity) to every
+     element; on star layers holding hundreds of shadows that is very expensive */
+  .samt-sky,.samt-sky *{transition:none !important}
+
   /* deep space wash */
   .samt-base{top:0;left:0;width:100%;height:100%;
     background:
@@ -35,21 +39,21 @@
     transform:translate(-50%,-50%) rotate(-21deg);
     -webkit-mask-image:radial-gradient(ellipse 58% 50% at 50% 50%,#000 30%,rgba(0,0,0,.35) 62%,transparent 80%);
     mask-image:radial-gradient(ellipse 58% 50% at 50% 50%,#000 30%,rgba(0,0,0,.35) 62%,transparent 80%);
-    animation:samt-mw 300s linear infinite}
-  .samt-mw-glow{top:0;left:0;width:100%;height:100%;filter:blur(26px);
+    will-change:transform;animation:samt-mw 300s linear infinite}
+  .samt-mw-glow{top:0;left:0;width:100%;height:100%;filter:blur(18px);will-change:transform;
     background:
       radial-gradient(ellipse 46% 46% at 28% 52%, rgba(160,195,255,.17), transparent 72%),
       radial-gradient(ellipse 34% 58% at 60% 46%, rgba(255,224,196,.13), transparent 72%),
       radial-gradient(ellipse 40% 40% at 82% 55%, rgba(190,170,255,.12), transparent 74%),
       radial-gradient(ellipse 70% 34% at 50% 50%, rgba(120,150,255,.10), transparent 78%)}
-  .samt-mw-dust{top:0;left:0;width:100%;height:100%;filter:blur(16px);
+  .samt-mw-dust{top:0;left:0;width:100%;height:100%;filter:blur(12px);
     background:
       radial-gradient(ellipse 32% 14% at 40% 54%, rgba(4,6,13,.80), transparent 72%),
       radial-gradient(ellipse 24% 10% at 64% 45%, rgba(4,6,13,.70), transparent 72%),
       radial-gradient(ellipse 18% 8%  at 22% 48%, rgba(4,6,13,.60), transparent 72%)}
 
   /* ---- nebulae ---- */
-  .samt-neb{border-radius:50%;filter:blur(70px);opacity:.55;
+  .samt-neb{border-radius:50%;opacity:.55;will-change:transform,opacity;
     animation:samt-neb 46s ease-in-out infinite alternate}
   .samt-neb.n1{width:44vw;height:44vw;top:-10%;right:-8%;
     background:radial-gradient(circle,rgba(0,187,249,.34),transparent 68%);animation-duration:52s}
@@ -61,7 +65,7 @@
     background:radial-gradient(circle,rgba(255,120,180,.16),transparent 70%);animation-duration:72s;animation-delay:-30s}
 
   /* ---- star fields ---- */
-  .samt-stars{top:50%;left:50%;transform:translate(-50%,-50%)}
+  .samt-stars{top:50%;left:50%;transform:translate(-50%,-50%);will-change:transform}
   .samt-stars i{position:absolute;top:0;left:0;border-radius:50%;background:transparent}
   .samt-s1{animation:samt-spin 900s linear infinite}
   .samt-s2{animation:samt-spin 1400s linear infinite reverse}
@@ -169,7 +173,7 @@
     var mwW = Math.round(vw * 2.4), mwH = Math.round(vh * 0.56);
     mwStars.style.width = mwW + 'px';
     mwStars.style.height = mwH + 'px';
-    mwStars.appendChild(dot(1, field(560, mwW, mwH, true), 'samt-tw3'));
+    mwStars.appendChild(dot(1, field(360, mwW, mwH, true), 'samt-tw3'));
     mw.appendChild(mwStars);
 
     var dust = document.createElement('div');
@@ -178,9 +182,9 @@
     sky.appendChild(mw);
 
     // three parallax star fields
-    sky.appendChild(layer('samt-s1', 1, 430, D, 'samt-tw1', 0));
-    sky.appendChild(layer('samt-s2', 1.6, 180, D, 'samt-tw2', 1));
-    sky.appendChild(layer('samt-s3', 2.2, 70, D, 'samt-tw3', 3));
+    sky.appendChild(layer('samt-s1', 1, 280, D, 'samt-tw1', 0));
+    sky.appendChild(layer('samt-s2', 1.6, 110, D, 'samt-tw2', 1));
+    sky.appendChild(layer('samt-s3', 2.2, 45, D, 'samt-tw3', 3));
 
     document.body.insertBefore(sky, document.body.firstChild);
   }
