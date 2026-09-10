@@ -10,7 +10,7 @@
   window.__samtSky = true;
 
   var CSS = `
-  .samt-sky{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;
+  .samt-sky{position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
     overflow:hidden;transition:opacity .9s ease;background:#05070F}
   html:not(.dark) .samt-sky{opacity:0}
   html.dark .samt-sky{opacity:1}
