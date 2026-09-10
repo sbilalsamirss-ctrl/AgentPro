@@ -355,7 +355,7 @@
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
-  <script src="./assets/js/samt-analytics.js?v=1"></script>
+  <script src="./assets/js/samt-notify.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
@@ -806,14 +806,14 @@
       const type = app.type || ((app.url || app.downloadUrl || '').indexOf('play.google.com') >= 0 ? 'play' : 'direct');
       const href = escHtml(app.url || app.downloadUrl || './downloads.html');
       if (type === 'play') {
-        return `<a href="${href}" target="_blank" rel="noopener" data-track-download data-track-id="${escHtml(app.id||'')}" data-track-name="${escHtml(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+        return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                   <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
       }
       if (type === 'web') {
-        return `<a href="${href}" target="_blank" rel="noopener" data-track-download data-track-id="${escHtml(app.id||'')}" data-track-name="${escHtml(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+        return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i><span>فتح التطبيق</span></a>`;
       }
-      return `<a href="${href}" data-track-download data-track-id="${escHtml(app.id||'')}" data-track-name="${escHtml(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+      return `<a href="${href}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                 <i class="fa-solid fa-download"></i><span>تحميل البرنامج${app.fileSize ? ' (' + escHtml(app.fileSize) + ')' : ''}</span></a>`;
     }
 

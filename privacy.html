@@ -227,7 +227,7 @@
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
-  <script src="./assets/js/samt-analytics.js?v=1"></script>
+  <script src="./assets/js/samt-notify.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
@@ -345,6 +345,19 @@
         <p class="text-xs text-slate-400 mt-2">آخر تحديث: سبتمبر 2026</p>
       </div>
 
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-6 border border-samt-cyan/25">
+        <div class="flex items-start gap-3">
+          <i class="fa-solid fa-shield-halved text-samt-cyan text-xl mt-0.5"></i>
+          <div>
+            <h2 class="text-base font-bold font-cairo mb-1">باختصار: إحنا مش بنجمع أي بيانات عنك</h2>
+            <p class="text-slate-300 text-sm leading-loose">
+              مفيش حسابات، مفيش تسجيل، مفيش أدوات تتبّع، ومفيش إحصائيات زوار.
+              تقدر تستخدم الموقع كله من غير ما تسيب أي أثر عندنا.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="glass-card rounded-2xl p-6 md:p-8 space-y-8 text-sm leading-loose">
 
         <section>
@@ -356,57 +369,33 @@
         </section>
 
         <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">2. البيانات اللي بنجمعها</h2>
+          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">2. الخصوصية</h2>
           <p class="text-slate-300 mb-3">
-            بنجمع إحصائيات استخدام مجهولة الهوية، وبس بعد ما توافق صراحةً من الشريط اللي بيظهر أول زيارة.
-            لو رفضت، مش هيتسجّل أي حاجة خالص وتقدر تستخدم الموقع عادي.
+            الموقع مش بيجمع ولا بيخزّن أي بيانات عن زواره. تحديداً:
           </p>
           <ul class="space-y-2 text-slate-300">
-            <li><i class="fa-solid fa-circle-check text-samt-cyan ml-2 text-xs"></i><strong>معرّف عشوائي:</strong> رقم عشوائي بيتخزّن في متصفحك أنت، عشان منعدّش الزيارة الواحدة أكتر من مرة. مش مرتبط بأي بيانات شخصية.</li>
-            <li><i class="fa-solid fa-circle-check text-samt-cyan ml-2 text-xs"></i><strong>الدولة:</strong> رمز الدولة من حرفين بس (مثال: EG). بنستخدم خدمة خارجية تحدد الدولة من عنوان الـ IP، لكن <strong class="text-white">إحنا مش بنخزّن عنوان الـ IP</strong> ولا بننقله لحد.</li>
-            <li><i class="fa-solid fa-circle-check text-samt-cyan ml-2 text-xs"></i><strong>الاستخدام:</strong> أي برنامج اتحمّل، وأي كورس اتفتح ونسبة اللي اتشاف منه.</li>
-            <li><i class="fa-solid fa-circle-check text-samt-cyan ml-2 text-xs"></i><strong>الصفحة:</strong> اسم الصفحة اللي فتحتها جوّه الموقع.</li>
+            <li><i class="fa-solid fa-xmark text-rose-400 ml-2 text-xs"></i>مفيش حسابات ولا تسجيل دخول — كل المحتوى مفتوح للجميع.</li>
+            <li><i class="fa-solid fa-xmark text-rose-400 ml-2 text-xs"></i>مفيش تسجيل للزيارات ولا للدول ولا للتحميلات.</li>
+            <li><i class="fa-solid fa-xmark text-rose-400 ml-2 text-xs"></i>مفيش كوكيز إعلانية ولا أدوات تحليلات ولا تتبّع لطرف تالت.</li>
+            <li><i class="fa-solid fa-xmark text-rose-400 ml-2 text-xs"></i>مفيش تخزين لعنوان الـ IP ولا الموقع الجغرافي.</li>
           </ul>
+          <p class="text-slate-300 mt-3">
+            الحاجة الوحيدة اللي بتتخزّن هي <strong class="text-white">تقدّمك في الكورسات</strong>، وبتتخزّن
+            في متصفحك أنت (LocalStorage) مش على أي سيرفر. لو مسحت بيانات المتصفح بتروح، ومحدش غيرك بيقدر يشوفها.
+          </p>
         </section>
 
         <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">3. البيانات اللي مش بنجمعها</h2>
+          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">3. الإشعارات</h2>
           <p class="text-slate-300">
-            مش بنجمع اسمك، ولا إيميلك، ولا رقم تليفونك، ولا عنوان الـ IP، ولا موقعك الجغرافي الدقيق،
-            ولا بنستخدم كوكيز إعلانية أو أدوات تتبّع لطرف تالت.
-            <br><strong class="text-white">ومفيش حسابات على الموقع أصلاً</strong> — كل الكورسات والبرامج مفتوحة
-            للجميع من غير تسجيل، وتقدّمك في الكورسات متخزّن في متصفحك أنت مش عندنا.
+            ممكن تختار تستقبل إشعارات المتصفح عشان تعرف بالبرامج والكورسات الجديدة.
+            ده اختياري تماماً وبيتفعّل بضغطة منك، وتقدر توقفه في أي وقت من إعدادات المتصفح.
+            الإشعارات مش بتحتاج أي بيانات منك.
           </p>
         </section>
 
         <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">4. الإشعارات</h2>
-          <p class="text-slate-300">
-            ممكن نطلب إذنك تستقبل إشعارات المتصفح عشان نعلمك بالبرامج والكورسات الجديدة.
-            الإذن ده اختياري تماماً، وتقدر توقفه في أي وقت من إعدادات المتصفح.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">5. مكان تخزين البيانات</h2>
-          <p class="text-slate-300">
-            الإحصائيات بتتخزّن في قاعدة بيانات Google Firebase الخاصة بالموقع، ومحدش بيقدر يشوفها غير إدارة الموقع.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">6. حقوقك</h2>
-          <p class="text-slate-300 mb-3">
-            تقدر تسحب موافقتك في أي وقت. لما تسحبها، بيقف تسجيل أي بيانات جديدة فوراً.
-          </p>
-          <button onclick="if(window.SamtStats){window.SamtStats.reopenConsent();}else{location.reload();}"
-                  class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
-            <i class="fa-solid fa-rotate"></i><span>تغيير قرار الموافقة</span>
-          </button>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">7. استخدام البرامج</h2>
+          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">4. استخدام البرامج</h2>
           <p class="text-slate-300">
             البرامج المعروضة بتتحمّل من روابطها الرسمية (متجر جوجل بلاي أو روابط مباشرة).
             الموقع مسؤول عن عرض الروابط فقط، والاستخدام على مسؤولية المستخدم.
@@ -414,17 +403,17 @@
         </section>
 
         <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">8. الملكية الفكرية</h2>
+          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">5. الملكية الفكرية</h2>
           <p class="text-slate-300">
             محتوى الكورسات والمواد التدريبية ملك لمنظومة سمت، وممنوع إعادة نشرها أو بيعها بدون إذن مكتوب.
           </p>
         </section>
 
         <section>
-          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">9. تعديل الشروط</h2>
+          <h2 class="text-lg font-bold font-cairo text-samt-cyan mb-3">6. تعديل الشروط</h2>
           <p class="text-slate-300">
-            ممكن نحدّث الصفحة دي وقت ما نحتاج، ولو حصل تغيير جوهري في طريقة جمع البيانات
-            هيظهرلك شريط الموافقة تاني عشان تراجع قرارك.
+            ممكن نحدّث الصفحة دي وقت ما نحتاج. ولو حصل في أي وقت إننا هنبدأ نجمع أي بيانات،
+            هيتكتب هنا صراحةً وهتتسأل الأول.
           </p>
         </section>
 
