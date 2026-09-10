@@ -43,7 +43,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
   <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
-  <script src="./assets/js/night-sky.js?v=4"></script>
+  <script src="./assets/js/night-sky.js?v=5"></script>
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
        page text by a different amount. That is why the header fitted on one
@@ -54,6 +54,27 @@
        Plain `hidden` here silently breaks every `position: sticky` on the page. */
     html, body { overflow-x: hidden; }
     @supports (overflow: clip) { html, body { overflow-x: clip; } }
+
+    /* ---- phone performance ----
+       backdrop-filter is by far the most expensive effect on this page, and it
+       is used ~48 times, stacked over an animated background - so the browser
+       can never cache any of it. Mid-range phones respond by discarding
+       painted tiles, which is what showed up as blank areas while scrolling
+       fast. Below 900px (and on any touch device) the frosted glass becomes a
+       plain solid panel, which looks nearly identical over a dark sky. */
+    @media (max-width: 900px), (hover: none) and (pointer: coarse) {
+      .glass-card, header, .samt-app, .samt-auth-slot button,
+      .samt-auth-slot a, #themeToggle, .btn-samt-glow {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+      .glass-card { background-color: rgba(13, 21, 42, .94) !important; }
+      header      { background-color: rgba(7, 10, 18, .96) !important; }
+      /* a 30px blur behind every program card, on top of everything else */
+      .samt-media-bg { filter: none !important; opacity: .25 !important; }
+      .samt-shine { display: none !important; }
+      .samt-app:hover { transform: none !important; }
+    }
     .celestial-canvas { overflow: hidden !important; }
 
     /* the header is a single row that must never wrap or grow taller */
