@@ -327,20 +327,50 @@
     </div>
   </header>
 
-  <!-- Login Shield (PIN Protected) -->
+  <!-- Admin sign-in. The PIN this used to ask for lived in the page source,
+       so anyone could read it. Identity is Firebase's job now. -->
   <div id="loginShield" class="flex-grow flex items-center justify-center p-4 relative z-10">
-    <div class="glass-card rounded-2xl p-8 max-w-md w-full text-center space-y-6">
-      <div class="w-16 h-16 rounded-2xl bg-samt-gold/10 border border-samt-gold/30 text-samt-gold text-2xl flex items-center justify-center mx-auto">
-        <i class="fa-solid fa-lock"></i>
+    <div class="glass-card rounded-2xl p-8 max-w-md w-full space-y-5">
+      <div class="text-center space-y-3">
+        <div class="w-16 h-16 rounded-2xl bg-samt-cyan/10 border border-samt-cyan/30 text-samt-cyan text-2xl flex items-center justify-center mx-auto">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold font-cairo">تسجيل دخول المشرف</h2>
+          <p class="text-xs text-slate-400 mt-1">هذه الصفحة للإدارة فقط.</p>
+        </div>
       </div>
-      <div>
-        <h2 class="text-xl font-bold font-cairo">تسجيل دخول المشرف</h2>
-        <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة لإدارة الكورسات، البرامج، والمشتركين.</p>
+
+      <button type="button" id="adminGoogleBtn"
+              class="w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2.5
+                     bg-white text-[#3c4043] hover:bg-slate-100 transition-colors shadow-lg">
+        <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        <span>الدخول بحساب جوجل</span>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="flex-1 h-px bg-white/10"></div>
+        <span class="text-[10px] text-slate-500">أو بالبريد الإلكتروني</span>
+        <div class="flex-1 h-px bg-white/10"></div>
       </div>
-      <input type="password" id="pinInput" placeholder="الرمز السري" class="w-full glass-card border border-white/20 focus:border-samt-cyan text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
+
+      <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" dir="ltr"
+             class="w-full glass-card border border-white/20 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left bg-black/40 text-white" />
+      <input type="password" id="adminPass" placeholder="كلمة المرور" dir="ltr"
+             class="w-full glass-card border border-white/20 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none text-left bg-black/40 text-white" />
+
+      <p id="adminError" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs"></p>
+
       <button id="loginBtn" class="btn-samt-glow w-full py-3 rounded-xl text-sm font-bold">
         دخول لوحة التحكم
       </button>
+
+      <p class="text-center"><a href="./index.html" class="text-[11px] text-slate-500 hover:text-samt-cyan">رجوع للموقع</a></p>
     </div>
   </div>
 
@@ -351,9 +381,6 @@
     <div class="flex items-center gap-3 border-b border-white/10 pb-3 flex-wrap">
       <button id="tabCoursesBtn" class="px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space" onclick="switchTab('courses')">
         <i class="fa-solid fa-graduation-cap ml-1"></i> إدارة الكورسات والدروس
-      </button>
-      <button id="tabSubscribersBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('subscribers')">
-        <i class="fa-solid fa-envelope ml-1"></i> قائمة الإيميلات المسجلة (<span id="subCountBadge">0</span>)
       </button>
       <button id="tabStatsBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('stats')">
         <i class="fa-solid fa-chart-simple ml-1"></i> سجل الزوار والإحصائيات
@@ -402,37 +429,6 @@
       </div>
     </div>
 
-    <!-- TAB 2: Email Subscribers Management -->
-    <div id="subscribersSection" class="hidden space-y-6">
-      <div class="glass-card rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-black font-cairo">المشتركون وقائمة الإيميلات المسجلة</h2>
-          <p class="text-xs text-slate-400 mt-1">قائمة الزوار الذين سجلوا للحصول على إشعارات الكورسات والبرامج الجديدة.</p>
-        </div>
-        <button onclick="exportSubscribersCSV()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
-          <i class="fa-solid fa-file-csv"></i>
-          <span>تحميل قائمة الإيميلات (CSV)</span>
-        </button>
-      </div>
-
-      <div class="glass-card rounded-2xl overflow-hidden text-right">
-        <div class="overflow-x-auto">
-          <table class="w-full text-right text-sm">
-            <thead class="bg-black/30 text-xs text-slate-400 font-cairo border-b border-white/10">
-              <tr>
-                <th class="p-4">#</th>
-                <th class="p-4">اسم المشترك</th>
-                <th class="p-4">البريد الإلكتروني</th>
-                <th class="p-4">تاريخ التسجيل</th>
-              </tr>
-            </thead>
-            <tbody id="subscribersTableBody" class="divide-y divide-white/5 text-xs text-slate-300"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3: Admin Account Settings -->
     <!-- TAB: Visitor stats -->
     <div id="statsSection" class="hidden space-y-6">
       <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -588,40 +584,78 @@
 
       // Data State
       let activeCourses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
-      let subscribers = JSON.parse(localStorage.getItem('samt_subscribers')) || window.AgentProData?.subscribers || [];
 
       const loginShield = document.getElementById('loginShield');
       const adminPanel = document.getElementById('adminPanel');
-      const pinInput = document.getElementById('pinInput');
       const loginBtn = document.getElementById('loginBtn');
       const tableBody = document.getElementById('coursesTableBody');
-      const subTableBody = document.getElementById('subscribersTableBody');
-      const subCountBadge = document.getElementById('subCountBadge');
 
       function unlockAdmin() {
         loginShield.classList.add('hidden');
         adminPanel.classList.remove('hidden');
         renderCoursesTable();
-        renderSubscribersTable();
         loadAdminSettings();
       }
 
-      // فحص تلقائي: إذا كان المشرف مسجل دخول عبر النظام الموحد يتم الفتح فوراً
-      if (window.SamtAuth && window.SamtAuth.isAdmin()) {
-        unlockAdmin();
+      // Firebase owns the identity. The panel opens only when Firebase says the
+      // signed-in account is the admin - there is no code in this page that can
+      // unlock it on its own.
+      const errEl = document.getElementById('adminError');
+      const showErr = (m) => { errEl.textContent = m; errEl.classList.remove('hidden'); };
+      const hideErr = () => errEl.classList.add('hidden');
+
+      function fbReady() {
+        return !!(window.SamtFB && window.SamtFB.available);
       }
 
-      loginBtn.addEventListener('click', () => {
-        const val = pinInput.value.trim();
-        if (val === '1234' || val === 'admin' || val === 'admin1234') {
-          // تسجيل دخول المشرف في الجلسة العامة
-          if (window.SamtAuth) {
-            window.SamtAuth.login('admin@samt.com', 'SAMT-SECURE-ADMIN-2026');
-          }
-          unlockAdmin();
-        } else {
-          alert('الرمز السري غير صحيح! الرمز الافتراضي: 1234 أو admin1234');
-        }
+      function afterSignIn() {
+        if (window.SamtFB && window.SamtFB.isAdmin()) { hideErr(); unlockAdmin(); return; }
+        showErr('هذا الحساب ليس حساب المشرف.');
+        if (window.SamtFB && window.SamtFB.signOut) window.SamtFB.signOut();
+      }
+
+      function authError(err) {
+        const code = (err && err.code) || '';
+        if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return;
+        if (code === 'auth/operation-not-allowed') showErr('تسجيل الدخول بجوجل غير مفعّل في إعدادات Firebase.');
+        else if (code === 'auth/unauthorized-domain') showErr('نطاق الموقع غير مسموح به في إعدادات Firebase.');
+        else if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found')
+          showErr('البريد الإلكتروني أو كلمة المرور غير صحيحة.');
+        else showErr('تعذّر تسجيل الدخول. حاول مرة أخرى.');
+      }
+
+      // already signed in from a previous visit
+      if (fbReady() && window.SamtFB.onAuthChange) {
+        window.SamtFB.onAuthChange(() => {
+          if (window.SamtFB.isAdmin()) unlockAdmin();
+        });
+      }
+
+      document.getElementById('adminGoogleBtn').addEventListener('click', async () => {
+        hideErr();
+        if (!fbReady()) { showErr('الاتصال بخدمة الحسابات غير متاح حالياً.'); return; }
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
+          await firebase.auth().signInWithPopup(provider);
+          afterSignIn();
+        } catch (err) { authError(err); }
+      });
+
+      loginBtn.addEventListener('click', async () => {
+        hideErr();
+        const email = document.getElementById('adminEmail').value.trim();
+        const pass = document.getElementById('adminPass').value;
+        if (!email || !pass) { showErr('اكتب البريد الإلكتروني وكلمة المرور.'); return; }
+        if (!fbReady()) { showErr('الاتصال بخدمة الحسابات غير متاح حالياً.'); return; }
+        try {
+          await window.SamtFB.adminSignIn(email, pass);
+          afterSignIn();
+        } catch (err) { authError(err); }
+      });
+
+      document.getElementById('adminPass').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') loginBtn.click();
       });
 
       function renderCoursesTable() {
@@ -649,22 +683,6 @@
             </td>
           </tr>
         `}).join('');
-      }
-
-      function renderSubscribersTable() {
-        subCountBadge.textContent = subscribers.length;
-        if (subscribers.length === 0) {
-          subTableBody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-slate-400">لا يوجد مشتركون مسجلون حالياً</td></tr>';
-          return;
-        }
-        subTableBody.innerHTML = subscribers.map((s, idx) => `
-          <tr class="hover:bg-white/5 transition-colors">
-            <td class="p-4 text-slate-400 font-bold">${idx + 1}</td>
-            <td class="p-4 font-bold">${s.name}</td>
-            <td class="p-4 text-samt-cyan font-mono" dir="ltr">${s.email}</td>
-            <td class="p-4 text-slate-400">${s.date || '2026-08-24'}</td>
-          </tr>
-        `).join('');
       }
 
       function loadAdminSettings() {
@@ -709,16 +727,14 @@
 
       window.switchTab = (tab) => {
         const cSec = document.getElementById('coursesSection');
-        const sSec = document.getElementById('subscribersSection');
         const setSec = document.getElementById('settingsSection');
         const stSec = document.getElementById('statsSection');
         const cBtn = document.getElementById('tabCoursesBtn');
-        const sBtn = document.getElementById('tabSubscribersBtn');
         const setBtn = document.getElementById('tabSettingsBtn');
         const stBtn = document.getElementById('tabStatsBtn');
 
-        [cSec, sSec, setSec, stSec].forEach(s => s?.classList.add('hidden'));
-        [cBtn, sBtn, setBtn, stBtn].forEach(b => {
+        [cSec, setSec, stSec].forEach(s => s?.classList.add('hidden'));
+        [cBtn, setBtn, stBtn].forEach(b => {
           if (b) {
             b.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white';
           }
@@ -727,9 +743,6 @@
         if (tab === 'courses') {
           cSec.classList.remove('hidden');
           cBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
-        } else if (tab === 'subscribers') {
-          sSec.classList.remove('hidden');
-          sBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
         } else if (tab === 'stats') {
           stSec.classList.remove('hidden');
           stBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
@@ -910,8 +923,7 @@
       window.exportUpdatedData = () => {
         const fullDataObj = {
           releases: window.AgentProData?.releases || [],
-          courses: activeCourses,
-          subscribers: subscribers
+          courses: activeCourses
         };
         const exportContent = `/**
  * سمت SAMT - Central Database File
@@ -945,17 +957,6 @@ if (typeof window !== 'undefined') {
         a.click();
       };
 
-      window.exportSubscribersCSV = () => {
-        let csv = 'Name,Email,Date\n';
-        subscribers.forEach(s => {
-          csv += `"${s.name}","${s.email}","${s.date}"\n`;
-        });
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'samt_subscribers.csv';
-        a.click();
-      };
     });
   </script>
 
