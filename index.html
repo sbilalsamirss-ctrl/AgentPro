@@ -832,11 +832,18 @@
       if (!box || !app.shotCount) return;
       const done = (a) => homeStartCycle(box, (a && a.shots) || []);
       if (homeShotCache[app.id]) return done(homeShotCache[app.id]);
-      if (!(window.SamtFB && window.SamtFB.loadProgramAssets)) return;
       const io = new IntersectionObserver((es, obs) => {
         if (!es.some((e) => e.isIntersecting)) return;
         obs.disconnect();
-        window.SamtFB.loadProgramAssets(app.id).then((a) => { homeShotCache[app.id] = a || {}; done(a); });
+        // firebase-init may still be booting on a cold load - wait for it
+        // instead of silently giving up on the screenshots.
+        let tries = 0;
+        const go = () => {
+          if (window.SamtFB && window.SamtFB.loadProgramAssets) {
+            window.SamtFB.loadProgramAssets(app.id).then((a) => { homeShotCache[app.id] = a || {}; done(a); });
+          } else if (tries++ < 40) { setTimeout(go, 250); }
+        };
+        go();
       }, { rootMargin: '200px' });
       io.observe(card);
     }
