@@ -135,7 +135,10 @@
        phone and wrapped onto two lines on another. Pin it so every browser
        renders the same size. */
     html { -webkit-text-size-adjust: 100%; -moz-text-size-adjust: 100%; text-size-adjust: 100%; }
+    /* `clip` contains horizontal overflow WITHOUT creating a scroll container.
+       Plain `hidden` here silently breaks every `position: sticky` on the page. */
     html, body { overflow-x: hidden; }
+    @supports (overflow: clip) { html, body { overflow-x: clip; } }
     .celestial-canvas { overflow: hidden !important; }
 
     /* the header is a single row that must never wrap or grow taller */
