@@ -446,6 +446,24 @@
         <div class="p-6 space-y-4">
           
           <!-- 1. LOGIN FORM -->
+          <button type="button" id="samtGoogleBtn" onclick="window.SamtAuth.handleGoogleSignIn()"
+                  class="w-full py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2.5
+                         bg-white text-[#3c4043] hover:bg-slate-100 transition-colors shadow-lg">
+            <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            <span>تسجيل الدخول بحساب جوجل</span>
+          </button>
+
+          <div class="flex items-center gap-3 py-1">
+            <div class="flex-1 h-px bg-white/10"></div>
+            <span class="text-[10px] text-slate-500">أو بالبريد الإلكتروني</span>
+            <div class="flex-1 h-px bg-white/10"></div>
+          </div>
+
           <form id="samtLoginForm" onsubmit="window.SamtAuth.handleLoginSubmit(event)" class="space-y-4">
             <div>
               <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">البريد الإلكتروني:</label>
@@ -481,7 +499,7 @@
             <div>
               <label class="block text-xs font-bold mb-1 font-cairo text-slate-300 text-right">الاسم الكامل:</label>
               <div class="relative">
-                <input type="text" id="authRegName" required placeholder="مثال: بلال سمير" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white text-right" />
+                <input type="text" id="authRegName" required placeholder="اكتب اسمك بالكامل" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl py-2.5 pr-10 pl-3 outline-none bg-black/40 text-white text-right" />
                 <i class="fa-solid fa-user absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
               </div>
             </div>
@@ -767,7 +785,7 @@
 
           <div>
             <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">عنوان الكورس / الدرس:</label>
-            <input type="text" id="inlineFormTitle" required placeholder="مثال: أسرار التصفح السريع والإنتاجية" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white" />
+            <input type="text" id="inlineFormTitle" required placeholder="عنوان الكورس" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white" />
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -804,7 +822,7 @@
 
           <div>
             <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">الوصف والشرح:</label>
-            <textarea id="inlineFormDesc" rows="3" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..." class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white"></textarea>
+            <textarea id="inlineFormDesc" rows="3" placeholder="وصف مختصر لمحتوى الكورس" class="w-full glass-card border border-white/15 focus:border-samt-cyan text-xs rounded-xl p-3 outline-none bg-black/40 text-white"></textarea>
           </div>
 
           <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
@@ -1256,6 +1274,65 @@
     fillDemoAdmin: function () {
       document.getElementById('authLoginEmail').value = MASTER_ADMIN.email;
       document.getElementById('authLoginPassword').value = MASTER_ADMIN.password;
+    },
+
+    // Google sign-in. Firebase owns the credentials; we only mirror the
+    // resulting profile into the local session the rest of the site reads.
+    handleGoogleSignIn: async function () {
+      const errEl = document.getElementById('authLoginError');
+      const show = (msg) => { if (errEl) { errEl.textContent = msg; errEl.classList.remove('hidden'); } };
+
+      if (!(window.firebase && firebase.apps && firebase.apps.length)) {
+        show('الاتصال بخدمة الحسابات غير متاح حالياً.');
+        return;
+      }
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const res = await firebase.auth().signInWithPopup(provider);
+        const u = res.user || {};
+        const email = (u.email || '').toLowerCase();
+        const adminEmail = (window.SamtFB && window.SamtFB.ADMIN_EMAIL || '').toLowerCase();
+        const isAdmin = !!adminEmail && email === adminEmail;
+
+        const session = {
+          name: u.displayName || email.split('@')[0] || 'مستخدم',
+          email: email,
+          role: isAdmin ? 'admin' : 'user',
+          avatar: isAdmin ? '👑' : '👤',
+          photo: u.photoURL || '',
+          provider: 'google',
+          emailVerified: true,
+          notificationsEnabled: true,
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+
+        // keep the local user list in step so existing screens still work
+        try {
+          const users = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+          if (!users.some(x => (x.email || '').toLowerCase() === email)) {
+            users.push({ name: session.name, email: email, role: session.role, provider: 'google',
+                         registeredAt: new Date().toISOString() });
+            localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+          }
+        } catch (err) {}
+
+        if (window.SamtStats && window.SamtStats.askNotify) window.SamtStats.askNotify();
+        this.closeAuthModal();
+        SamtAuth.toast('مرحباً بك يا ' + session.name, 'success');
+        setTimeout(() => window.location.reload(), 400);
+      } catch (err) {
+        const code = (err && err.code) || '';
+        if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return;
+        if (code === 'auth/operation-not-allowed') {
+          show('تسجيل الدخول بجوجل غير مفعّل في إعدادات Firebase.');
+        } else if (code === 'auth/unauthorized-domain') {
+          show('نطاق الموقع غير مسموح به في إعدادات Firebase.');
+        } else {
+          show('تعذّر تسجيل الدخول بجوجل. حاول مرة أخرى.');
+        }
+      }
     },
 
     handleLoginSubmit: async function (e) {
