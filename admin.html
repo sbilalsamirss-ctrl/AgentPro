@@ -224,8 +224,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
-  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
+  <script src="./assets/js/samt-analytics.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
@@ -336,7 +337,7 @@
         <h2 class="text-xl font-bold font-cairo">تسجيل دخول المشرف</h2>
         <p class="text-xs text-slate-400 mt-1">أدخل الرمز السري للإدارة لإدارة الكورسات، البرامج، والمشتركين.</p>
       </div>
-      <input type="password" id="pinInput" placeholder="الرمز السري الافتراضي: 1234" class="w-full glass-card border border-white/20 focus:border-samt-cyan text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
+      <input type="password" id="pinInput" placeholder="الرمز السري" class="w-full glass-card border border-white/20 focus:border-samt-cyan text-center text-lg tracking-widest rounded-xl p-3 outline-none" />
       <button id="loginBtn" class="btn-samt-glow w-full py-3 rounded-xl text-sm font-bold">
         دخول لوحة التحكم
       </button>
@@ -353,6 +354,9 @@
       </button>
       <button id="tabSubscribersBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('subscribers')">
         <i class="fa-solid fa-envelope ml-1"></i> قائمة الإيميلات المسجلة (<span id="subCountBadge">0</span>)
+      </button>
+      <button id="tabStatsBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('stats')">
+        <i class="fa-solid fa-chart-simple ml-1"></i> سجل الزوار والإحصائيات
       </button>
       <button id="tabSettingsBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('settings')">
         <i class="fa-solid fa-user-shield ml-1"></i> إعدادات حساب المشرف
@@ -429,6 +433,60 @@
     </div>
 
     <!-- TAB 3: Admin Account Settings -->
+    <!-- TAB: Visitor stats -->
+    <div id="statsSection" class="hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-black font-cairo">سجل الزوار والإحصائيات</h2>
+          <p class="text-xs text-slate-400 mt-1">أرقام مجهولة الهوية من الزوار اللي وافقوا على سياسة الخصوصية.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="statsRange" class="glass-card border border-white/15 rounded-xl text-xs py-2 px-3 outline-none bg-black/40 text-white">
+            <option value="7">آخر 7 أيام</option>
+            <option value="30" selected>آخر 30 يوم</option>
+            <option value="90">آخر 90 يوم</option>
+            <option value="0">كل الفترات</option>
+          </select>
+          <button id="statsRefresh" class="btn-samt-glow px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-rotate"></i><span>تحديث</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="statsCards" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-sm font-bold font-cairo mb-4"><i class="fa-solid fa-earth-africa text-samt-cyan ml-2"></i>الزوار حسب الدولة</h3>
+          <div id="statsCountries" class="space-y-2 text-xs"></div>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-sm font-bold font-cairo mb-4"><i class="fa-solid fa-download text-samt-cyan ml-2"></i>التحميلات لكل برنامج</h3>
+          <div id="statsDownloads" class="space-y-2 text-xs"></div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-sm font-bold font-cairo mb-4"><i class="fa-solid fa-graduation-cap text-samt-cyan ml-2"></i>الكورسات — الإكمال والتقدّم</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right">
+            <thead class="text-[11px] text-slate-400 border-b border-white/10">
+              <tr>
+                <th class="p-3">الكورس</th>
+                <th class="p-3">عدد اللي بدأوه</th>
+                <th class="p-3">خلّصوه</th>
+                <th class="p-3">نسبة الإكمال</th>
+                <th class="p-3">متوسط اللي اتشاف</th>
+              </tr>
+            </thead>
+            <tbody id="statsCoursesBody" class="divide-y divide-white/5 text-xs text-slate-300"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p id="statsNote" class="text-[11px] text-slate-500 text-center"></p>
+    </div>
+
     <div id="settingsSection" class="hidden space-y-6 max-w-3xl">
       <div class="glass-card rounded-2xl p-6 text-right space-y-6">
         <div>
@@ -495,6 +553,7 @@
 
   <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
     &copy; 2026 <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
+      <div class="mt-2"><a href="./privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-samt-cyan text-xs font-cairo transition-colors">الشروط وسياسة الخصوصية</a></div>
   </footer>
 
   <!-- Central Data & Auth Scripts -->
@@ -652,12 +711,14 @@
         const cSec = document.getElementById('coursesSection');
         const sSec = document.getElementById('subscribersSection');
         const setSec = document.getElementById('settingsSection');
+        const stSec = document.getElementById('statsSection');
         const cBtn = document.getElementById('tabCoursesBtn');
         const sBtn = document.getElementById('tabSubscribersBtn');
         const setBtn = document.getElementById('tabSettingsBtn');
+        const stBtn = document.getElementById('tabStatsBtn');
 
-        [cSec, sSec, setSec].forEach(s => s?.classList.add('hidden'));
-        [cBtn, sBtn, setBtn].forEach(b => {
+        [cSec, sSec, setSec, stSec].forEach(s => s?.classList.add('hidden'));
+        [cBtn, sBtn, setBtn, stBtn].forEach(b => {
           if (b) {
             b.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white';
           }
@@ -669,11 +730,162 @@
         } else if (tab === 'subscribers') {
           sSec.classList.remove('hidden');
           sBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
+        } else if (tab === 'stats') {
+          stSec.classList.remove('hidden');
+          stBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
+          loadStats();
         } else if (tab === 'settings') {
           setSec.classList.remove('hidden');
           setBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space';
         }
       };
+
+      // ======================= visitor stats =======================
+      // Everything is read straight out of Firestore and aggregated here, so
+      // there is no server and no second dashboard to log into.
+      function statsDb() {
+        try { if (window.firebase && firebase.apps && firebase.apps.length) return firebase.firestore(); }
+        catch (e) {}
+        return null;
+      }
+
+      function dayCutoff(days) {
+        if (!days) return '0000-00-00';
+        const d = new Date(Date.now() - days * 86400000);
+        return d.toISOString().slice(0, 10);
+      }
+
+      function statCard(label, value, icon, tone) {
+        return `
+          <div class="glass-card rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] text-slate-400 font-bold">${label}</span>
+              <i class="fa-solid ${icon} ${tone || 'text-samt-cyan'}"></i>
+            </div>
+            <div class="text-2xl font-black font-readex">${value}</div>
+          </div>`;
+      }
+
+      function bar(label, value, max, extra) {
+        const pct = max ? Math.round((value / max) * 100) : 0;
+        return `
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-slate-300">${label}</span>
+              <span class="text-slate-400 font-mono">${value}${extra || ''}</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-white/8 overflow-hidden">
+              <div class="h-full rounded-full" style="width:${pct}%;background:linear-gradient(90deg,#00F5D4,#00BBF9)"></div>
+            </div>
+          </div>`;
+      }
+
+      async function loadStats() {
+        const db = statsDb();
+        const note = document.getElementById('statsNote');
+        const cards = document.getElementById('statsCards');
+        if (!db) {
+          cards.innerHTML = '<p class="col-span-full text-xs text-rose-400">الاتصال بقاعدة البيانات غير متاح.</p>';
+          return;
+        }
+        cards.innerHTML = '<p class="col-span-full text-xs text-slate-400">جاري التحميل…</p>';
+
+        const days = parseInt(document.getElementById('statsRange').value, 10);
+        const from = dayCutoff(days);
+
+        let visits = [], events = [], progress = [];
+        try {
+          const [v, e, p] = await Promise.all([
+            db.collection('analytics_visits').get(),
+            db.collection('analytics_events').get(),
+            db.collection('analytics_progress').get()
+          ]);
+          v.forEach(d => visits.push(d.data()));
+          e.forEach(d => events.push(d.data()));
+          p.forEach(d => progress.push(d.data()));
+        } catch (err) {
+          cards.innerHTML = '<p class="col-span-full text-xs text-rose-400">تعذّر قراءة الإحصائيات: ' +
+            (err && err.code ? err.code : 'خطأ') + '. تأكد من قواعد Firestore.</p>';
+          return;
+        }
+
+        visits = visits.filter(x => (x.day || '') >= from);
+        events = events.filter(x => (x.day || '') >= from);
+
+        // --- headline numbers ---
+        const uniqueDays = new Set(visits.map(x => x.day));
+        const visitors = visits.length;                       // one row per visitor per day
+        const downloads = events.filter(x => x.type === 'download').length;
+        const finished = progress.filter(x => x.completed).length;
+
+        cards.innerHTML =
+          statCard('زيارات', visitors, 'fa-eye') +
+          statCard('تحميلات البرامج', downloads, 'fa-download') +
+          statCard('كورسات مكتملة', finished, 'fa-circle-check', 'text-emerald-400') +
+          statCard('أيام فيها نشاط', uniqueDays.size, 'fa-calendar-day');
+
+        // --- countries ---
+        const byCountry = {};
+        visits.forEach(x => { const c = x.country || 'ZZ'; byCountry[c] = (byCountry[c] || 0) + 1; });
+        const cList = Object.keys(byCountry).map(c => [c, byCountry[c]]).sort((a, b) => b[1] - a[1]);
+        const cMax = cList.length ? cList[0][1] : 0;
+        const nameOf = (c) => (window.SamtStats ? window.SamtStats.countryName(c) : c);
+        document.getElementById('statsCountries').innerHTML = cList.length
+          ? cList.slice(0, 12).map(([c, n]) => bar(nameOf(c), n, cMax)).join('')
+          : '<p class="text-slate-500">لا توجد بيانات بعد.</p>';
+
+        // --- downloads per program ---
+        const byApp = {};
+        events.filter(x => x.type === 'download').forEach(x => {
+          const k = x.refName || x.refId || 'غير معروف';
+          byApp[k] = (byApp[k] || 0) + 1;
+        });
+        const dList = Object.keys(byApp).map(k => [k, byApp[k]]).sort((a, b) => b[1] - a[1]);
+        const dMax = dList.length ? dList[0][1] : 0;
+        document.getElementById('statsDownloads').innerHTML = dList.length
+          ? dList.map(([k, n]) => bar(k, n, dMax)).join('')
+          : '<p class="text-slate-500">لا توجد تحميلات بعد.</p>';
+
+        // --- courses ---
+        const byCourse = {};
+        progress.forEach(x => {
+          const k = x.courseId || '?';
+          if (!byCourse[k]) byCourse[k] = { title: x.courseTitle || k, started: 0, done: 0, sum: 0 };
+          byCourse[k].started++;
+          byCourse[k].sum += (x.percent || 0);
+          if (x.completed) byCourse[k].done++;
+        });
+        const rows = Object.keys(byCourse).map(k => byCourse[k])
+          .sort((a, b) => b.started - a.started);
+        document.getElementById('statsCoursesBody').innerHTML = rows.length
+          ? rows.map(r => {
+              const rate = r.started ? Math.round((r.done / r.started) * 100) : 0;
+              const avg = r.started ? Math.round(r.sum / r.started) : 0;
+              return `
+                <tr>
+                  <td class="p-3 font-bold text-white">${r.title}</td>
+                  <td class="p-3">${r.started}</td>
+                  <td class="p-3 text-emerald-400 font-bold">${r.done}</td>
+                  <td class="p-3">
+                    <div class="flex items-center gap-2">
+                      <div class="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden min-w-[60px]">
+                        <div class="h-full rounded-full" style="width:${rate}%;background:linear-gradient(90deg,#00F5D4,#00BBF9)"></div>
+                      </div>
+                      <span class="font-mono">${rate}%</span>
+                    </div>
+                  </td>
+                  <td class="p-3 font-mono">${avg}%</td>
+                </tr>`;
+            }).join('')
+          : '<tr><td colspan="5" class="p-6 text-center text-slate-500">لا توجد بيانات كورسات بعد.</td></tr>';
+
+        note.textContent = 'الأرقام دي من الزوار اللي وافقوا على سياسة الخصوصية فقط، ومحسوبة على '
+          + (days ? ('آخر ' + days + ' يوم') : 'كل الفترات') + '.';
+      }
+
+      document.getElementById('statsRefresh')?.addEventListener('click', loadStats);
+      document.getElementById('statsRange')?.addEventListener('change', loadStats);
+      window.loadStats = loadStats;
 
       window.openNewCourseModal = () => {
         window.location.href = './course-builder.html';

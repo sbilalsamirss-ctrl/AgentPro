@@ -50,8 +50,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
-  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
+  <script src="./assets/js/samt-analytics.js?v=1"></script>
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
        page text by a different amount. That is why the header fitted on one
@@ -174,11 +175,11 @@
         <div class="glass-card rounded-2xl p-5 space-y-4">
           <div>
             <label class="lbl" for="fName">اسم البرنامج</label>
-            <input id="fName" class="fld" placeholder="مثال: AgentPro للكول سنتر" />
+            <input id="fName" class="fld" placeholder="اسم البرنامج" />
           </div>
           <div>
             <label class="lbl" for="fDesc">وصف مختصر</label>
-            <textarea id="fDesc" rows="3" class="fld" placeholder="سطرين يشرحوا البرنامج بيعمل إيه"></textarea>
+            <textarea id="fDesc" rows="3" class="fld" placeholder="وصف مختصر للبرنامج"></textarea>
           </div>
 
           <div>
@@ -190,17 +191,17 @@
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="lbl" for="fVersion">الإصدار (اختياري)</label>
-              <input id="fVersion" class="fld" dir="ltr" placeholder="v2.4.2" />
+              <input id="fVersion" class="fld" dir="ltr" placeholder="رقم الإصدار" />
             </div>
             <div id="sizeWrap">
               <label class="lbl" for="fSize">حجم الملف (اختياري)</label>
-              <input id="fSize" class="fld" dir="ltr" placeholder="68 MB" />
+              <input id="fSize" class="fld" dir="ltr" placeholder="حجم الملف" />
             </div>
           </div>
 
           <div>
             <label class="lbl" for="fPlat">المنصات / المتطلبات (كل سطر بند)</label>
-            <textarea id="fPlat" rows="3" class="fld" placeholder="Windows 10 / 11&#10;4 GB RAM"></textarea>
+            <textarea id="fPlat" rows="3" class="fld" placeholder="متطلبات التشغيل — كل سطر بند"></textarea>
           </div>
         </div>
 

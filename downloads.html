@@ -276,8 +276,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
-  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
+  <script src="./assets/js/samt-analytics.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
@@ -448,6 +449,7 @@
 
   <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
     &copy; 2026 <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. جميع الحقوق محفوظة.
+      <div class="mt-2"><a href="./privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-samt-cyan text-xs font-cairo transition-colors">الشروط وسياسة الخصوصية</a></div>
   </footer>
 
   <script src="./assets/js/courses-data.js?v=20260830a" charset="utf-8"></script>
@@ -517,14 +519,14 @@
         const type = app.type || (app.url || app.downloadUrl || '').includes('play.google.com') ? 'play' : 'direct';
         const href = esc(app.url || app.downloadUrl || '#');
         if (type === 'play') {
-          return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+          return `<a href="${href}" target="_blank" rel="noopener" data-track-download data-track-id="${esc(app.id||'')}" data-track-name="${esc(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                     <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
         }
         if (type === 'web') {
-          return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+          return `<a href="${href}" target="_blank" rel="noopener" data-track-download data-track-id="${esc(app.id||'')}" data-track-name="${esc(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i><span>فتح التطبيق</span></a>`;
         }
-        return `<a href="${href}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+        return `<a href="${href}" data-track-download data-track-id="${esc(app.id||'')}" data-track-name="${esc(app.name||'')}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                   <i class="fa-solid fa-download"></i><span>تحميل البرنامج</span></a>`;
       }
 

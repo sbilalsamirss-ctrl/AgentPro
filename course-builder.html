@@ -42,8 +42,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
-  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
+  <script src="./assets/js/samt-analytics.js?v=1"></script>
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
        page text by a different amount. That is why the header fitted on one
@@ -153,7 +154,7 @@
       <div class="lg:col-span-2 space-y-5 glass-card rounded-2xl p-6">
         <div>
           <label class="lbl">عنوان الكورس / الدرس:</label>
-          <input type="text" id="fTitle" required class="fld" placeholder="مثال: أساسيات التصفح الذكي" />
+          <input type="text" id="fTitle" required class="fld" placeholder="عنوان الكورس" />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -194,7 +195,7 @@
 
         <div>
           <label class="lbl">الوصف والشرح:</label>
-          <textarea id="fDesc" rows="3" class="fld" placeholder="ملخص ما يتعلمه الطالب في هذا الكورس..."></textarea>
+          <textarea id="fDesc" rows="3" class="fld" placeholder="وصف مختصر لمحتوى الكورس"></textarea>
         </div>
 
         <div id="formError" class="hidden p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs"></div>

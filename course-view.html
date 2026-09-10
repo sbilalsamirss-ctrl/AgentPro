@@ -126,8 +126,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script src="./assets/js/firebase-init.js?v=20260830b"></script>
-  <script src="./assets/js/auth.js?v=20260830a" charset="utf-8"></script>
+  <script src="./assets/js/auth.js?v=20260910a" charset="utf-8"></script>
   <script src="./assets/js/night-sky.js?v=5"></script>
+  <script src="./assets/js/samt-analytics.js?v=1"></script>
 
   <style id="samt-responsive-fix">
     /* Android browsers (Chrome, Brave, Samsung Internet, MIUI...) each inflate
@@ -589,6 +590,9 @@
         progressPercent.textContent = percent + '%';
         progressBar.style.width = percent + '%';
         localStorage.setItem('samt_completed_' + course.id, JSON.stringify(completedLessons));
+        if (window.SamtStats) {
+          window.SamtStats.trackCourse(course.id, course.title, percent, percent >= 100);
+        }
 
         // Show congrats message
         if (percent === 100 && course.congratsMessage) {
