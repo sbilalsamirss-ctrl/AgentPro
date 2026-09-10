@@ -302,6 +302,52 @@
       color: #00BBF9 !important; /* cyan/blue */
     }
 
+
+    /* ---- program card media: full screenshot + caption that slides away ---- */
+    .samt-app { position: relative; transition: transform .3s ease, border-color .3s ease; }
+    .samt-app:hover { transform: translateY(-3px); }
+    .samt-media { position: relative; aspect-ratio: 4 / 3; background: #05070F; overflow: hidden; }
+    .samt-media-bg {
+      position: absolute; inset: -12%;
+      background-size: cover; background-position: center;
+      filter: blur(30px) brightness(.42) saturate(1.25);
+      transition: background-image .5s ease;
+    }
+    .samt-shots { position: absolute; inset: 0; }
+    .samt-shot {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: contain;
+      transition: opacity .7s ease, transform .6s ease;
+    }
+    .samt-app:hover .samt-shot { transform: scale(1.03); }
+    .samt-cap {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
+      max-height: 78%; overflow: hidden;
+      padding: 2.2rem 1.1rem .95rem;
+      background: linear-gradient(to top,
+                  rgba(5,7,15,.97) 0%, rgba(5,7,15,.92) 40%,
+                  rgba(5,7,15,.6) 75%, rgba(5,7,15,0) 100%);
+      transform: translateY(0); opacity: 1;
+      transition: transform .6s cubic-bezier(.4,0,.2,1), opacity .45s ease;
+    }
+    .samt-cap p {
+      margin: 0; font-size: 11.5px; line-height: 1.75; color: #cbd5e1;
+      display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .samt-app:hover .samt-cap,
+    .samt-app.samt-peek .samt-cap { transform: translateY(102%); opacity: 0; }
+    .samt-shine {
+      position: absolute; inset: 0; z-index: 6; pointer-events: none;
+      background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.14) 50%, transparent 65%);
+      transform: translateX(-120%); opacity: 0;
+    }
+    .samt-app:hover .samt-shine {
+      opacity: 1; transform: translateX(120%);
+      transition: transform .85s ease, opacity .2s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .samt-app, .samt-app *, .samt-cap, .samt-shine { transition: none !important; animation: none !important; }
+    }
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
@@ -727,6 +773,74 @@
       return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
     }
 
+    // Home apps: same card as the downloads page - real icon, whole screenshot,
+    // description overlaid on the shot and sliding away on hover/tap.
+    const escHtml = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+
+    function homeActionButton(app) {
+      const type = app.type || ((app.url || app.downloadUrl || '').indexOf('play.google.com') >= 0 ? 'play' : 'direct');
+      const href = escHtml(app.url || app.downloadUrl || './downloads.html');
+      if (type === 'play') {
+        return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                  <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
+      }
+      if (type === 'web') {
+        return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i><span>فتح التطبيق</span></a>`;
+      }
+      return `<a href="${href}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                <i class="fa-solid fa-download"></i><span>تحميل البرنامج${app.fileSize ? ' (' + escHtml(app.fileSize) + ')' : ''}</span></a>`;
+    }
+
+    function homeStartCycle(box, shots) {
+      if (!shots || !shots.length) return;
+      const media = box.closest('.samt-media');
+      if (media) media.classList.remove('hidden');
+      const bg = media ? media.querySelector('.samt-media-bg') : null;
+      box.innerHTML = shots.map((sh, i) =>
+        `<img src="${escHtml(sh)}" alt="" loading="lazy" class="samt-shot" style="opacity:${i === 0 ? 1 : 0}">`
+      ).join('');
+      const setBg = (n) => { if (bg) bg.style.backgroundImage = 'url("' + shots[n] + '")'; };
+      setBg(0);
+      if (media && !media.__tap) {
+        media.__tap = true;
+        media.addEventListener('click', () => media.closest('.samt-app').classList.toggle('samt-peek'));
+      }
+      if (shots.length < 2) return;
+      const imgs = box.querySelectorAll('.samt-shot');
+      let i = 0, timer = null;
+      const tick = () => {
+        imgs[i].style.opacity = '0';
+        i = (i + 1) % imgs.length;
+        imgs[i].style.opacity = '1';
+        setBg(i);
+      };
+      const io = new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          if (e.isIntersecting && !timer) timer = setInterval(tick, 3800);
+          else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
+        });
+      }, { threshold: 0.15 });
+      io.observe(box);
+    }
+
+    const homeShotCache = {};
+    function homeHydrateShots(card, app) {
+      const box = card.querySelector('.samt-shots');
+      if (!box || !app.shotCount) return;
+      const done = (a) => homeStartCycle(box, (a && a.shots) || []);
+      if (homeShotCache[app.id]) return done(homeShotCache[app.id]);
+      if (!(window.SamtFB && window.SamtFB.loadProgramAssets)) return;
+      const io = new IntersectionObserver((es, obs) => {
+        if (!es.some((e) => e.isIntersecting)) return;
+        obs.disconnect();
+        window.SamtFB.loadProgramAssets(app.id).then((a) => { homeShotCache[app.id] = a || {}; done(a); });
+      }, { rootMargin: '200px' });
+      io.observe(card);
+    }
+
     function renderHomeApps() {
       const container = document.getElementById('homeAppsContainer');
       if (!container) return;
@@ -745,23 +859,40 @@
         return;
       }
 
-      container.innerHTML = releases.slice(0, 3).map(app => `
-        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between group transition-all">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-2xl">${app.icon || '🚀'}</span>
-              <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-samt-cyan/20 text-samt-cyan border border-samt-cyan/30">${app.badge || app.version || 'إصدار رسمي'}</span>
-            </div>
-            <span class="text-xs font-extrabold text-samt-cyan">${app.category || 'تطبيقات سمت'}</span>
-            <h3 class="text-base font-bold mt-1 mb-2 font-cairo">${app.name}</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-6">${app.desc || ''}</p>
+      const shown = releases.slice(0, 3);
+      container.innerHTML = shown.map((app) => {
+        const desc = escHtml(app.desc || '');
+        const badge = escHtml(app.badge || app.version || 'إصدار رسمي');
+        return `
+        <div class="samt-app glass-card rounded-2xl overflow-hidden flex flex-col h-full group transition-all" data-id="${escHtml(app.id || '')}">
+          <div class="samt-media hidden">
+            <div class="samt-media-bg"></div>
+            <div class="samt-shots"></div>
+            ${desc ? `<div class="samt-cap"><p>${desc}</p></div>` : ''}
+            <div class="samt-shine"></div>
           </div>
-          <a href="${app.downloadUrl || './downloads.html'}" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-            <i class="fa-solid fa-download"></i>
-            <span>تحميل البرنامج (${app.fileSize || 'مباشر'})</span>
-          </a>
-        </div>
-      `).join('');
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15 bg-black/30">
+                ${app.icon && String(app.icon).indexOf(':') > 0
+                    ? `<img src="${escHtml(app.icon)}" alt="${escHtml(app.name)}" loading="lazy" class="w-full h-full object-contain">`
+                    : `<div class="w-full h-full flex items-center justify-center text-xl">${escHtml(app.icon || '🚀')}</div>`}
+              </div>
+              <div class="min-w-0 flex-grow">
+                <h3 class="text-base font-bold font-cairo leading-snug">${escHtml(app.name || '')}</h3>
+                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-samt-cyan/20 text-samt-cyan border border-samt-cyan/30">${badge}</span>
+              </div>
+            </div>
+            ${(!app.shotCount && desc) ? `<p class="text-slate-400 text-xs leading-relaxed mb-4">${desc}</p>` : ''}
+            <div class="mt-auto pt-1">${homeActionButton(app)}</div>
+          </div>
+        </div>`;
+      }).join('');
+
+      [].forEach.call(container.querySelectorAll('.samt-app'), (card) => {
+        const app = shown.filter((r) => String(r.id) === card.getAttribute('data-id'))[0];
+        if (app) homeHydrateShots(card, app);
+      });
     }
 
     function renderHomeCourses() {
@@ -915,6 +1046,7 @@
     // Initial Dynamic Render
     document.addEventListener('DOMContentLoaded', () => {
       renderHomeApps();
+      window.addEventListener('samt-programs-updated', renderHomeApps);
       renderHomeCourses();
     });
   </script>
