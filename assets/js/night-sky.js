@@ -86,7 +86,31 @@
 
   @media (prefers-reduced-motion: reduce){
     .samt-sky *{animation:none !important}}
+
+  /* ---- lite mode: phones and low-power machines ----
+     Every layer here either animates or is blurred, and both force the
+     compositor to repaint full-screen layers on every frame. On a mid-range
+     phone that starves the scroller, and the browser starts discarding
+     painted tiles - which is what shows up as blank areas when you scroll
+     fast. In lite mode the sky is painted once and then costs nothing.
+     The motion was imperceptible anyway (the star fields take 15 minutes
+     for one turn), so almost nothing is lost visually. */
+  .samt-lite *{animation:none !important;will-change:auto !important}
+  .samt-lite .samt-mw-glow,.samt-lite .samt-mw-dust{filter:none !important}
+  .samt-lite .samt-neb{opacity:.5}
+  .samt-lite .samt-neb.n3,.samt-lite .samt-neb.n4{display:none}
   `;
+
+  // Phones, tablets and weak laptops get the cheap sky.
+  var LITE = (function () {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+      if (navigator.deviceMemory && navigator.deviceMemory <= 4) return true;
+      if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return true;
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return true;
+      return window.innerWidth <= 900;
+    } catch (e) { return false; }
+  })();
 
   // Build a box-shadow star field. Returns a CSS box-shadow string.
   function field(count, w, h, band, blur) {
@@ -140,10 +164,14 @@
     var vw = Math.max(window.innerWidth, 360);
     var vh = Math.max(window.innerHeight, 480);
     // diagonal * margin => the rotating layers always cover the screen
-    var D = Math.ceil(Math.sqrt(vw * vw + vh * vh) * 1.45);
+    // Full mode rotates the star fields, so each layer must be a square big
+    // enough to still cover the screen at any angle. Lite mode does not
+    // rotate, so the viewport-sized square is plenty - roughly a third of
+    // the pixels to paint.
+    var D = LITE ? Math.ceil(Math.max(vw, vh)) : Math.ceil(Math.sqrt(vw * vw + vh * vh) * 1.45);
 
     var sky = document.createElement('div');
-    sky.className = 'samt-sky';
+    sky.className = 'samt-sky' + (LITE ? ' samt-lite' : '');
     sky.setAttribute('aria-hidden', 'true');
 
     var base = document.createElement('div');
@@ -173,7 +201,7 @@
     var mwW = Math.round(vw * 2.4), mwH = Math.round(vh * 0.56);
     mwStars.style.width = mwW + 'px';
     mwStars.style.height = mwH + 'px';
-    mwStars.appendChild(dot(1, field(360, mwW, mwH, true), 'samt-tw3'));
+    mwStars.appendChild(dot(1, field(LITE ? 150 : 360, mwW, mwH, true), LITE ? '' : 'samt-tw3'));
     mw.appendChild(mwStars);
 
     var dust = document.createElement('div');
@@ -181,10 +209,15 @@
     mw.appendChild(dust);
     sky.appendChild(mw);
 
-    // three parallax star fields
-    sky.appendChild(layer('samt-s1', 1, 280, D, 'samt-tw1', 0));
-    sky.appendChild(layer('samt-s2', 1.6, 110, D, 'samt-tw2', 1));
-    sky.appendChild(layer('samt-s3', 2.2, 45, D, 'samt-tw3', 3));
+    // parallax star fields - three rotating layers normally, two still ones on phones
+    if (LITE) {
+      sky.appendChild(layer('samt-s1', 1, 140, D, '', 0));
+      sky.appendChild(layer('samt-s3', 2, 30, D, '', 2));
+    } else {
+      sky.appendChild(layer('samt-s1', 1, 280, D, 'samt-tw1', 0));
+      sky.appendChild(layer('samt-s2', 1.6, 110, D, 'samt-tw2', 1));
+      sky.appendChild(layer('samt-s3', 2.2, 45, D, 'samt-tw3', 3));
+    }
 
     document.body.insertBefore(sky, document.body.firstChild);
   }
