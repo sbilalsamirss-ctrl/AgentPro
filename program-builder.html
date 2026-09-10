@@ -375,9 +375,13 @@
           +   '<div class="btn-samt-glow w-full py-2.5 rounded-xl text-xs flex items-center justify-center gap-2">' + btn + '</div>'
           + '</div>';
 
-        var total = bytesOf(state.icon) + state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
-        $('sizeNote').textContent = total ? ('حجم الصور المرفوعة: ' + human(total) + ' من 1 MB المسموحة') : '';
-        $('sizeNote').className = 'text-[11px] mt-2 ' + (total > 850000 ? 'text-amber-400' : 'text-slate-500');
+        var shotBytes = state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
+        var iconBytes = bytesOf(state.icon);
+        $('sizeNote').textContent = (shotBytes || iconBytes)
+          ? ('اللقطات: ' + human(shotBytes) + ' من 900 KB  •  الأيقونة: ' + human(iconBytes) + ' من 250 KB')
+          : '';
+        $('sizeNote').className = 'text-[11px] mt-2 '
+          + ((shotBytes > 780000 || iconBytes > 200000) ? 'text-amber-400' : 'text-slate-500');
       }
 
       /* ---------- shots list ---------- */
@@ -435,7 +439,7 @@
 
       function takeIcon(files) {
         if (!files.length) return;
-        compress(files[0], 128, 0.85).then(function (d) {
+        compress(files[0], 256, 0.92).then(function (d) {
           state.icon = d; $('fIconUrl').value = '';
           $('iconPrev').innerHTML = '<img src="' + esc(d) + '" class="w-full h-full object-cover" alt="">';
           render();
@@ -443,7 +447,7 @@
       }
       function takeShots(files) {
         files.slice(0, MAX_SHOTS).forEach(function (f) {
-          compress(f, 640, 0.72).then(addShot).catch(function () { msg('تعذّر قراءة إحدى الصور', 'bad'); });
+          compress(f, 1000, 0.86).then(addShot).catch(function () { msg('تعذّر قراءة إحدى الصور', 'bad'); });
         });
       }
 
@@ -499,8 +503,10 @@
         if (!url) { msg('لازم تحط رابط البرنامج', 'bad'); return; }
         if (state.type === 'play' && !playPackage(url)) { msg('رابط جوجل بلاي غير صحيح', 'bad'); return; }
 
-        var total = bytesOf(state.icon) + state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
-        if (total > 950000) { msg('حجم الصور كبير — امسح لقطة أو اتنين', 'bad'); return; }
+        var shotBytes = state.shots.reduce(function (a, s) { return a + bytesOf(s); }, 0);
+        var iconBytes = bytesOf(state.icon);
+        if (shotBytes > 900000) { msg('حجم اللقطات كبير — امسح لقطة أو اتنين', 'bad'); return; }
+        if (iconBytes > 250000) { msg('حجم الأيقونة كبير — جرّب صورة أصغر', 'bad'); return; }
 
         var programs = readPrograms();
         var id = state.id || ('app-' + Date.now());

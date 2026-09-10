@@ -220,24 +220,56 @@
       color: #00BBF9 !important; /* cyan/blue */
     }
 
-    /* ---- program cards: hover lift + shine, screenshot cross-fade ---- */
-    .samt-app { position: relative; }
-    .samt-app .samt-shots img { transition: transform .6s ease, opacity .7s ease; }
-    .samt-app:hover .samt-shots img { transform: scale(1.06); }
+    /* ---- program card media: full screenshot + caption that slides away ---- */
+    .samt-app { position: relative; transition: transform .3s ease, border-color .3s ease; }
+    .samt-app:hover { transform: translateY(-3px); }
+
+    .samt-media { position: relative; aspect-ratio: 4 / 3; background: #05070F; overflow: hidden; }
+    /* a blurred copy of the shot fills the letterbox so nothing is cropped */
+    .samt-media-bg {
+      position: absolute; inset: -12%;
+      background-size: cover; background-position: center;
+      filter: blur(30px) brightness(.42) saturate(1.25);
+      transition: background-image .5s ease;
+    }
+    .samt-shots { position: absolute; inset: 0; }
+    .samt-shot {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: contain;                 /* show the WHOLE screenshot, never crop */
+      transition: opacity .7s ease, transform .6s ease;
+    }
+    .samt-app:hover .samt-shot { transform: scale(1.03); }
+
+    /* the description sits over the image and slides down out of the way on hover */
+    .samt-cap {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
+      max-height: 78%; overflow: hidden;
+      padding: 2.2rem 1.1rem .95rem;
+      background: linear-gradient(to top,
+                  rgba(5,7,15,.97) 0%, rgba(5,7,15,.92) 40%,
+                  rgba(5,7,15,.6) 75%, rgba(5,7,15,0) 100%);
+      transform: translateY(0); opacity: 1;
+      transition: transform .6s cubic-bezier(.4,0,.2,1), opacity .45s ease;
+    }
+    .samt-cap p {
+      margin: 0; font-size: 11.5px; line-height: 1.75; color: #cbd5e1;
+      display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .samt-app:hover .samt-cap,
+    .samt-app.samt-peek .samt-cap { transform: translateY(102%); opacity: 0; }
+
     .samt-shine {
-      background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.16) 50%, transparent 65%);
-      transform: translateX(-120%);
-      opacity: 0;
+      position: absolute; inset: 0; z-index: 6; pointer-events: none;
+      background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.14) 50%, transparent 65%);
+      transform: translateX(-120%); opacity: 0;
     }
     .samt-app:hover .samt-shine {
-      opacity: 1;
-      transform: translateX(120%);
+      opacity: 1; transform: translateX(120%);
       transition: transform .85s ease, opacity .2s ease;
     }
-    .samt-app:hover { transform: translateY(-3px); }
-    .samt-app { transition: transform .3s ease, border-color .3s ease; }
+
     @media (prefers-reduced-motion: reduce) {
-      .samt-app, .samt-app *, .samt-shine { transition: none !important; animation: none !important; }
+      .samt-app, .samt-app *, .samt-cap, .samt-shine { transition: none !important; animation: none !important; }
     }
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -478,35 +510,40 @@
       function cardHtml(app, admin) {
         const meta = [app.version, app.fileSize].filter(Boolean).join(' • ');
         const list = app.platforms || app.requirements || [];
+        const hasShots = !!app.shotCount;
+        const desc = esc(app.desc || '');
         return `
-        <div class="samt-app glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all" data-id="${esc(app.id || '')}">
+        <div class="samt-app glass-card rounded-2xl overflow-hidden flex flex-col h-full group transition-all" data-id="${esc(app.id || '')}">
           ${admin ? `
-            <div class="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-cyan/40">
+            <div class="absolute top-3 left-3 z-30 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-cyan/40">
               <button onclick="event.preventDefault();event.stopPropagation();window.location.href='./program-builder.html?edit=${esc(app.id)}'"
                       title="تعديل" class="w-7 h-7 rounded-lg bg-samt-cyan/20 hover:bg-samt-cyan/40 text-samt-cyan flex items-center justify-center text-xs">
                 <i class="fa-solid fa-pen"></i>
               </button>
             </div>` : ''}
-          <div>
-            <div class="samt-shots relative aspect-video bg-black/40 overflow-hidden hidden">
-              <div class="samt-shine absolute inset-0 z-10 pointer-events-none"></div>
-            </div>
-            <div class="p-6">
-              <div class="flex items-start gap-3 mb-3">
-                <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15">
-                  ${app.icon ? `<img src="${esc(app.icon)}" alt="${esc(app.name)}" loading="lazy" class="w-full h-full object-cover">` : fallbackTile(app.name)}
-                </div>
-                <div class="min-w-0 flex-grow">
-                  <h3 class="text-base font-bold font-cairo leading-snug">${esc(app.name || '')}</h3>
-                  ${meta ? `<div class="text-[10px] text-samt-cyan font-mono mt-0.5">${esc(meta)}</div>` : ''}
-                </div>
+
+          <div class="samt-media hidden">
+            <div class="samt-media-bg"></div>
+            <div class="samt-shots"></div>
+            ${desc ? `<div class="samt-cap"><p>${desc}</p></div>` : ''}
+            <div class="samt-shine"></div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/15 bg-black/30">
+                ${app.icon ? `<img src="${esc(app.icon)}" alt="${esc(app.name)}" loading="lazy" class="w-full h-full object-contain">` : fallbackTile(app.name)}
               </div>
-              <p class="text-slate-400 text-xs leading-relaxed mb-4">${esc(app.desc || '')}</p>
-              ${list.length ? `<ul class="space-y-1.5 text-xs text-slate-300 mb-5">
-                ${list.map((x) => `<li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i>${esc(x)}</li>`).join('')}
-              </ul>` : ''}
-              ${actionButton(app)}
+              <div class="min-w-0 flex-grow">
+                <h3 class="text-base font-bold font-cairo leading-snug">${esc(app.name || '')}</h3>
+                ${meta ? `<div class="text-[10px] text-samt-cyan font-mono mt-0.5">${esc(meta)}</div>` : ''}
+              </div>
             </div>
+            ${(!hasShots && desc) ? `<p class="text-slate-400 text-xs leading-relaxed mb-4">${desc}</p>` : ''}
+            ${list.length ? `<ul class="space-y-1.5 text-xs text-slate-300 mb-4">
+              ${list.map((x) => `<li><i class="fa-solid fa-check text-emerald-400 ml-1.5"></i>${esc(x)}</li>`).join('')}
+            </ul>` : ''}
+            <div class="mt-auto pt-1">${actionButton(app)}</div>
           </div>
         </div>`;
       }
@@ -514,12 +551,21 @@
       // Cycle a card's screenshots, but only while the card is actually visible.
       function startCycle(box, shots) {
         if (!shots || !shots.length) return;
-        box.classList.remove('hidden');
+        const media = box.closest('.samt-media');
+        if (media) media.classList.remove('hidden');
+        const bg = media ? media.querySelector('.samt-media-bg') : null;
+
         box.innerHTML = shots.map((s, i) =>
-          `<img src="${esc(s)}" alt="" loading="lazy"
-                class="samt-shot absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-                style="opacity:${i === 0 ? 1 : 0}">`
-        ).join('') + '<div class="samt-shine absolute inset-0 z-10 pointer-events-none"></div>';
+          `<img src="${esc(s)}" alt="" loading="lazy" class="samt-shot" style="opacity:${i === 0 ? 1 : 0}">`
+        ).join('');
+        const setBg = (n) => { if (bg) bg.style.backgroundImage = 'url("' + shots[n] + '")'; };
+        setBg(0);
+
+        // tap toggles the caption on touch devices, where there is no hover
+        if (media && !media.__tap) {
+          media.__tap = true;
+          media.addEventListener('click', () => media.closest('.samt-app').classList.toggle('samt-peek'));
+        }
 
         if (shots.length < 2) return;
         const imgs = box.querySelectorAll('.samt-shot');
@@ -528,10 +574,11 @@
           imgs[i].style.opacity = '0';
           i = (i + 1) % imgs.length;
           imgs[i].style.opacity = '1';
+          setBg(i);
         };
         const io = new IntersectionObserver((es) => {
           es.forEach((e) => {
-            if (e.isIntersecting && !timer) timer = setInterval(tick, 3000);
+            if (e.isIntersecting && !timer) timer = setInterval(tick, 3800);
             else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
           });
         }, { threshold: 0.15 });
