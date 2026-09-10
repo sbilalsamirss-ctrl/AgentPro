@@ -76,7 +76,6 @@
       .samt-shine { display: none !important; }
       .samt-app:hover { transform: none !important; }
     }
-    .celestial-canvas { overflow: hidden !important; }
 
     /* the header is a single row that must never wrap or grow taller */
     header .max-w-7xl { flex-wrap: nowrap !important; }
@@ -352,7 +351,7 @@
       var CAT_NAMES = { basics: 'دليل المبتدئين', productivity: 'الإنتاجية والتنظيم', analytics: 'التحليلات ومؤشرات الأداء', database: 'قواعد البيانات والسيرفرات' };
 
       function getCourses() {
-        try { return JSON.parse(localStorage.getItem('samt_admin_courses')) || (window.AgentProData && window.AgentProData.courses) || []; }
+        try { return JSON.parse(localStorage.getItem('samt_admin_courses')) || []; }
         catch (e) { return []; }
       }
 
@@ -421,7 +420,7 @@
         } catch (e) { done(); }
       });
 
-      function showBuilder() { guardScreen.classList.add('hidden'); builderMain.classList.remove('hidden'); loadnorEdit(); updatePreview(); }
+      function showBuilder() { guardScreen.classList.add('hidden'); builderMain.classList.remove('hidden'); loadForEdit(); updatePreview(); }
       function denyAccess() {
         guardMsg.innerHTML = 'هذه الصفحة مخصّصة للمشرف فقط.<br>يرجى تسجيل الدخول بحساب المشرف من صفحة الكورسات.';
         guardScreen.querySelector('i').className = 'fa-solid fa-lock';

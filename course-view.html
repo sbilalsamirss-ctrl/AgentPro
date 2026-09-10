@@ -57,45 +57,20 @@
       border-color: rgba(0, 245, 212, 0.45);
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.2);
     }
-    html.dark .celestial-canvas { opacity: 1; }
+    html.dark
 
     html:not(.dark) body { background-color: #F8FAFC; color: #0F172A; }
     html:not(.dark) .glass-card { background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #0F172A; }
     html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
     html:not(.dark) .text-white { color: #0F172A !important; }
-    html:not(.dark) .celestial-canvas { opacity: 0; }
+    html:not(.dark)
 
     .lesson-item.active {
       background: rgba(0, 245, 212, 0.12) !important;
       border-color: rgba(0, 245, 212, 0.4) !important;
     }
-
-    .celestial-canvas {
-      position: fixed; inset: 0; z-index: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
-    }
-    .stars-layer {
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1.5px 1.5px at 25% 42%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 47% 8%, rgba(0,245,212,0.8), transparent),
-        radial-gradient(2px 2px at 62% 55%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 78% 22%, rgba(0,187,249,0.7), transparent),
-        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent);
-      animation: twinkleStars 4s ease-in-out infinite alternate;
-    }
     @keyframes twinkleStars {
       0% { opacity: 0.5; } 50% { opacity: 0.8; } 100% { opacity: 0.6; }
-    }
-
-    .nebula-layer { position: absolute; inset: -20%; width: 140%; height: 140%; }
-    .nebula-1 {
-      position: absolute; width: 600px; height: 600px; top: -5%; right: -8%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 187, 249, 0.14) 0%, transparent 70%);
-      filter: blur(80px);
     }
 
     .theme-toggle-icon::before {
@@ -161,7 +136,6 @@
       .samt-shine { display: none !important; }
       .samt-app:hover { transform: none !important; }
     }
-    .celestial-canvas { overflow: hidden !important; }
 
     /* the header is a single row that must never wrap or grow taller */
     header .max-w-7xl { flex-wrap: nowrap !important; }
@@ -200,10 +174,8 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- 🌌 Background -->
-  <div class="celestial-canvas" aria-hidden="true">
-    <div class="stars-layer"></div>
-    <div class="nebula-layer"><div class="nebula-1"></div></div>
-  </div>
+
+</div>
 
   <!-- Top Classroom Bar -->
   <header class="h-16 glass-card px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
@@ -317,7 +289,6 @@
   </div>
 
   <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="./assets/js/courses-data.js?v=20260830a" charset="utf-8"></script>
 
   <script>
     // Theme
@@ -359,7 +330,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const courseId = urlParams.get('id') || 'course-01';
-      const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
+      const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
       const course = courses.find(c => c.id === courseId) || courses[0];
       if (!course) {
         var hasCourses = (localStorage.getItem('samt_admin_courses') || '[]') !== '[]';

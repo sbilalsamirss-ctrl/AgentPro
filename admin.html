@@ -69,7 +69,7 @@
       border-color: rgba(0, 245, 212, 0.45);
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.2);
     }
-    html.dark .celestial-canvas { opacity: 1; }
+    html.dark
 
     html:not(.dark) body {
       background-color: #F8FAFC;
@@ -88,42 +88,13 @@
     }
     html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400 { color: #475569 !important; }
     html:not(.dark) .text-white { color: #0F172A !important; }
-    html:not(.dark) .celestial-canvas { opacity: 0; }
+    html:not(.dark)
 
     /* ==========================================================================
        ✨ Celestial Animated Background Layers
        ========================================================================== */
-    .celestial-canvas {
-      position: absolute; inset: 0; z-index: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
-    }
 
     /* ⭐ Twinkling Stars Layer */
-    .stars-layer {
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1.5px 1.5px at 25% 42%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 47% 8%, rgba(0,245,212,0.8), transparent),
-        radial-gradient(2px 2px at 62% 55%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 78% 22%, rgba(0,187,249,0.7), transparent),
-        radial-gradient(1.5px 1.5px at 88% 70%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(2px 2px at 55% 88%, rgba(0,245,212,0.6), transparent);
-      animation: twinkleStars 4s ease-in-out infinite alternate;
-    }
-    .stars-layer-2 {
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 15% 30%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1.5px 1.5px at 40% 18%, rgba(0,245,212,0.6), transparent),
-        radial-gradient(1px 1px at 58% 72%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(2px 2px at 80% 45%, rgba(0,187,249,0.5), transparent),
-        radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1.5px 1.5px at 68% 12%, rgba(255,255,255,0.6), transparent);
-      animation: twinkleStars2 5.5s ease-in-out infinite alternate;
-    }
 
     @keyframes twinkleStars {
       0%   { opacity: 0.5; }
@@ -139,36 +110,6 @@
     }
 
     /* 🌫️ Drifting Nebulae Layer */
-    .nebula-layer {
-      position: absolute; inset: -20%; width: 140%; height: 140%;
-    }
-    .nebula-1 {
-      position: absolute;
-      width: 600px; height: 600px;
-      top: -5%; right: -8%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 187, 249, 0.14) 0%, transparent 70%);
-      filter: blur(80px);
-      animation: driftNebula1 35s ease-in-out infinite alternate;
-    }
-    .nebula-2 {
-      position: absolute;
-      width: 500px; height: 500px;
-      bottom: 5%; left: -5%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(121, 40, 202, 0.12) 0%, transparent 70%);
-      filter: blur(70px);
-      animation: driftNebula2 42s ease-in-out infinite alternate;
-    }
-    .nebula-3 {
-      position: absolute;
-      width: 450px; height: 450px;
-      top: 40%; left: 30%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 245, 212, 0.1) 0%, transparent 70%);
-      filter: blur(90px);
-      animation: driftNebula3 50s ease-in-out infinite alternate;
-    }
 
     @keyframes driftNebula1 {
       0%   { transform: translate(0, 0) scale(1); }
@@ -259,7 +200,6 @@
       .samt-shine { display: none !important; }
       .samt-app:hover { transform: none !important; }
     }
-    .celestial-canvas { overflow: hidden !important; }
 
     /* the header is a single row that must never wrap or grow taller */
     header .max-w-7xl { flex-wrap: nowrap !important; }
@@ -297,16 +237,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-  <!-- 🌌 Celestial Animated Background (Stars + Nebulae) -->
-  <div class="celestial-canvas" aria-hidden="true">
-    <div class="stars-layer"></div>
-    <div class="stars-layer-2"></div>
-    <div class="nebula-layer">
-      <div class="nebula-1"></div>
-      <div class="nebula-2"></div>
-      <div class="nebula-3"></div>
-    </div>
-  </div>
+</div>
 
   <!-- Admin Navbar -->
   <header class="h-20 glass-card px-6 flex items-center justify-between sticky top-0 z-50 relative z-10">
@@ -382,11 +313,6 @@
       <button id="tabCoursesBtn" class="px-5 py-2 rounded-xl text-xs font-bold bg-samt-cyan text-samt-space" onclick="switchTab('courses')">
         <i class="fa-solid fa-graduation-cap ml-1"></i> إدارة الكورسات والدروس
       </button>
-      <button id="tabSettingsBtn" class="px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white" onclick="switchTab('settings')">
-        <i class="fa-solid fa-user-shield ml-1"></i> إعدادات حساب المشرف
-      </button>
-    </div>
-
     <!-- TAB 1: Courses Management -->
     <div id="coursesSection" class="space-y-6">
       <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -399,10 +325,6 @@
           <button onclick="window.location.href='./course-builder.html'" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
             <i class="fa-solid fa-plus"></i>
             <span>إضافة كورس جديد</span>
-          </button>
-          <button onclick="exportUpdatedData()" class="px-5 py-2.5 rounded-xl glass-card hover:border-samt-cyan text-samt-cyan text-xs font-bold transition-all flex items-center gap-2">
-            <i class="fa-solid fa-cloud-arrow-down"></i>
-            <span>تصدير ملف البيانات (Export)</span>
           </button>
         </div>
       </div>
@@ -426,69 +348,10 @@
       </div>
     </div>
 
-    <div id="settingsSection" class="hidden space-y-6 max-w-3xl">
-      <div class="glass-card rounded-2xl p-6 text-right space-y-6">
-        <div>
-          <h2 class="text-xl font-black font-cairo">إعدادات حساب المشرف (Master Admin)</h2>
-          <p class="text-xs text-slate-400 mt-1">تغيير البريد الإلكتروني وكلمة المرور الخاصة بك لتسجيل الدخول بأمان.</p>
-        </div>
-
-        <form id="adminSettingsForm" onsubmit="handleSaveSettings(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">اسم المشرف:</label>
-            <input type="text" id="settingAdminName" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none bg-white/5 text-slate-400" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">البريد الإلكتروني للأدمن:</label>
-            <input type="email" id="settingAdminEmail" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none text-left bg-white/5 text-slate-400" dir="ltr" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold mb-1.5 font-cairo text-slate-300">كلمة المرور:</label>
-            <input type="password" id="settingAdminPass" readonly required class="w-full glass-card border border-white/10 text-xs rounded-xl p-3 outline-none text-left bg-white/5 text-slate-400" dir="ltr" />
-          </div>
-
-          <div class="pt-4 border-t border-white/10 text-xs text-slate-400 leading-relaxed font-cairo">
-            <i class="fa-solid fa-shield-halved text-samt-cyan ml-1"></i> حساب المشرف مدمج بالنظام ومحمي كودياً لأسباب أمنية لمنع أي محاولات اختراق أو تعديل للصلاحيات.
-          </div>
-        </form>
-      </div>
-    </div>
-
   </main>
 
 
   <!-- Course Modal removed — now using course-builder.html full page -->
-
-  <!-- Export Code Modal -->
-  <div id="exportModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-card rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl text-right">
-      <div class="bg-black/60 px-6 py-4 flex items-center justify-between border-b border-white/10">
-        <h3 class="text-base font-bold text-samt-cyan font-cairo">تصدير بيانات الكورسات والمشتركين</h3>
-        <button onclick="document.getElementById('exportModal').classList.add('hidden')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <div class="p-6 space-y-4">
-        <p class="text-xs text-slate-400">
-          تم تحديث البيانات محلياً. يمكنك نسخ الكود بالأسفل واستبدال محتوى ملف <code class="text-samt-cyan font-mono">assets/js/courses-data.js</code> ورفعه إلى GitHub:
-        </p>
-
-        <textarea id="exportCodeArea" readonly rows="10" class="w-full bg-black/80 border border-white/15 text-samt-cyan font-mono text-[11px] p-3 rounded-xl outline-none" dir="ltr"></textarea>
-
-        <div class="flex items-center justify-between pt-2">
-          <button onclick="copyExportCode()" class="btn-samt-glow px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
-            <i class="fa-solid fa-copy"></i>
-            <span id="copyBtnText">نسخ الكود بالكامل</span>
-          </button>
-          <button onclick="downloadDataFile()" class="px-5 py-2.5 rounded-xl bg-samt-blue text-samt-space text-xs font-bold flex items-center gap-2">
-            <i class="fa-solid fa-download"></i>
-            <span>تنزيل courses-data.js</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
     &copy; 2026 <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
@@ -496,7 +359,6 @@
   </footer>
 
   <!-- Central Data & Auth Scripts -->
-  <script src="./assets/js/courses-data.js?v=20260830a" charset="utf-8"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -526,7 +388,7 @@
     });
 
       // Data State
-      let activeCourses = JSON.parse(localStorage.getItem('samt_admin_courses')) || window.AgentProData?.courses || [];
+      let activeCourses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
 
       const loginShield = document.getElementById('loginShield');
       const adminPanel = document.getElementById('adminPanel');
@@ -537,7 +399,6 @@
         loginShield.classList.add('hidden');
         adminPanel.classList.remove('hidden');
         renderCoursesTable();
-        loadAdminSettings();
       }
 
       // Firebase owns the identity. The panel opens only when Firebase says the
@@ -628,54 +489,12 @@
         `}).join('');
       }
 
-      function loadAdminSettings() {
-        const user = window.SamtAuth?.getCurrentUser();
-        if (user) {
-          document.getElementById('settingAdminName').value = user.name || 'المشرف العام';
-          document.getElementById('settingAdminEmail').value = user.email || 'admin@samt.com';
-        }
-      }
-
-      window.handleSaveSettings = (e) => {
-        e.preventDefault();
-        const name = document.getElementById('settingAdminName').value.trim();
-        const email = document.getElementById('settingAdminEmail').value.trim().toLowerCase();
-        const pass = document.getElementById('settingAdminPass').value.trim();
-
-        if (!name || !email || !pass) {
-          alert('يرجى ملء جميع الحقول.');
-          return;
-        }
-
-        let users = JSON.parse(localStorage.getItem('samt_registered_users')) || [];
-        const adminIdx = users.findIndex(u => u.role === 'admin' || u.email === email);
-
-        if (adminIdx !== -1) {
-          users[adminIdx] = { ...users[adminIdx], name, email, password: pass };
-        } else {
-          users.push({ name, email, password: pass, role: 'admin', avatar: '👑' });
-        }
-
-        localStorage.setItem('samt_registered_users', JSON.stringify(users));
-
-        const updatedSession = { name, email, role: 'admin', avatar: '👑', loginTime: new Date().toISOString() };
-        localStorage.setItem('samt_user_session', JSON.stringify(updatedSession));
-
-        if (window.SamtAuth) {
-          window.SamtAuth.toast('تم تحديث إعدادات حساب المشرف بنجاح!', 'success');
-        } else {
-          alert('تم حفظ التعديلات بنجاح!');
-        }
-      };
-
       window.switchTab = (tab) => {
         const cSec = document.getElementById('coursesSection');
-        const setSec = document.getElementById('settingsSection');
         const cBtn = document.getElementById('tabCoursesBtn');
-        const setBtn = document.getElementById('tabSettingsBtn');
 
-        [cSec, setSec].forEach(s => s?.classList.add('hidden'));
-        [cBtn, setBtn].forEach(b => {
+        [cSec].forEach(s => s?.classList.add('hidden'));
+        [cBtn].forEach(b => {
           if (b) {
             b.className = 'px-5 py-2 rounded-xl text-xs font-bold glass-card text-slate-300 hover:text-white';
           }
@@ -709,43 +528,6 @@
       };
 
       // Course form submission is now handled by course-builder.html
-
-      window.exportUpdatedData = () => {
-        const fullDataObj = {
-          releases: window.AgentProData?.releases || [],
-          courses: activeCourses
-        };
-        const exportContent = `/**
- * سمت SAMT - Central Database File
- * Auto-generated on ${new Date().toLocaleString()}
- */
-
-const AgentProData = ${JSON.stringify(fullDataObj, null, 2)};
-
-if (typeof window !== 'undefined') {
-  window.AgentProData = AgentProData;
-}
-`;
-        document.getElementById('exportCodeArea').value = exportContent;
-        document.getElementById('exportModal').classList.remove('hidden');
-        document.getElementById('exportModal').classList.add('flex');
-      };
-
-      window.copyExportCode = () => {
-        const area = document.getElementById('exportCodeArea');
-        area.select();
-        navigator.clipboard.writeText(area.value);
-        document.getElementById('copyBtnText').textContent = 'تم النسخ ✔️';
-        setTimeout(() => { document.getElementById('copyBtnText').textContent = 'نسخ الكود بالكامل'; }, 2000);
-      };
-
-      window.downloadDataFile = () => {
-        const blob = new Blob([document.getElementById('exportCodeArea').value], { type: 'application/javascript' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'courses-data.js';
-        a.click();
-      };
 
     });
   </script>

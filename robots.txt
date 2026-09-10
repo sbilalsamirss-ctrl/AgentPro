@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /course-builder.html
+Disallow: /program-builder.html
+
 Sitemap: https://sbilalsamirss-ctrl.github.io/AgentPro/sitemap.xml
