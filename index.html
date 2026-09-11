@@ -723,10 +723,15 @@
     const escHtml = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => (
       { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
     ));
+    // للروابط: نمنع javascript:/data:/vbscript: عشان محدش يحط سكربت في رابط
+    const safeUrl = (u) => {
+      u = String(u == null ? '' : u).trim();
+      return /^(?:javascript|data|vbscript|file):/i.test(u) ? '#' : escHtml(u);
+    };
 
     function homeActionButton(app) {
       const type = app.type || ((app.url || app.downloadUrl || '').indexOf('play.google.com') >= 0 ? 'play' : 'direct');
-      const href = escHtml(app.url || app.downloadUrl || './downloads.html');
+      const href = safeUrl(app.url || app.downloadUrl || './downloads.html');
       if (type === 'play') {
         return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                   <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
@@ -877,10 +882,10 @@
         const thumb = course.thumbnail || extractYoutubeThumbnail(course.promoVideoUrl || course.videoUrl);
         const adminControls = isAdmin ? `
           <div class="absolute top-3 left-3 flex items-center gap-1 z-20">
-            <button onclick="event.stopPropagation(); window.SamtAuth.editCourseInline('${course.id}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-samt-gold text-samt-gold hover:text-black border border-samt-gold/40 text-[10px] font-bold shadow-md transition-all">
+            <button onclick="event.stopPropagation(); window.SamtAuth.editCourseInline('${encodeURIComponent(course.id)}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-samt-gold text-samt-gold hover:text-black border border-samt-gold/40 text-[10px] font-bold shadow-md transition-all">
               <i class="fa-solid fa-pen"></i>
             </button>
-            <button onclick="event.stopPropagation(); window.SamtAuth.deleteCourseInline('${course.id}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 text-[10px] font-bold shadow-md transition-all">
+            <button onclick="event.stopPropagation(); window.SamtAuth.deleteCourseInline('${encodeURIComponent(course.id)}')" class="px-2.5 py-1 rounded-lg bg-black/80 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 text-[10px] font-bold shadow-md transition-all">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -889,27 +894,27 @@
         return `
           <div class="glass-card rounded-2xl overflow-hidden group flex flex-col justify-between relative transition-all">
             ${adminControls}
-            <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal('${course.videoUrl}', '${course.title.replace(/'/g, "\\'")}')">
-              ${thumb ? `<img src="${thumb}" alt="${course.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
+            <div class="relative aspect-video bg-[#0B152E] flex items-center justify-center cursor-pointer overflow-hidden" onclick="openVideoModal(${escHtml(JSON.stringify(course.videoUrl || ''))}, ${escHtml(JSON.stringify(course.title || ''))})">
+              ${thumb ? `<img src="${safeUrl(thumb)}" alt="${escHtml(course.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
               <div class="absolute w-12 h-12 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-base shadow-xl group-hover:scale-110 transition-transform">
                 <i class="fa-solid fa-play ml-0.5"></i>
               </div>
               <span class="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-black/70 text-samt-cyan border border-samt-cyan/30 z-10 backdrop-blur-md">
-                ${course.level || 'شامل'}
+                ${escHtml(course.level || 'شامل')}
               </span>
               ${course.duration ? `
                 <span class="absolute bottom-2 left-2 px-2 py-0.5 text-[9px] font-bold rounded bg-black/80 text-white z-10">
-                  <i class="fa-regular fa-clock ml-1"></i>${course.duration}
+                  <i class="fa-regular fa-clock ml-1"></i>${escHtml(course.duration)}
                 </span>
               ` : ''}
             </div>
 
             <div class="p-5 flex flex-col flex-grow">
-              <span class="text-xs font-bold text-samt-cyan mb-1">${course.categoryName || 'شروحات عامة'}</span>
-              <h3 class="text-sm sm:text-base font-bold mb-2 font-cairo leading-snug">${course.title}</h3>
-              <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${course.description || ''}</p>
-              <a href="./course-view.html?id=${course.id}" class="w-full mt-auto py-2 rounded-xl bg-samt-cyan/10 hover:bg-samt-cyan hover:text-samt-space border border-samt-cyan/30 text-samt-cyan text-xs font-bold transition-all flex items-center justify-center gap-2">
+              <span class="text-xs font-bold text-samt-cyan mb-1">${escHtml(course.categoryName || 'شروحات عامة')}</span>
+              <h3 class="text-sm sm:text-base font-bold mb-2 font-cairo leading-snug">${escHtml(course.title)}</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${escHtml(course.description || '')}</p>
+              <a href="./course-view.html?id=${encodeURIComponent(course.id)}" class="w-full mt-auto py-2 rounded-xl bg-samt-cyan/10 hover:bg-samt-cyan hover:text-samt-space border border-samt-cyan/30 text-samt-cyan text-xs font-bold transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-graduation-cap"></i>
                 <span>دراسة الكورس وحساب التقدم</span>
               </a>
@@ -932,7 +937,10 @@
 
     function openVideoModal(url, title) {
       document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalIframe').src = toYoutubeEmbed(url);
+      var safe = toYoutubeEmbed(url);
+      // امنع أي رابط خطير (javascript:/data: ...) من الوصول لـ iframe
+      if (/^(?:javascript|data|vbscript|file):/i.test(String(safe || '').trim())) safe = '';
+      document.getElementById('modalIframe').src = safe;
       document.getElementById('videoModal').classList.remove('hidden');
       document.getElementById('videoModal').classList.add('flex');
     }
