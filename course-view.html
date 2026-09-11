@@ -330,6 +330,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const courseId = urlParams.get('id') || 'course-01';
+      // ---- تأمين ضد حقن HTML/سكربتات (XSS) ----
+      const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+      const safeUrl = (u) => {
+        u = String(u == null ? '' : u).trim();
+        return /^(?:javascript|data|vbscript|file):/i.test(u) ? '#' : esc(u);
+      };
       const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
       const course = courses.find(c => c.id === courseId) || courses[0];
       if (!course) {
@@ -395,17 +403,17 @@
       const audList = document.getElementById('overviewAudience');
 
       if (course.objectives && course.objectives.length > 0) {
-        objList.innerHTML = course.objectives.map(o => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5 text-[10px]"></i><span>${o}</span></li>`).join('');
+        objList.innerHTML = course.objectives.map(o => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5 text-[10px]"></i><span>${esc(o)}</span></li>`).join('');
       } else {
         objList.innerHTML = '<li class="text-slate-500">لم يتم تحديد أهداف بعد.</li>';
       }
       if (course.requirements && course.requirements.length > 0) {
-        reqList.innerHTML = course.requirements.map(r => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-blue mt-1.5 text-[5px]"></i><span>${r}</span></li>`).join('');
+        reqList.innerHTML = course.requirements.map(r => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-blue mt-1.5 text-[5px]"></i><span>${esc(r)}</span></li>`).join('');
       } else {
         reqList.innerHTML = '<li class="text-slate-500">لا توجد متطلبات محددة.</li>';
       }
       if (course.targetAudience && course.targetAudience.length > 0) {
-        audList.innerHTML = course.targetAudience.map(a => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-purple mt-1.5 text-[5px]"></i><span>${a}</span></li>`).join('');
+        audList.innerHTML = course.targetAudience.map(a => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle text-samt-purple mt-1.5 text-[5px]"></i><span>${esc(a)}</span></li>`).join('');
       } else {
         audList.innerHTML = '<li class="text-slate-500">لم يتم تحديد الفئة المستهدفة.</li>';
       }
@@ -516,6 +524,8 @@
       }
 
       function loadPlayer(videoUrl) {
+        // امنع أي رابط فيديو خطير (javascript:/data: ...) من الوصول لـ iframe
+        if (/^(?:javascript|data|vbscript|file):/i.test(String(videoUrl || '').trim())) videoUrl = '';
         const vid = extractVideoId(videoUrl);
         const host = document.getElementById('mainPlayer');
         if (!vid) {
@@ -600,8 +610,8 @@
                     ${isDone ? '<i class="fa-solid fa-check"></i>' : (gIdx + 1)}
                   </span>
                   <div>
-                    <h4 class="text-[11px] sm:text-xs font-bold font-cairo leading-snug">${l.title || 'بدون عنوان'}</h4>
-                    <span class="text-[9px] text-slate-500 font-mono">${l.duration || ''}</span>
+                    <h4 class="text-[11px] sm:text-xs font-bold font-cairo leading-snug">${esc(l.title || 'بدون عنوان')}</h4>
+                    <span class="text-[9px] text-slate-500 font-mono">${esc(l.duration || '')}</span>
                     ${l.freePreview ? '<span class="text-[9px] text-samt-blue font-bold mr-2"><i class="fa-solid fa-eye"></i> مجاني</span>' : ''}
                   </div>
                 </div>
@@ -615,7 +625,7 @@
               <div class="section-header px-3.5 py-2.5 flex items-center justify-between gap-2 bg-black/20" onclick="toggleSection(this)">
                 <div class="flex items-center gap-2">
                   <i class="fa-solid fa-layer-group text-samt-cyan text-[10px]"></i>
-                  <span class="text-[11px] font-bold font-cairo truncate">${sec.title || 'قسم ' + (secIdx + 1)}</span>
+                  <span class="text-[11px] font-bold font-cairo truncate">${esc(sec.title || 'قسم ' + (secIdx + 1))}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-[9px] text-slate-500 font-mono">${completedInSection}/${sectionLessons.length}</span>
@@ -662,9 +672,9 @@
         const resources = cl.resources || [];
         if (resources.length > 0) {
           resList.innerHTML = resources.map(r => `
-            <a href="${r.url}" target="_blank" class="flex items-center gap-3 p-3 rounded-xl glass-card border border-white/10 hover:border-samt-cyan text-xs font-bold">
+            <a href="${safeUrl(r.url)}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 rounded-xl glass-card border border-white/10 hover:border-samt-cyan text-xs font-bold">
               <i class="fa-solid fa-download text-samt-cyan"></i>
-              <span>${r.name}</span>
+              <span>${esc(r.name)}</span>
               <i class="fa-solid fa-external-link text-slate-500 mr-auto text-[10px]"></i>
             </a>
           `).join('');
