@@ -9,6 +9,47 @@
 (function () {
   'use strict';
 
+  // ---- تحسينات واجهة عامة (تُحقن في كل الصفحات) ----
+  // 1) نعومة عند المرور بالماوس (transitions) على الأزرار والكروت والروابط.
+  // 2) إصلاح تباين "الوضع الصباحي/الفاتح": ناف بار أبيض بخط غامق مقروء،
+  //    وتصحيح خلفية/ألوان الصفحة والكروت (يبطّل مفعول قواعد CSS الناقصة).
+  (function injectSamtUiPolish() {
+    try {
+      var CSS = [
+        '/* smooth hover / interaction */',
+        'a, button, .glass-card, .glass-nav, .samt-app, .btn-samt-glow, [class*="hover:"], [onclick], input, select, textarea, label, summary {',
+        '  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease, opacity .25s ease, filter .25s ease;',
+        '}',
+        '/* light / morning mode contrast (only when NOT dark) */',
+        'html:not(.dark) body { background-color:#F8FAFC !important; color:#0F172A !important; }',
+        'html:not(.dark) header, html:not(.dark) .glass-nav {',
+        '  background: rgba(255,255,255,.94) !important;',
+        '  border-bottom: 1px solid #E2E8F0 !important;',
+        '  box-shadow: 0 4px 20px rgba(0,0,0,.05) !important;',
+        '  -webkit-backdrop-filter: blur(20px) !important; backdrop-filter: blur(20px) !important;',
+        '}',
+        'html:not(.dark) header a, html:not(.dark) header button, html:not(.dark) header span,',
+        'html:not(.dark) .glass-nav a, html:not(.dark) nav a { color:#0F172A !important; }',
+        'html:not(.dark) .glass-card { background:#ffffff !important; border:1px solid #E2E8F0 !important; color:#0F172A !important; }',
+        'html:not(.dark) .text-white { color:#0F172A !important; }',
+        'html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-400, html:not(.dark) .text-slate-500 { color:#475569 !important; }',
+        '/* keep the brand accent readable on white */',
+        'html:not(.dark) .text-samt-cyan { color:#0E9AAE !important; }'
+      ].join('\n');
+      var add = function () {
+        if (document.getElementById('samt-ui-polish')) return;
+        var s = document.createElement('style');
+        s.id = 'samt-ui-polish';
+        s.textContent = CSS;
+        (document.head || document.documentElement).appendChild(s);
+      };
+      add();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', add);
+      }
+    } catch (e) {}
+  })();
+
   var COURSES_KEY = 'samt_admin_courses';
 
   // Accounts from the old visitor-login system are dead weight now - clear
