@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+SMOKE_TEST_LINE_1
+SMOKE_TEST_LINE_2<!DOCTYPE html>
 <html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
@@ -332,7 +333,7 @@
     </div>
 
     <!-- Requirements & Info -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+    <div class="grid grid-cols-1 gap-6 mb-16">
       <div class="glass-card rounded-2xl p-6 text-right">
         <h3 class="text-lg font-bold mb-4 font-cairo text-samt-cyan">
           <i class="fa-solid fa-circle-info ml-2"></i>معلومات التثبيت والأمان
@@ -351,28 +352,6 @@
             <span>التحديثات تتم بشكل تلقائي عند تشغيل التطبيقات المتصلة بالإنترنت.</span>
           </li>
         </ul>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 text-right">
-        <h3 class="text-lg font-bold mb-4 font-cairo text-samt-cyan">
-          <i class="fa-solid fa-microchip ml-2"></i>الحد الأدنى لمتطلبات النظام
-        </h3>
-        <table class="w-full text-xs text-right border-collapse">
-          <tbody>
-            <tr class="border-b border-white/10">
-              <td class="py-2 font-bold text-slate-300">نظام التشغيل:</td>
-              <td class="py-2 text-slate-400">Windows 10/11 (64-bit) أو macOS Catalina 10.15+</td>
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="py-2 font-bold text-slate-300">الذاكرة العشوائية:</td>
-              <td class="py-2 text-slate-400">2 جيجابايت رام (RAM) أو أعلى لضمان سرعة فائقة</td>
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="py-2 font-bold text-slate-300">مساحة التخزين:</td>
-              <td class="py-2 text-slate-400">200 ميجابايت مساحة فارغة على القرص الصلب</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
 
@@ -421,6 +400,11 @@
       const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
         { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
       ));
+      // للروابط: نمنع javascript:/data:/vbscript: عشان محدش يحط سكربت في رابط
+      const safeUrl = (u) => {
+        u = String(u == null ? '' : u).trim();
+        return /^(?:javascript|data|vbscript|file):/i.test(u) ? '#' : esc(u);
+      };
 
       function readPrograms() {
         try {
@@ -446,7 +430,7 @@
 
       function actionButton(app) {
         const type = app.type || (app.url || app.downloadUrl || '').includes('play.google.com') ? 'play' : 'direct';
-        const href = esc(app.url || app.downloadUrl || '#');
+        const href = safeUrl(app.url || app.downloadUrl || '#');
         if (type === 'play') {
           return `<a href="${href}" target="_blank" rel="noopener" class="btn-samt-glow w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
                     <i class="fa-brands fa-google-play"></i><span>تثبيت من جوجل بلاي</span></a>`;
