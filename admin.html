@@ -462,6 +462,11 @@
         if (e.key === 'Enter') loginBtn.click();
       });
 
+      // ---- تأمين ضد حقن HTML/سكربتات (XSS) ----
+      const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
       function renderCoursesTable() {
         if (!activeCourses || activeCourses.length === 0) {
           tableBody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400">لا توجد كورسات مضافة حالياً. اضغط على "إضافة كورس جديد" بالأعلى للبدء.</td></tr>';
@@ -477,13 +482,13 @@
           return `
           <tr class="hover:bg-white/5 transition-colors">
             <td class="p-4 font-bold text-slate-400">${idx + 1}</td>
-            <td class="p-4 font-bold font-cairo">${c.title}${c._draft ? ' <span class="text-samt-gold text-[10px]">(مسودة)</span>' : ''}</td>
-            <td class="p-4 text-samt-cyan font-bold">${c.categoryName || c.category}</td>
-            <td class="p-4 font-mono">${c.duration || (c.sections ? c.sections.length + ' أقسام • ' + totalLectures + ' درس' : '-')}</td>
-            <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[11px] font-bold">${c.level || 'معتمد'}</span></td>
+            <td class="p-4 font-bold font-cairo">${esc(c.title)}${c._draft ? ' <span class="text-samt-gold text-[10px]">(مسودة)</span>' : ''}</td>
+            <td class="p-4 text-samt-cyan font-bold">${esc(c.categoryName || c.category)}</td>
+            <td class="p-4 font-mono">${esc(c.duration || (c.sections ? c.sections.length + ' أقسام • ' + totalLectures + ' درس' : '-'))}</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-samt-cyan/10 text-samt-cyan text-[11px] font-bold">${esc(c.level || 'معتمد')}</span></td>
             <td class="p-4 text-center space-x-2 space-x-reverse">
-              <button onclick="editCourse('${c.id}')" class="px-3 py-1 rounded-lg bg-samt-blue/20 text-samt-blue text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
-              <button onclick="deleteCourse('${c.id}')" class="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+              <button onclick="editCourse('${encodeURIComponent(c.id)}')" class="px-3 py-1 rounded-lg bg-samt-blue/20 text-samt-blue text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
+              <button onclick="deleteCourse('${encodeURIComponent(c.id)}')" class="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
             </td>
           </tr>
         `}).join('');
