@@ -348,6 +348,16 @@
       const courses = JSON.parse(localStorage.getItem('samt_admin_courses')) || [];
       const isAdmin = window.SamtAuth?.isAdmin();
 
+      // ---- تأمين ضد حقن HTML/سكربتات (XSS) ----
+      const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+      // للروابط: نمنع javascript:/data:/vbscript: عشان محدش يحط سكربت في رابط
+      const safeUrl = (u) => {
+        u = String(u == null ? '' : u).trim();
+        return /^(?:javascript|data|vbscript|file):/i.test(u) ? '#' : esc(u);
+      };
+
       function getProgress(courseId, totalLessons = 3) {
         try {
           // prefer real watch progress recorded by the course player
@@ -419,10 +429,10 @@
           // Inline Admin Action Buttons
           const adminControls = isAdmin ? `
             <div class="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-samt-gold/40 shadow-lg">
-              <button onclick="event.preventDefault(); event.stopPropagation(); window.location.href='./course-builder.html?edit=${c.id}'" title="تعديل هذا الكورس" class="w-7 h-7 rounded-lg bg-samt-gold/20 hover:bg-samt-gold/40 text-samt-gold flex items-center justify-center text-xs transition-colors">
+              <button onclick="event.preventDefault(); event.stopPropagation(); window.location.href='./course-builder.html?edit=${encodeURIComponent(c.id)}'" title="تعديل هذا الكورس" class="w-7 h-7 rounded-lg bg-samt-gold/20 hover:bg-samt-gold/40 text-samt-gold flex items-center justify-center text-xs transition-colors">
                 <i class="fa-solid fa-pen"></i>
               </button>
-              <button onclick="event.preventDefault(); event.stopPropagation(); deleteCourseInline('${c.id}')" title="حذف هذا الكورس" class="w-7 h-7 rounded-lg bg-rose-500/20 hover:bg-rose-500/40 text-rose-400 flex items-center justify-center text-xs transition-colors">
+              <button onclick="event.preventDefault(); event.stopPropagation(); deleteCourseInline('${encodeURIComponent(c.id)}')" title="حذف هذا الكورس" class="w-7 h-7 rounded-lg bg-rose-500/20 hover:bg-rose-500/40 text-rose-400 flex items-center justify-center text-xs transition-colors">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
             </div>
@@ -431,30 +441,30 @@
           return `
             <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative transition-all">
               ${adminControls}
-              <div onclick="window.location.href='./course-view.html?id=${c.id}'" class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden cursor-pointer">
-                ${thumb ? `<img src="${thumb}" alt="${c.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
+              <div onclick="window.location.href='./course-view.html?id=${encodeURIComponent(c.id)}'" class="relative aspect-video bg-gradient-to-br from-[#0B152E] to-[#16254A] flex items-center justify-center overflow-hidden cursor-pointer">
+                ${thumb ? `<img src="${safeUrl(thumb)}" alt="${esc(c.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />` : ''}
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute w-14 h-14 rounded-full bg-samt-cyan/90 text-samt-space flex items-center justify-center text-xl shadow-xl group-hover:scale-110 transition-transform">
                   <i class="fa-solid fa-play ml-0.5"></i>
                 </div>
                 <span class="absolute top-3 right-3 px-2.5 py-1 text-[11px] font-bold rounded-full bg-black/70 text-samt-cyan border border-samt-cyan/30 backdrop-blur-md z-10">
-                  ${c.level || 'كورس معتمد'}
+                  ${esc(c.level || 'كورس معتمد')}
                 </span>
                 ${c.duration ? `
                   <span class="absolute bottom-3 left-3 px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-black/80 text-white z-10">
-                    <i class="fa-regular fa-clock ml-1"></i>${c.duration}
+                    <i class="fa-regular fa-clock ml-1"></i>${esc(c.duration)}
                   </span>
                 ` : ''}
               </div>
               <div class="p-5 flex flex-col flex-grow text-right">
                 <div class="flex items-center justify-between text-xs text-samt-cyan font-bold mb-1.5">
-                  <span>${c.categoryName || 'شروحات عامة'}</span>
+                  <span>${esc(c.categoryName || 'شروحات عامة')}</span>
                   <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-book-bookmark ml-1"></i>${totalSections > 0 ? totalSections + ' أقسام • ' : ''}${totalLessons} درس</span>
                 </div>
-                <h3 class="text-base font-bold mb-1 leading-snug font-cairo">${c.title}</h3>
-                ${c.subtitle ? `<p class="text-slate-500 text-[11px] mb-2">${c.subtitle}</p>` : ''}
-                <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${c.description || ''}</p>
-                ${c.instructorName ? `<div class="text-[10px] text-slate-500 mb-3"><i class="fa-solid fa-user-tie ml-1"></i>${c.instructorName}</div>` : ''}
+                <h3 class="text-base font-bold mb-1 leading-snug font-cairo">${esc(c.title)}</h3>
+                ${c.subtitle ? `<p class="text-slate-500 text-[11px] mb-2">${esc(c.subtitle)}</p>` : ''}
+                <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-2">${esc(c.description || '')}</p>
+                ${c.instructorName ? `<div class="text-[10px] text-slate-500 mb-3"><i class="fa-solid fa-user-tie ml-1"></i>${esc(c.instructorName)}</div>` : ''}
                 <div class="mt-auto pt-3 border-t border-white/10 mb-4">
                   <div class="flex items-center justify-between text-[11px] font-bold mb-1">
                     <span class="text-slate-400">نسبة التقدم:</span>
@@ -464,7 +474,7 @@
                     <div class="h-full bg-gradient-to-r from-samt-cyan to-samt-blue rounded-full" style="width:${progress}%"></div>
                   </div>
                 </div>
-                <a href="./course-view.html?id=${c.id}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black flex items-center justify-center gap-2">
+                <a href="./course-view.html?id=${encodeURIComponent(c.id)}" class="w-full py-2.5 rounded-xl bg-samt-cyan text-samt-space hover:opacity-90 text-xs font-black flex items-center justify-center gap-2">
                   <i class="fa-solid fa-graduation-cap"></i>
                   <span>${progress > 0 ? 'متابعة التعلم (' + progress + '%)' : 'بدء دراسة الكورس'}</span>
                 </a>
