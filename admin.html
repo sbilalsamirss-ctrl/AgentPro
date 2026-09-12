@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <script>try{var t=localStorage.getItem('samt_theme');document.documentElement.classList[t==='light'?'remove':'add']('dark');}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة تحكم المشرف (Admin) | منظومة سمت SAMT</title>
+  <title>لوحة تحكم المشرف (Admin) | سمت SAMT</title>
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%2300F5D4' stroke-width='4'/><circle cx='50' cy='50' r='6' fill='%2300BBF9'/><line x1='50' y1='6' x2='50' y2='94' stroke='%2300F5D4' stroke-width='3'/><line x1='6' y1='50' x2='94' y2='50' stroke='%2300F5D4' stroke-width='3'/></svg>" type="image/svg+xml">
 
   <!-- Open Graph / Social -->
-  <meta property="og:title" content="لوحة تحكم المشرف | منظومة سمت SAMT" />
+  <meta property="og:title" content="لوحة تحكم المشرف | سمت SAMT" />
   <meta property="og:description" content="لوحة تحكم المشرف لإدارة الكورسات، البرمجيات، ورؤية المشتركين." />
   <meta property="og:url" content="https://sbilalsamirss-ctrl.github.io/AgentPro/admin.html" />
   <meta property="og:type" content="website" />
@@ -354,9 +354,16 @@
 
   <!-- Course Modal removed — now using course-builder.html full page -->
 
-  <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-6 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
-    &copy; 2026 <strong class="text-slate-800 dark:text-white">منظومة سمت SAMT</strong>. لوحة تحكم المشرف.
-      <div class="mt-2"><a href="./privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-samt-cyan text-xs font-cairo transition-colors">الشروط وسياسة الخصوصية</a></div>
+  <footer class="bg-slate-50 dark:bg-black/50 border-t border-slate-200 dark:border-white/10 py-8 text-center text-xs text-slate-500 dark:text-slate-400 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>&copy; <span id="currentYear">2026</span> <strong class="text-slate-800 dark:text-white">سمت SAMT</strong>. جميع الحقوق محفوظة.</div>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="./index.html" class="hover:text-samt-cyan transition-colors">الرئيسية</a>
+        <a href="./downloads.html" class="hover:text-samt-cyan transition-colors">مركز التحميل</a>
+        <a href="./courses.html" class="hover:text-samt-cyan transition-colors">أكاديمية الكورسات</a>
+        <a href="./privacy.html" class="hover:text-samt-cyan transition-colors">الشروط وسياسة الخصوصية</a>
+      </div>
+    </div>
   </footer>
 
   <!-- Central Data & Auth Scripts -->
